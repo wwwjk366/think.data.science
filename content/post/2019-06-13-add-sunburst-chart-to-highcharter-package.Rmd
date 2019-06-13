@@ -50,6 +50,8 @@ frameWidget(l)
 
 ```
 
+
+
 Or to be more flexible, use the API functions to "build" the chart and fine tuning almost any specs of your charts:
 
 ```{r}
