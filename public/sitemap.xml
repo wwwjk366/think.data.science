@@ -42,18 +42,31 @@
   </url>
   
   <url>
-    <loc>/post/highcharts-demo/</loc>
-    <lastmod>2019-06-12T20:27:33+00:00</lastmod>
+    <loc>/post/add-sunburst-chart-to-highcharter-package/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-06-12T20:54:57+00:00</lastmod>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/testtest/</loc>
-    <lastmod>2019-06-12T20:54:57+00:00</lastmod>
+    <loc>/categories/r/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/visulization/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -179,20 +192,8 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/post/2015-07-23-r-rmarkdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

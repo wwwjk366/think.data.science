@@ -1,0 +1,253 @@
+---
+title: Add Sunburst Chart to `highcharter` Package
+author: Michael Yan
+date: '2019-06-13'
+slug: add-sunburst-chart-to-highcharter-package
+categories:
+  - R
+  - Visulization
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2019-06-13T00:11:50-04:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+options(max.print = "75")
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = FALSE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE)
+```
+
+## The `highcharter` Package
+
+The `highcharter` package [link](http://jkunst.com/highcharter/) by Joshua Kunst has long been my favorite data visualization package in R. It created a wonderful API to the famous JS `Highcharts` library. [link](https://www.highcharts.com/). Although `Highcharts` is not free for commercial use, but I found many functionality of it is unparalleled with other visualization packages like `ploty` or `sunburstR` or `r2d3`.
+
+For example, you can easily create an interactive scatterplot with `ggplot2` like syntax:
+
+```{r}
+data(diamonds, economics_long, mpg, package = "ggplot2")
+library(tidyverse)
+library(highcharter)
+
+hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+```
+
+Or to be more flexible, use the API functions to "build" the chart and fine tuning almost any specs of your charts:
+
+```{r}
+highchart() %>% 
+  hc_xAxis(categories = citytemp$month) %>% 
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_series(name = "New York", data = citytemp$new_york) %>% 
+  hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
+           margin = 20, align = "left",
+           style = list(color = "#90ed7d", useHTML = TRUE)) %>% 
+  hc_subtitle(text = "And this is a subtitle with more information",
+              align = "left",
+              style = list(color = "#2b908f", fontWeight = "bold")) %>% 
+  hc_credits(enabled = TRUE, # add credits
+             text = "www.link.tomy.site",
+             href = "http://jkunst.com") %>% 
+  hc_legend(align = "left", verticalAlign = "top",
+            layout = "vertical", x = 0, y = 100) %>%
+  hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
+             shared = TRUE, borderWidth = 5) %>% 
+  hc_exporting(enabled = TRUE)
+```
+
+
+Here. A light weighted, interactive chart with exporting ability and customized tooltip with less than 20 lines of code.
+
+
+## Sunburst Chart
+
+Let's take a look at an example of sunburst chart by official Highcharts.org (created in jsfiddle, added to this RMD document using iframe):
+
+<iframe width='80%' height='800px' src='https://jsfiddle.net/wwwjk366/pa72o0Ln/embedded/result,html,js,css' allowfullscreen='allowfullscreen' frameborder='0'></iframe>
+
+Sunburst chart shows hierarchy through a series of rings, that are sliced for each category node. Each ring corresponds to a level in the hierarchy, with the central circle representing the root node and the hierarchy moving outwards from it.
+
+Rings are sliced up and divided based on their hierarchical relationship to the parent slice. The angle of each slice is either divided equally under its parent node or can be made proportional to a value.
+
+Color can be used to highlight hierarchical groupings or specific categories.
+
+
+## Add Wrapper to Existing `highcharter`
+
+This is very straightforward since the `hc_add_series()` function provides an robust interface to Highcharts series API [link](https://api.highcharts.com/highcharts/series). Moreover, the data structure required of sunburst chart is actually same as treemap chart.
+
+
+Assume we have a dataframe with 3 levels(index1, index2 and index3), each observation is also associated with an numeric value:
+
+```{r}
+library(tibble)
+data <- tibble(
+  index0 = "Letter",
+  index1 = sample(LETTERS[1:5], 500, replace = T),
+  index2 = sample(LETTERS[6:10], 500, replace = T),
+  index3 = sample(LETTERS[11:15], 500, replace = T),
+  value = rpois(500, 5)  
+)
+
+head(data)
+```
+
+and remember we need to parse the data into the format that Highcharts can recognized, which is a nested list:
+
+```r
+
+var data = [{
+    id: '0.0',
+    parent: '',
+    name: 'The World'
+}, {
+    id: '1.3',
+    parent: '0.0',
+    name: 'Asia'
+}, {
+    id: '1.1',
+    parent: '0.0',
+    name: 'Africa'
+}, {
+    id: '1.2',
+    parent: '0.0'
+},
+...
+}
+    
+```
+
+Note that every item in the list must have an "id" and "parent".
+
+In `hctreemap2()` function, author parsed the dataframe into list nicely using `purrr` and `rlang` package from tidyverse. Do not worry if you don't understand those "Quasiquotations" [link](https://github.com/r-lib/rlang). It is just syntax sugar using non-standard evaluation. [more reference](https://tidyeval.tidyverse.org/)
+
+```{r}
+group_vars <- c("index0","index1", "index2", "index3")
+size_var <- "value"
+group_syms <- rlang::syms(group_vars)
+size_sym <- rlang::sym(size_var)
+  
+  if (data %>%
+      select(!!!group_syms) %>%
+      map(unique) %>%
+      unlist() %>%
+      anyDuplicated()) stop("Sunburst data uses same label at multiple levels.")
+  
+  data <- data %>% mutate_at(group_vars, as.character)
+  
+  name_cell <- function(..., depth) paste0(list(...), 1:depth, collapse = "")
+  
+  data_at_depth <- function(depth) {
+    data %>%
+      group_by(!!!group_syms[1:depth]) %>%
+      summarise(
+        value = sum(!!size_sym)
+      ) %>%
+      ungroup() %>%
+      mutate(
+        name = !!group_syms[[depth]],
+        level = depth
+      ) %>% 
+      mutate_at(group_vars, as.character()) %>% 
+      {
+        if (depth == 1) mutate(., id = paste0(name, 1))
+        else {
+          mutate(
+            .,
+            parent = pmap_chr(
+              list(!!!group_syms[1:depth - 1]),
+              name_cell,
+              depth = depth - 1),
+            id = paste0(parent, name, depth)
+          )
+        }
+      }
+  }
+```
+
+Lets look at the dataframe before we parse it to a list:
+
+```{r}
+sunburst_df <- 1:length(group_vars) %>%
+  map(data_at_depth) %>%
+  bind_rows() %>% 
+  arrange(level)
+
+head(sunburst_df)
+```
+
+Let's take a look at the first couple of items:
+
+```{r}
+data_list <- sunburst_df %>%
+  highcharter::list_parse() %>%
+  purrr::map(~.[!is.na(.)])
+
+
+data_list[1:3]
+```
+
+Alright, the data has been parsed into the corresponding format. Now we just need to pass this in to `highcharter::hc_add_series()`
+
+```{r}
+highchart() %>%
+  hc_add_series(data = data_list,
+                type = "sunburst",
+                allowDrillToNode = TRUE)
+```
+
+Here we go! 
+
+![](https://media.giphy.com/media/rVbAzUUSUC6dO/giphy.gif)
+
+We are able to create the sunburst chart using Highcharts API! [link to full code](https://github.com/wwwjk366/highcharter/blob/0a3c53a7ec5547af4998bc0b893f5c44df3469d8/R/hchart-shorcuts.R#L449-L554) Of course it's a bit ugly now because we didn't pass any other parameters to the chart.
+
+
+## More Configurations
+
+Putting everything together,let's make the center spot transparent by adding `color = 'transparent'` arguments and change the sub level coloring by `colorVariation = list(key = 'brightness', to = 0.5)`
+
+
+```{r cars}
+library(tidyverse)
+library(highcharter)
+library(RColorBrewer)
+
+tibble(
+ index0 = "Letter",
+ index1 = sample(LETTERS[1:5], 500, replace = T),
+ index2 = sample(LETTERS[6:10], 500, replace = T),
+ index3 = sample(LETTERS[11:15], 500, replace = T),
+ value = rpois(500, 5)  
+) %>%
+ hcsunburst(
+   group_vars = c("index0","index1", "index2", "index3"),
+   size_var = "value",
+   levels = list(
+     list(level = 1, color = 'transparent', dataLabels = list(enabled = TRUE)),
+     list(level = 2, colorByPoint = TRUE, dataLabels = list(enabled = TRUE)),
+     list(level = 3, colorVariation = list(key = 'brightness', to = 0.5),
+          dataLabels = list(enabled = TRUE)),
+     list(level = 4, colorVariation = list(key = 'brightness', to = -0.5),
+          dataLabels = list(enabled = FALSE))
+   )
+ ) %>% 
+ hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+            Value: {point.value:,.0f}<br>")
+
+```
