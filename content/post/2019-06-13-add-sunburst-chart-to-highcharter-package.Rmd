@@ -43,8 +43,11 @@ For example, you can easily create an interactive scatterplot with `ggplot2` lik
 data(diamonds, economics_long, mpg, package = "ggplot2")
 library(tidyverse)
 library(highcharter)
+library(widgetframe)
 
-hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+l <- hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+frameWidget(l)
+
 ```
 
 Or to be more flexible, use the API functions to "build" the chart and fine tuning almost any specs of your charts:
