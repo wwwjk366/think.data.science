@@ -22,7 +22,6 @@ projects: []
 
 ```{r setup, include=FALSE}
 library(knitr)
-opts_chunk$set(echo = TRUE)
 options(max.print = "75")
 opts_chunk$set(echo = TRUE,
 	             cache = FALSE,
@@ -46,16 +45,15 @@ library(highcharter)
 library(widgetframe)
 
 l <- hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
-frameWidget(l)
+frameWidget(l, height = '400')
 
 ```
-
 
 
 Or to be more flexible, use the API functions to "build" the chart and fine tuning almost any specs of your charts:
 
 ```{r}
-highchart() %>% 
+hc <- highchart() %>% 
   hc_xAxis(categories = citytemp$month) %>% 
   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
   hc_add_series(name = "New York", data = citytemp$new_york) %>% 
@@ -73,6 +71,9 @@ highchart() %>%
   hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
              shared = TRUE, borderWidth = 5) %>% 
   hc_exporting(enabled = TRUE)
+
+frameWidget(hc, height = '600')
+
 ```
 
 
@@ -83,7 +84,7 @@ Here. A light weighted, interactive chart with exporting ability and customized 
 
 Let's take a look at an example of sunburst chart by official Highcharts.org (created in jsfiddle, added to this RMD document using iframe):
 
-<iframe width='80%' height='800px' src='https://jsfiddle.net/wwwjk366/pa72o0Ln/embedded/result,html,js,css' allowfullscreen='allowfullscreen' frameborder='0'></iframe>
+<iframe width='100%' height='800px' src='https://jsfiddle.net/wwwjk366/pa72o0Ln/embedded/result,html,js,css' allowfullscreen='allowfullscreen' frameborder='0'></iframe>
 
 Sunburst chart shows hierarchy through a series of rings, that are sliced for each category node. Each ring corresponds to a level in the hierarchy, with the central circle representing the root node and the hierarchy moving outwards from it.
 
@@ -210,10 +211,13 @@ data_list[1:3]
 Alright, the data has been parsed into the corresponding format. Now we just need to pass this in to `highcharter::hc_add_series()`
 
 ```{r}
-highchart() %>%
+hc <- highchart() %>%
   hc_add_series(data = data_list,
                 type = "sunburst",
                 allowDrillToNode = TRUE)
+
+frameWidget(hc, height = '600')
+
 ```
 
 Here we go! 
@@ -233,7 +237,7 @@ library(tidyverse)
 library(highcharter)
 library(RColorBrewer)
 
-tibble(
+hc <- tibble(
  index0 = "Letter",
  index1 = sample(LETTERS[1:5], 500, replace = T),
  index2 = sample(LETTERS[6:10], 500, replace = T),
@@ -254,5 +258,8 @@ tibble(
  ) %>% 
  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
             Value: {point.value:,.0f}<br>")
+
+frameWidget(hc, height = '600')
+
 
 ```
