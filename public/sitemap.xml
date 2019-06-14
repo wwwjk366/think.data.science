@@ -18,14 +18,6 @@
   </url>
   
   <url>
-    <loc>/bio/skills/</loc>
-  </url>
-  
-  <url>
-    <loc>/bio/experience/</loc>
-  </url>
-  
-  <url>
     <loc>/talk/example/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url>
@@ -44,6 +36,11 @@
   <url>
     <loc>/post/add-sunburst-chart-to-highcharter-package/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/bio/</loc>
+    <lastmod>2019-06-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -223,11 +220,6 @@
   <url>
     <loc>/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/bio/</loc>
-    <priority>0</priority>
   </url>
   
   <url>

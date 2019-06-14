@@ -85,24 +85,6 @@
     </item>
     
     <item>
-      <title>Skills</title>
-      <link>/bio/skills/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/bio/skills/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Experience</title>
-      <link>/bio/experience/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/bio/experience/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Example Talk</title>
       <link>/talk/example/</link>
       <pubDate>Sat, 01 Jun 2030 13:00:00 +0000</pubDate>
@@ -403,6 +385,15 @@ frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst-chart-to-highcharter-package_files/figure-html//widgets/widget_cars.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;/div&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>Bio</title>
+      <link>/bio/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/bio/</guid>
+      <description></description>
     </item>
     
     <item>

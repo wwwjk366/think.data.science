@@ -10,7 +10,7 @@
 
 [[main]]
   name = "Bio"
-  url = "/bio/"
+  url = "bio/"
   weight = 2
   
 [[main]]
