@@ -1,6 +1,6 @@
 ---
 # Display name
-name: Nelson Bighetti
+name: Michael Yan
 
 # Username (this should match the folder name)
 authors:
@@ -18,7 +18,7 @@ organizations:
   url: ""
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: A student of the lost forbidden art of Data Science.
 
 interests:
 - Artificial Intelligence

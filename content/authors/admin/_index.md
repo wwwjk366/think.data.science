@@ -1,8 +1,7 @@
 ---
 authors:
 - admin
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: A student of the last forbidden art of Data Science.
 education:
   courses:
   - course: MSc Statistics
@@ -20,15 +19,15 @@ interests:
 name: Michael Yan
 organizations:
 - name: Ingram Micro
-  url: ""
+  url: "https://corp.ingrammicro.com/About-Us.aspx"
 role: Principal Data Scientist
 social:
 - icon: envelope
   icon_pack: fas
   link: '#contact'
-- icon: google-scholar
-  icon_pack: ai
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+- icon: linkedin
+  icon_pack: fab
+  link:  https://linkedin.com/in/michaelyan3
 - icon: github
   icon_pack: fab
   link: https://github.com/wwwjk366
@@ -38,4 +37,6 @@ user_groups:
 - Visitors
 ---
 
-A seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance and retail industries. A person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data.
+"You can have data without information, but you cannot have information without data."
+
+I am a seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. A person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data.

@@ -25,25 +25,20 @@ weight = 1
   icon = "r-project"
   icon_pack = "fab"
   name = "R user"
-  description = "I have been an avid R user since 2010. I have used R both in the classroom as a professor, and in the lab as a scientist and NIH-funded Principal Investigator. You can find my current work for [RStudio Education on GitHub](https://github.com/rstudio-education)."
+  description = "I have been an avid R user since 2010. I have used R both in the classroom as a data scientist and always fascinated by how easy and intuitive you can teach it to others."
   
 [[feature]]
-  icon = "apple-alt"
-  icon_pack = "fas"
-  name = "Data Science Educator"
-  description = "I have developed and taught multiple graduate-level data science courses. I also trained the Office of Research Impact at the [Oregon Clinical & Translational Research Institute](https://www.ohsu.edu/xd/research/centers-institutes/octri/) to use R, and have consulted with the [University of Oregon College of Education](https://education.uoregon.edu/) on the development of a graduate data science specialization track. I received an [Excellence in Education award](https://www.ohsu.edu/xd/education/schools/school-of-medicine/news-and-events/honors2018.cfm) from OHSU in 2018."
+  icon = "python"
+  icon_pack = "fab"
+  name = "Python user"
+  description = "As a daily Python user now, its structured programming, functional programming patterns and object-oriented programming is unpararelled comparing to R."
   
 [[feature]]
   icon = "book"
   icon_pack = "fas"
-  name = "Author"
+  name = "Teach"
   description = "I created the DataCamp.com course [Working with Data in the Tidyverse](https://www.datacamp.com/courses/working-with-data-in-the-tidyverse), and I am a co-author of the book [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/). I have also written numerous scientific journal articles and book chapters on autism and neurodevelopmental disorders."
-  
-[[feature]]
-  icon = "microphone-alt"
-  icon_pack = "fas"
-  name = "Speaker"
-  description = "I have presented original research at over 25 international conferences. Recently, I gave a keynote at the [2018 Cascadia R Conf in Portland, Oregon](../talk/cascadia-r-keynote/), and have an upcoming keynote for the 2019 [Young Statisticians Conference in Canberra, Australia](http://ysc2019.netlify.com/)."
+
   
 [[feature]]
   icon = "drafting-compass"
@@ -57,5 +52,10 @@ weight = 1
   name = "Scientist"
   description = "I studied developmental psychology and quantitative methods, finishing my PhD in 2008. [My research](https://profiles.impactstory.org/u/0000-0002-8082-1890) focused on health-related applications of Natural Language Processing-based methods, and has been funded by the National Institutes of Health, the Oregon Clinical and Translational Research Institute, and Autism Speaks."
 
+[[feature]]
+  icon = "chart-line"
+  icon_pack = "fas"
+  name = "Investor"
+  description = "I am been an active investor in equity market since 2013. Finding out-performing stocks is like real world treasure hunt, you will always learn a lesson whether successful or not."
 
 +++
