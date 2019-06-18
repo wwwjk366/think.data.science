@@ -57,8 +57,8 @@ date_format = "January 2006"
   
 [[experience]]
   title = "Revenue Analyst"
-  company = "Canadian Primedia"
-  company_url = "https://www.ohsu.edu/"
+  company = "Canadian Primedia Sales and Marketing"
+  company_url = ""
   location = "Toronto, Ontario"
   date_start = "2011-11-01"
   date_end = "2012-12-31"

@@ -33,24 +33,26 @@ weight = 1
   name = "Python user"
   description = "As a daily Python user now, its structured programming, functional programming patterns and object-oriented programming is unpararelled comparing to R."
   
+
 [[feature]]
-  icon = "book"
+  icon = "brain"
   icon_pack = "fas"
-  name = "Teach"
-  description = "I created the DataCamp.com course [Working with Data in the Tidyverse](https://www.datacamp.com/courses/working-with-data-in-the-tidyverse), and I am a co-author of the book [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/). I have also written numerous scientific journal articles and book chapters on autism and neurodevelopmental disorders."
+  name = "Problem Solver"
+  description = "I have strong business sense which allows me to apply appropraite data science approach to different real-world problems. Building a fairly complex machine learning models is easily nowadays, but when dealing with real business problems, sometimes all you need is the simplest solution. [(An Example)](http://thinkdatascience.com/a-non-modeling-approach-scored-top-50-in-a-data-science-competition/)"
 
   
 [[feature]]
   icon = "drafting-compass"
   icon_pack = "fas"
   name = "Data Visualization & Statistics"
-  description = "I love exploring, analyzing, and [visualizing data](https://apreshill.github.io/data-vis-labs-2018/). Lately, I enjoy visualizing ['The Great British Bake Off'](https://alison.netlify.com/uo-tidy-bakeoff/#1) (you can too with [my R package!](http://bakeoff.netlify.com/)), and talking about how to [take a sad plot and make it better](../talk/ohsu-biodatavis)."
-
+  description = "I love exploring, analyzing, and visulizaing data. `ggplot2`, `highcharter`, `ggiraph` are my favorrate R visulization packages. I believe that one good chart can tell much better story than a 5 page report if you done it correctly." 
+  
 [[feature]]
-  icon = "flask"
+  icon = "book"
   icon_pack = "fas"
-  name = "Scientist"
-  description = "I studied developmental psychology and quantitative methods, finishing my PhD in 2008. [My research](https://profiles.impactstory.org/u/0000-0002-8082-1890) focused on health-related applications of Natural Language Processing-based methods, and has been funded by the National Institutes of Health, the Oregon Clinical and Translational Research Institute, and Autism Speaks."
+  name = "Teach"
+  description = "Nothing is more enjoyable than sharing your knowledge. I have been teaching and mentoring junior data scientist over the last couple of years and I enjoyed every moment of those."
+
 
 [[feature]]
   icon = "chart-line"
