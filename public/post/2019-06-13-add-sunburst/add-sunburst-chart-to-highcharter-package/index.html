@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Michael Yan">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="The highcharter Package The highcharter package link by Joshua Kunst has long been my favorite data visualization package in R. It created a wonderful API to the famous JS Highcharts library. link. Although Highcharts is not free for commercial use, but I found many functionality of it is unparalleled with other visualization packages like ploty or sunburstR or r2d3.
+For example, you can easily create an interactive scatterplot with ggplot2 like syntax:">
+
+  
+  <link rel="alternate" hreflang="en-us" href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="../../../css/academic.min.966b3bc843cfea29ab40b0bad2f17078.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74212634-3', 'auto');
+      
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="../../../site.webmanifest">
+  <link rel="icon" type="image/png" href="../../../img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../../img/icon-192.png">
+
+  <link rel="canonical" href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Think.Data.Science">
+  <meta property="og:url" content="/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">
+  <meta property="og:title" content="Add Sunburst Chart to highcharter Package | Think.Data.Science">
+  <meta property="og:description" content="The highcharter Package The highcharter package link by Joshua Kunst has long been my favorite data visualization package in R. It created a wonderful API to the famous JS Highcharts library. link. Although Highcharts is not free for commercial use, but I found many functionality of it is unparalleled with other visualization packages like ploty or sunburstR or r2d3.
+For example, you can easily create an interactive scatterplot with ggplot2 like syntax:"><meta property="og:image" content="/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/featured.PNG">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-06-13T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2019-06-13T00:11:50-04:00">
+  
+
+  
+
+
+  
+
+
+
+
+
+  <title>Add Sunburst Chart to highcharter Package | Think.Data.Science</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="../../../"><img src="../../../img/header_trans.png" alt="Think.Data.Science"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../bio/"><span>Bio</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../#posts"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../courses/"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/featured_hu4ff6e0bce9cbb3d59aa995a33bcf5997_183224_800x0_resize_lanczos_2.PNG');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">Add Sunburst Chart to highcharter Package</h1>
+
+        
+
+        
+
+
+
+<meta content="2019-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-06-13 00:11:50 -0400 -0400" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Jun 13, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../../categories/r/">R</a>, <a href="../../../categories/visulization/">Visulization</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Add%20Sunburst%20Chart%20to%20highcharter%20Package&amp;url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f&amp;title=Add%20Sunburst%20Chart%20to%20highcharter%20Package"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f&amp;title=Add%20Sunburst%20Chart%20to%20highcharter%20Package"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Add%20Sunburst%20Chart%20to%20highcharter%20Package&amp;body=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/featured_hu4ff6e0bce9cbb3d59aa995a33bcf5997_183224_680x500_fill_q90_lanczos_smart1_2.PNG" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">Add Sunburst Chart to highcharter Package</h1>
+
+  
+
+  
+
+
+
+<meta content="2019-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-06-13 00:11:50 -0400 -0400" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Jun 13, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../../categories/r/">R</a>, <a href="../../../categories/visulization/">Visulization</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Add%20Sunburst%20Chart%20to%20highcharter%20Package&amp;url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f&amp;title=Add%20Sunburst%20Chart%20to%20highcharter%20Package"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f&amp;title=Add%20Sunburst%20Chart%20to%20highcharter%20Package"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Add%20Sunburst%20Chart%20to%20highcharter%20Package&amp;body=%2fpost%2f2019-06-13-add-sunburst%2fadd-sunburst-chart-to-highcharter-package%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+<script src="../../../rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="../../../rmarkdown-libs/pymjs/pym.v1.js"></script>
+<script src="../../../rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+
+
+<div id="the-highcharter-package" class="section level2">
+<h2>The <code>highcharter</code> Package</h2>
+<p>The <code>highcharter</code> package <a href="http://jkunst.com/highcharter/">link</a> by Joshua Kunst has long been my favorite data visualization package in R. It created a wonderful API to the famous JS <code>Highcharts</code> library. <a href="https://www.highcharts.com/">link</a>. Although <code>Highcharts</code> is not free for commercial use, but I found many functionality of it is unparalleled with other visualization packages like <code>ploty</code> or <code>sunburstR</code> or <code>r2d3</code>.</p>
+<p>For example, you can easily create an interactive scatterplot with <code>ggplot2</code> like syntax:</p>
+<pre class="r"><code>data(diamonds, economics_long, mpg, package = &quot;ggplot2&quot;)
+library(tidyverse)
+library(highcharter)
+library(widgetframe)
+
+l &lt;- hchart(mpg, &quot;scatter&quot;, hcaes(x = displ, y = hwy, group = class))
+frameWidget(l, height = &#39;400&#39;)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:400px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Or to be more flexible, use the API functions to “build” the chart and fine tuning almost any specs of your charts:</p>
+<pre class="r"><code>hc &lt;- highchart() %&gt;% 
+  hc_xAxis(categories = citytemp$month) %&gt;% 
+  hc_add_series(name = &quot;Tokyo&quot;, data = citytemp$tokyo) %&gt;% 
+  hc_add_series(name = &quot;New York&quot;, data = citytemp$new_york) %&gt;% 
+  hc_title(text = &quot;This is a title with &lt;i&gt;margin&lt;/i&gt; and &lt;b&gt;Strong or bold text&lt;/b&gt;&quot;,
+           margin = 20, align = &quot;left&quot;,
+           style = list(color = &quot;#90ed7d&quot;, useHTML = TRUE)) %&gt;% 
+  hc_subtitle(text = &quot;And this is a subtitle with more information&quot;,
+              align = &quot;left&quot;,
+              style = list(color = &quot;#2b908f&quot;, fontWeight = &quot;bold&quot;)) %&gt;% 
+  hc_credits(enabled = TRUE, # add credits
+             text = &quot;www.link.tomy.site&quot;,
+             href = &quot;http://jkunst.com&quot;) %&gt;% 
+  hc_legend(align = &quot;left&quot;, verticalAlign = &quot;top&quot;,
+            layout = &quot;vertical&quot;, x = 0, y = 100) %&gt;%
+  hc_tooltip(crosshairs = TRUE, backgroundColor = &quot;#FCFFC5&quot;,
+             shared = TRUE, borderWidth = 5) %&gt;% 
+  hc_exporting(enabled = TRUE)
+
+frameWidget(hc, height = &#39;600&#39;)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Here. A light weighted, interactive chart with exporting ability and customized tooltip with less than 20 lines of code.</p>
+</div>
+<div id="sunburst-chart" class="section level2">
+<h2>Sunburst Chart</h2>
+<p>Let’s take a look at an example of sunburst chart by official Highcharts.org (created in jsfiddle, added to this RMD document using iframe):</p>
+<iframe width="100%" height="800px" src="https://jsfiddle.net/wwwjk366/pa72o0Ln/embedded/result,html,js,css" allowfullscreen="allowfullscreen" frameborder="0">
+</iframe>
+<p>Sunburst chart shows hierarchy through a series of rings, that are sliced for each category node. Each ring corresponds to a level in the hierarchy, with the central circle representing the root node and the hierarchy moving outwards from it.</p>
+<p>Rings are sliced up and divided based on their hierarchical relationship to the parent slice. The angle of each slice is either divided equally under its parent node or can be made proportional to a value.</p>
+<p>Color can be used to highlight hierarchical groupings or specific categories.</p>
+</div>
+<div id="add-wrapper-to-existing-highcharter" class="section level2">
+<h2>Add Wrapper to Existing <code>highcharter</code></h2>
+<p>This is very straightforward since the <code>hc_add_series()</code> function provides an robust interface to Highcharts series API <a href="https://api.highcharts.com/highcharts/series">link</a>. Moreover, the data structure required of sunburst chart is actually same as treemap chart.</p>
+<p>Assume we have a dataframe with 3 levels(index1, index2 and index3), each observation is also associated with an numeric value:</p>
+<pre class="r"><code>library(tibble)
+data &lt;- tibble(
+  index0 = &quot;Letter&quot;,
+  index1 = sample(LETTERS[1:5], 500, replace = T),
+  index2 = sample(LETTERS[6:10], 500, replace = T),
+  index3 = sample(LETTERS[11:15], 500, replace = T),
+  value = rpois(500, 5)  
+)
+
+head(data)</code></pre>
+<pre><code># A tibble: 6 x 5
+  index0 index1 index2 index3 value
+  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;
+1 Letter D      G      N          8
+2 Letter B      I      K          2
+3 Letter C      I      N          8
+4 Letter A      F      O          2
+5 Letter A      G      N          4
+6 Letter E      J      O          2</code></pre>
+<p>and remember we need to parse the data into the format that Highcharts can recognized, which is a nested list:</p>
+<pre class="r"><code>
+var data = [{
+    id: &#39;0.0&#39;,
+    parent: &#39;&#39;,
+    name: &#39;The World&#39;
+}, {
+    id: &#39;1.3&#39;,
+    parent: &#39;0.0&#39;,
+    name: &#39;Asia&#39;
+}, {
+    id: &#39;1.1&#39;,
+    parent: &#39;0.0&#39;,
+    name: &#39;Africa&#39;
+}, {
+    id: &#39;1.2&#39;,
+    parent: &#39;0.0&#39;
+},
+...
+}
+    </code></pre>
+<p>Note that every item in the list must have an “id” and “parent”.</p>
+<p>In <code>hctreemap2()</code> function, author parsed the dataframe into list nicely using <code>purrr</code> and <code>rlang</code> package from tidyverse. Do not worry if you don’t understand those “Quasiquotations” <a href="https://github.com/r-lib/rlang">link</a>. It is just syntax sugar using non-standard evaluation. <a href="https://tidyeval.tidyverse.org/">more reference</a></p>
+<pre class="r"><code>group_vars &lt;- c(&quot;index0&quot;,&quot;index1&quot;, &quot;index2&quot;, &quot;index3&quot;)
+size_var &lt;- &quot;value&quot;
+group_syms &lt;- rlang::syms(group_vars)
+size_sym &lt;- rlang::sym(size_var)
+  
+  if (data %&gt;%
+      select(!!!group_syms) %&gt;%
+      map(unique) %&gt;%
+      unlist() %&gt;%
+      anyDuplicated()) stop(&quot;Sunburst data uses same label at multiple levels.&quot;)
+  
+  data &lt;- data %&gt;% mutate_at(group_vars, as.character)
+  
+  name_cell &lt;- function(..., depth) paste0(list(...), 1:depth, collapse = &quot;&quot;)
+  
+  data_at_depth &lt;- function(depth) {
+    data %&gt;%
+      group_by(!!!group_syms[1:depth]) %&gt;%
+      summarise(
+        value = sum(!!size_sym)
+      ) %&gt;%
+      ungroup() %&gt;%
+      mutate(
+        name = !!group_syms[[depth]],
+        level = depth
+      ) %&gt;% 
+      mutate_at(group_vars, as.character()) %&gt;% 
+      {
+        if (depth == 1) mutate(., id = paste0(name, 1))
+        else {
+          mutate(
+            .,
+            parent = pmap_chr(
+              list(!!!group_syms[1:depth - 1]),
+              name_cell,
+              depth = depth - 1),
+            id = paste0(parent, name, depth)
+          )
+        }
+      }
+  }</code></pre>
+<p>Lets look at the dataframe before we parse it to a list:</p>
+<pre class="r"><code>sunburst_df &lt;- 1:length(group_vars) %&gt;%
+  map(data_at_depth) %&gt;%
+  bind_rows() %&gt;% 
+  arrange(level)
+
+head(sunburst_df)</code></pre>
+<pre><code># A tibble: 6 x 9
+  index0 value name   level id        index1 parent  index2 index3
+  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; 
+1 Letter  2550 Letter     1 Letter1   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  
+2 Letter   519 A          2 Letter1A2 A      Letter1 &lt;NA&gt;   &lt;NA&gt;  
+3 Letter   453 B          2 Letter1B2 B      Letter1 &lt;NA&gt;   &lt;NA&gt;  
+4 Letter   518 C          2 Letter1C2 C      Letter1 &lt;NA&gt;   &lt;NA&gt;  
+5 Letter   533 D          2 Letter1D2 D      Letter1 &lt;NA&gt;   &lt;NA&gt;  
+6 Letter   527 E          2 Letter1E2 E      Letter1 &lt;NA&gt;   &lt;NA&gt;  </code></pre>
+<p>Let’s take a look at the first couple of items:</p>
+<pre class="r"><code>data_list &lt;- sunburst_df %&gt;%
+  highcharter::list_parse() %&gt;%
+  purrr::map(~.[!is.na(.)])
+
+
+data_list[1:3]</code></pre>
+<pre><code>[[1]]
+[[1]]$index0
+[1] &quot;Letter&quot;
+
+[[1]]$value
+[1] 2550
+
+[[1]]$name
+[1] &quot;Letter&quot;
+
+[[1]]$level
+[1] 1
+
+[[1]]$id
+[1] &quot;Letter1&quot;
+
+
+[[2]]
+[[2]]$index0
+[1] &quot;Letter&quot;
+
+[[2]]$value
+[1] 519
+
+[[2]]$name
+[1] &quot;A&quot;
+
+[[2]]$level
+[1] 2
+
+[[2]]$id
+[1] &quot;Letter1A2&quot;
+
+[[2]]$index1
+[1] &quot;A&quot;
+
+[[2]]$parent
+[1] &quot;Letter1&quot;
+
+
+[[3]]
+[[3]]$index0
+[1] &quot;Letter&quot;
+
+[[3]]$value
+[1] 453
+
+[[3]]$name
+[1] &quot;B&quot;
+
+[[3]]$level
+[1] 2
+
+[[3]]$id
+[1] &quot;Letter1B2&quot;
+
+[[3]]$index1
+[1] &quot;B&quot;
+
+[[3]]$parent
+[1] &quot;Letter1&quot;</code></pre>
+<p>Alright, the data has been parsed into the corresponding format. Now we just need to pass this in to <code>highcharter::hc_add_series()</code></p>
+<pre class="r"><code>hc &lt;- highchart() %&gt;%
+  hc_add_series(data = data_list,
+                type = &quot;sunburst&quot;,
+                allowDrillToNode = TRUE)
+
+frameWidget(hc, height = &#39;600&#39;)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-7.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Here we go!</p>
+<p><img src="https://media.giphy.com/media/rVbAzUUSUC6dO/giphy.gif" /></p>
+<p>We are able to create the sunburst chart using Highcharts API! <a href="https://github.com/wwwjk366/highcharter/blob/0a3c53a7ec5547af4998bc0b893f5c44df3469d8/R/hchart-shorcuts.R#L449-L554">link to full code</a> Of course it’s a bit ugly now because we didn’t pass any other parameters to the chart.</p>
+</div>
+<div id="more-configurations" class="section level2">
+<h2>More Configurations</h2>
+<p>Putting everything together,let’s make the center spot transparent by adding <code>color = 'transparent'</code> arguments and change the sub level coloring by <code>colorVariation = list(key = 'brightness', to = 0.5)</code></p>
+<pre class="r"><code>library(tidyverse)
+library(highcharter)
+library(RColorBrewer)
+
+hc &lt;- tibble(
+ index0 = &quot;Letter&quot;,
+ index1 = sample(LETTERS[1:5], 500, replace = T),
+ index2 = sample(LETTERS[6:10], 500, replace = T),
+ index3 = sample(LETTERS[11:15], 500, replace = T),
+ value = rpois(500, 5)  
+) %&gt;%
+ hcsunburst(
+   group_vars = c(&quot;index0&quot;,&quot;index1&quot;, &quot;index2&quot;, &quot;index3&quot;),
+   size_var = &quot;value&quot;,
+   levels = list(
+     list(level = 1, color = &#39;transparent&#39;, dataLabels = list(enabled = TRUE)),
+     list(level = 2, colorByPoint = TRUE, dataLabels = list(enabled = TRUE)),
+     list(level = 3, colorVariation = list(key = &#39;brightness&#39;, to = 0.5),
+          dataLabels = list(enabled = TRUE)),
+     list(level = 4, colorVariation = list(key = &#39;brightness&#39;, to = -0.5),
+          dataLabels = list(enabled = FALSE))
+   )
+ ) %&gt;% 
+ hc_tooltip(pointFormat = &quot;&lt;b&gt;{point.name}&lt;/b&gt;:&lt;br&gt;
+            Value: {point.value:,.0f}&lt;br&gt;&quot;)
+
+frameWidget(hc, height = &#39;600&#39;)</code></pre>
+<div id="htmlwidget-4" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{"x":{"url":"/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_cars.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p><img src="https://media.giphy.com/media/J1S363SbQFselYWz68/source.gif" /></p>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="../../../tags/r/">R</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/686fe02aba9090b895e967fa6cc296a3?s=200')" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="../../../">Michael Yan</a></h5>
+      <h6 class="card-subtitle">Principal Data Scientist</h6>
+      <p class="card-text" itemprop="description">A student of the last forbidden art of Data Science.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="../../../#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://linkedin.com/in/michaelyan3" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/wwwjk366" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "@tanbingyan" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//@tanbingyan.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="../../../js/academic.min.9ef1b53ee2bde6c7f33b150c6ba4d452.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="../../../privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    2019 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

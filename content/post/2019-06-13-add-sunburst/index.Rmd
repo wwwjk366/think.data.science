@@ -1,12 +1,12 @@
 ---
-title: Add Sunburst Chart to `highcharter` Package
+title: Add Sunburst Chart to highcharter Package
 author: Michael Yan
 date: '2019-06-13'
 slug: add-sunburst-chart-to-highcharter-package
 categories:
   - R
   - Visulization
-tags: []
+tags: ['R']
 subtitle: ''
 summary: ''
 authors: []
@@ -263,3 +263,6 @@ frameWidget(hc, height = '600')
 
 
 ```
+
+
+![](https://media.giphy.com/media/J1S363SbQFselYWz68/source.gif)

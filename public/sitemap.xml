@@ -34,7 +34,7 @@
   </url>
   
   <url>
-    <loc>/post/add-sunburst-chart-to-highcharter-package/</loc>
+    <loc>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
   
@@ -56,6 +56,18 @@
   
   <url>
     <loc>/categories/r/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -102,12 +114,6 @@
   <url>
     <loc>/tags/source-themes/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2019-04-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

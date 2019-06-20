@@ -5,10 +5,10 @@ headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
 weight = 1  # Order that this section will appear.
 
-title = "Think Data Science"
+title = "Think.Data.Science"
 
 # Hero image (optional). Enter filename of an image in the `static/img/` folder.
-hero_media = ""
+hero_media = "linear_regression.png"
 
 [design.background]
   # Apply a background color, gradient, or image.
@@ -17,27 +17,32 @@ hero_media = ""
   #   Any HTML color name or Hex value is valid.
 
   # Background color.
-  # color = "navy"
+  color = "navy"
   
   # Background gradient.
-  #gradient_start = "#4bb4e3"
-  #gradient_end = "#2b94c3"
+  gradient_start = "#4bb4e3"
+  gradient_end = "#2b94c3"
   
   # Background image.
-  image = "hero.png"  # Name of image in `static/img/`.
-  image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
+  #image = "hero.png"  # Name of image in `static/img/`.
+  #image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
 
   # Text color (true=light or false=dark).
   text_color_light = true
-
-# Call to action links (optional).
-#   Display link(s) by specifying a URL and label below. Icon is optional for `[cta]`.
-#   Remove a link/note by deleting a cta/note block.
+  
+[cta]
+  url = ""
+  label = ""
+  
 [cta_alt]
   url = "https://thinkdatascience.com/"
-  label = "Visit old blog"
+  label = "View Documentation"
+
+# Note. An optional note to show underneath the links.
+[cta_note]
+  label = '<a id="old-blog" href="https://thinkdatascience.com">go to old website <!-- V --></a>'
+
 
 +++
 
-My new personal blog of **Data Science** and **Machine Learning** (R/Python bilingual)
-
+Michael Yan's new personal blog of **Data Science** and **Machine Learning** (R and Python Bilingual)

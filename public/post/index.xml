@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>Add Sunburst Chart to `highcharter` Package</title>
-      <link>/post/add-sunburst-chart-to-highcharter-package/</link>
+      <title>Add Sunburst Chart to highcharter Package</title>
+      <link>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</link>
       <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/add-sunburst-chart-to-highcharter-package/</guid>
+      <guid>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</guid>
       <description>
 &lt;script src=&#34;../rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;../rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
@@ -36,7 +36,7 @@ library(widgetframe)
 l &amp;lt;- hchart(mpg, &amp;quot;scatter&amp;quot;, hcaes(x = displ, y = hwy, group = class))
 frameWidget(l, height = &amp;#39;400&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:400px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst-chart-to-highcharter-package_files/figure-html//widgets/widget_unnamed-chunk-1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Or to be more flexible, use the API functions to “build” the chart and fine tuning almost any specs of your charts:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc &amp;lt;- highchart() %&amp;gt;% 
   hc_xAxis(categories = citytemp$month) %&amp;gt;% 
@@ -59,7 +59,7 @@ frameWidget(l, height = &amp;#39;400&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 
 frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst-chart-to-highcharter-package_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Here. A light weighted, interactive chart with exporting ability and customized tooltip with less than 20 lines of code.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;sunburst-chart&#34; class=&#34;section level2&#34;&gt;
@@ -88,12 +88,12 @@ head(data)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;# A tibble: 6 x 5
   index0 index1 index2 index3 value
   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;
-1 Letter E      I      M          7
-2 Letter B      F      L          3
-3 Letter A      F      N         10
-4 Letter E      G      O          5
-5 Letter D      F      L          3
-6 Letter A      I      N          7&lt;/code&gt;&lt;/pre&gt;
+1 Letter D      G      N          8
+2 Letter B      I      K          2
+3 Letter C      I      N          8
+4 Letter A      F      O          2
+5 Letter A      G      N          4
+6 Letter E      J      O          2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and remember we need to parse the data into the format that Highcharts can recognized, which is a nested list:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
 var data = [{
@@ -168,12 +168,12 @@ head(sunburst_df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;# A tibble: 6 x 9
   index0 value name   level id        index1 parent  index2 index3
   &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
-1 Letter  2480 Letter     1 Letter1   &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
-2 Letter   453 A          2 Letter1A2 A      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
-3 Letter   473 B          2 Letter1B2 B      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
-4 Letter   497 C          2 Letter1C2 C      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
-5 Letter   469 D          2 Letter1D2 D      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
-6 Letter   588 E          2 Letter1E2 E      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  &lt;/code&gt;&lt;/pre&gt;
+1 Letter  2550 Letter     1 Letter1   &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+2 Letter   519 A          2 Letter1A2 A      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+3 Letter   453 B          2 Letter1B2 B      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+4 Letter   518 C          2 Letter1C2 C      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+5 Letter   533 D          2 Letter1D2 D      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+6 Letter   527 E          2 Letter1E2 E      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Let’s take a look at the first couple of items:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_list &amp;lt;- sunburst_df %&amp;gt;%
   highcharter::list_parse() %&amp;gt;%
@@ -186,7 +186,7 @@ data_list[1:3]&lt;/code&gt;&lt;/pre&gt;
 [1] &amp;quot;Letter&amp;quot;
 
 [[1]]$value
-[1] 2480
+[1] 2550
 
 [[1]]$name
 [1] &amp;quot;Letter&amp;quot;
@@ -203,7 +203,7 @@ data_list[1:3]&lt;/code&gt;&lt;/pre&gt;
 [1] &amp;quot;Letter&amp;quot;
 
 [[2]]$value
-[1] 453
+[1] 519
 
 [[2]]$name
 [1] &amp;quot;A&amp;quot;
@@ -226,7 +226,7 @@ data_list[1:3]&lt;/code&gt;&lt;/pre&gt;
 [1] &amp;quot;Letter&amp;quot;
 
 [[3]]$value
-[1] 473
+[1] 453
 
 [[3]]$name
 [1] &amp;quot;B&amp;quot;
@@ -250,7 +250,7 @@ data_list[1:3]&lt;/code&gt;&lt;/pre&gt;
 
 frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst-chart-to-highcharter-package_files/figure-html//widgets/widget_unnamed-chunk-7.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-7.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Here we go!&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/rVbAzUUSUC6dO/giphy.gif&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;We are able to create the sunburst chart using Highcharts API! &lt;a href=&#34;https://github.com/wwwjk366/highcharter/blob/0a3c53a7ec5547af4998bc0b893f5c44df3469d8/R/hchart-shorcuts.R#L449-L554&#34;&gt;link to full code&lt;/a&gt; Of course it’s a bit ugly now because we didn’t pass any other parameters to the chart.&lt;/p&gt;
@@ -286,7 +286,8 @@ hc &amp;lt;- tibble(
 
 frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst-chart-to-highcharter-package_files/figure-html//widgets/widget_cars.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_cars.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/J1S363SbQFselYWz68/source.gif&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
