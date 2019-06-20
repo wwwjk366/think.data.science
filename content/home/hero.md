@@ -45,4 +45,4 @@ hero_media = "linear_regression.png"
 
 +++
 
-Michael Yan's new personal blog of **Data Science** and **Machine Learning** (R and Python Bilingual)
+Michael Yan's new personal website of **Data Science** and **Machine Learning** (R and Python Bilingual)

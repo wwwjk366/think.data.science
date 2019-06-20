@@ -7,7 +7,6 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,22 +14,13 @@
     <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/authors/admin/</guid>
       <description>&lt;p&gt;&amp;ldquo;You can have data without information, but you cannot have information without data.&amp;rdquo;&lt;/p&gt;
 
-&lt;p&gt;I am a seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. A person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m a seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. I&amp;rsquo;m also a person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Robert Ford</title>
-      <link>/authors/robert-ford/</link>
-      <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/authors/robert-ford/</guid>
-      <description></description>
     </item>
     
   </channel>

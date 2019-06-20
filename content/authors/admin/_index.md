@@ -39,4 +39,6 @@ user_groups:
 
 "You can have data without information, but you cannot have information without data."
 
-I am a seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. A person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data.
+I'm a seasoned data scientist with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. I'm also a person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data. 
+
+
