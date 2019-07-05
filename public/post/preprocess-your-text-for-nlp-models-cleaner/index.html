@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Michael Yan">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Motivation Well, it all start with one of my favorite tweets from 2013:
+In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.
+&mdash; Big Data Borat (@BigDataBorat) February 27, 2013 
+When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="../../post/preprocess-your-text-for-nlp-models-cleaner/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="../../css/academic.min.966b3bc843cfea29ab40b0bad2f17078.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74212634-3', 'auto');
+      
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="icon" type="image/png" href="../../img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../img/icon-192.png">
+
+  <link rel="canonical" href="../../post/preprocess-your-text-for-nlp-models-cleaner/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Think.Data.Science">
+  <meta property="og:url" content="/post/preprocess-your-text-for-nlp-models-cleaner/">
+  <meta property="og:title" content="Preprocess Text in Python --- A Cleaner and Faster Approach | Think.Data.Science">
+  <meta property="og:description" content="Motivation Well, it all start with one of my favorite tweets from 2013:
+In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.
+&mdash; Big Data Borat (@BigDataBorat) February 27, 2013 
+When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models."><meta property="og:image" content="/post/preprocess-your-text-for-nlp-models-cleaner/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-07-04T20:14:43&#43;00:00">
+  
+  <meta property="article:modified_time" content="2019-07-04T20:14:43&#43;00:00">
+  
+
+  
+
+
+  
+
+
+
+
+
+  <title>Preprocess Text in Python --- A Cleaner and Faster Approach | Think.Data.Science</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="../../"><img src="../../img/header_trans.png" alt="Think.Data.Science"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#posts"><span>BLOG</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../courses/"><span>TUTORIALS</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../bio/"><span>ABOUT ME</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#contact"><span>CONTACT</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/preprocess-your-text-for-nlp-models-cleaner/featured_hu5d8d9e5e9d26ae6a2202d74e6664d06d_168282_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">Preprocess Text in Python --- A Cleaner and Faster Approach</h1>
+
+        
+
+        
+
+
+
+<meta content="2019-07-04 20:14:43 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-07-04 20:14:43 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="../../authors/admin/">Michael Yan</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jul 4, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    10 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../post/preprocess-your-text-for-nlp-models-cleaner/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../categories/blog/">Blog</a>, <a href="../../categories/tutorial/">Tutorial</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach&amp;url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f&amp;title=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f&amp;title=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach&amp;body=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="../../post/preprocess-your-text-for-nlp-models-cleaner/featured_hu5d8d9e5e9d26ae6a2202d74e6664d06d_168282_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">Preprocess Text in Python --- A Cleaner and Faster Approach</h1>
+
+  
+
+  
+
+
+
+<meta content="2019-07-04 20:14:43 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-07-04 20:14:43 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="../../authors/admin/">Michael Yan</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jul 4, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    10 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../post/preprocess-your-text-for-nlp-models-cleaner/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../categories/blog/">Blog</a>, <a href="../../categories/tutorial/">Tutorial</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach&amp;url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f&amp;title=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f&amp;title=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Preprocess%20Text%20in%20Python%20---%20A%20Cleaner%20and%20Faster%20Approach&amp;body=%2fpost%2fpreprocess-your-text-for-nlp-models-cleaner%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<h2 id="motivation">Motivation</h2>
+
+<p>Well, it all start with one of my favorite tweets from 2013:</p>
+
+<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.</p>&mdash; Big Data Borat (@BigDataBorat) <a href="https://twitter.com/BigDataBorat/status/306596352991830016?ref_src=twsrc%5Etfw">February 27, 2013</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p>When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize? Or tokenize then remove? What we need is a clear to understand and yet flexiable code to do the pre-processing part. When using R, the pipe operator <code>%&gt;%</code> kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: <a href="https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c" target="_blank">(Long but very good read)</a></p>
+
+<blockquote>
+<p>In other words, it’s like saying that when OOP was born, it was also born with the Gang-of-Four design patterns baked into it’s core as its backing theory of thought (outside of types and inheritance and methods etc.), and every implemented OOP language included these patterns and abstractions by default for you to take advantage of, and that these patterns were bullet-proofed by centuries of research. But that can already never be correct — the Singleton pattern is by now widely recognized as an anti-pattern, and GoF authors said they would remove it, if only they could go back in time.</p>
+</blockquote>
+
+<p>But we can definitely hack our way around this using Python <strong>Class</strong></p>
+
+<h2 id="design">Design</h2>
+
+<p>Let&rsquo;s create a snippet of text as an example:</p>
+
+<pre><code class="language-python">sample = &quot;&quot;&quot;&lt;h1&gt;Title Goes Here&lt;/h1&gt;
+&lt;b&gt;Bolded Text&lt;/b&gt;
+&lt;i&gt;Italicized Text&lt;/i&gt;
+&lt;img src=&quot;this should all be gone&quot;/&gt;
+&lt;a href=&quot;this will be gone, too&quot;&gt;But this will still be here!&lt;/a&gt;
+I run. He ran. She is running. Will they stop running?
+I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+[Some text we don't want to keep is in here]
+¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+something... is! wrong() with.,; this :: sentence.
+I can't do this anymore. I didn't know them. Why couldn't you have dinner at the restaurant?
+My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+Don't do it.... Just don't. Billy! I know what you're doing. This is a great little house you've got here.
+[This is some other unwanted text]
+John: &quot;Well, well, well.&quot;
+James: &quot;There, there. There, there.&quot;
+&amp;nbsp;&amp;nbsp;
+There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
+I have to go get 2 tutus from 2 different stores, too.
+22    45   1067   445
+{{Here is some stuff inside of double curly braces.}}
+{Here is more stuff in single curly braces.}
+[DELETE]
+&lt;/body&gt;
+&lt;/html&gt;&quot;&quot;&quot;
+</code></pre>
+
+<p>Say you want to strip some html characters and use regular expressions to remove open and close double brackets and anything in between them:</p>
+
+<pre><code class="language-python">import re, string, unicodedata
+from bs4 import BeautifulSoup
+
+def strip_html(text):
+    soup = BeautifulSoup(text, &quot;html.parser&quot;)
+    return soup.get_text()
+
+def remove_between_square_brackets(text):
+    return re.sub('\[[^]]*\]', '', text)
+
+def denoise_text(text):
+    text = strip_html(text)
+    text = remove_between_square_brackets(text)
+    return text
+
+sample = denoise_text(sample)
+print(sample)
+</code></pre>
+
+<pre><code class="language-text">    Title Goes Here
+    Bolded Text
+    Italicized Text
+    
+    But this will still be here!
+    I run. He ran. She is running. Will they stop running?
+    I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+    
+    ¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+    something... is! wrong() with.,; this :: sentence.
+    I can't do this anymore. I didn't know them. Why couldn't you have dinner at the restaurant?
+    My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+    Don't do it.... Just don't. Billy! I know what you're doing. This is a great little house you've got here.
+    
+    John: &quot;Well, well, well.&quot;
+    James: &quot;There, there. There, there.&quot;
+      
+    There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
+    I have to go get 2 tutus from 2 different stores, too.
+    22    45   1067   445
+    {{Here is some stuff inside of double curly braces.}}
+     {Here is more stuff in single curly braces.}
+</code></pre>
+
+<p>This perfectly demonstrates our normal workflow:
+1. Define couple of functions like <code>strip_html()</code>, <code>remove_punctuation()</code> &hellip;
+2. Run them one by one or define another &ldquo;master function&rdquo; to run them all like above example
+3. Found that we need add more functions or change the order of the function runs
+4. Make changes to the &ldquo;master function&rdquo; by copy and paste, then re-define it
+5. Run new &ldquo;master function&rdquo; on the text
+6. Rinse and repeat</p>
+
+<p>It is not very flexiable and easy to do, isn&rsquo;t it?</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>If we put those functions in a Class and let the function return <code>self</code>, we can use the dot notation <code>.</code> to chain them together, at any order!</p>
+
+<pre><code class="language-python">class cleantext():
+    
+    def __init__(self, text = None):
+        self.text = text
+        
+    def strip_html(self):
+        soup = BeautifulSoup(self.text, &quot;html.parser&quot;)
+        self.text = soup.get_text()
+        return self
+
+    def remove_between_square_brackets(self):
+        self.text = re.sub('\[[^]]*\]', '', self.text)
+        return self
+
+    def remove_numbers(self):
+        self.text = re.sub('[-+]?[0-9]+', '', self.text)
+        return self
+    
+    def do_all(self, text):
+        
+        self.text = text
+        self = self.strip_html()
+        self = self.remove_numbers()
+       
+        return self.words
+
+
+</code></pre>
+
+<pre><code class="language-python">ct = cleantext(sample)
+</code></pre>
+
+<pre><code class="language-python">print(ct.strip_html().remove_between_square_brackets().remove_numbers().text)
+</code></pre>
+
+<pre><code class="language-text">    Title Goes Here
+    Bolded Text
+    Italicized Text
+    
+    But this will still be here!
+    I run. He ran. She is running. Will they stop running?
+    I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+    
+    ¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+    something... is! wrong() with.,; this :: sentence.
+    I can't do this anymore. I didn't know them. Why couldn't you have dinner at the restaurant?
+    My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+    Don't do it.... Just don't. Billy! I know what you're doing. This is a great little house you've got here.
+    
+    John: &quot;Well, well, well.&quot;
+    James: &quot;There, there. There, there.&quot;
+      
+    There are a lot of reasons not to do this. There are  reasons not to do it.  reasons, actually.
+    I have to go get  tutus from  different stores, too.
+              
+    {{Here is some stuff inside of double curly braces.}}
+    {Here is more stuff in single curly braces.}
+</code></pre>
+
+<p>This makes our code very readable and easy to manipulate. We can read the dot <code>.</code> as &ldquo;then&rdquo; :
+&gt; sample text <strong>then</strong> strip html <strong>then</strong> remove between square brackets <strong>then</strong> remove numbers&rdquo;</p>
+
+<h2 id="full-implementation">Full implementation</h2>
+
+<p>So my full definition of the class looks like this: (example and many functions are from Nugget)</p>
+
+<pre><code class="language-python">import re, string, unicodedata
+import nltk
+import contractions
+import inflect
+from bs4 import BeautifulSoup
+from nltk import word_tokenize, sent_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import LancasterStemmer, WordNetLemmatizer
+
+class cleantext():
+    
+    def __init__(self, text = &quot;test&quot;):
+        self.text = text
+        
+    def strip_html(self):
+        soup = BeautifulSoup(self.text, &quot;html.parser&quot;)
+        self.text = soup.get_text()
+        return self
+
+    def remove_between_square_brackets(self):
+        self.text = re.sub('\[[^]]*\]', '', self.text)
+        return self
+
+    def remove_numbers(self):
+        self.text = re.sub('[-+]?[0-9]+', '', self.text)
+        return self
+
+    def replace_contractions(self):
+        &quot;&quot;&quot;Replace contractions in string of text&quot;&quot;&quot;
+        self.text = contractions.fix(self.text)
+        return self
+    
+    def get_words(self):
+        self.words = nltk.word_tokenize(self.text)
+        return self
+
+    def remove_non_ascii(self):
+        &quot;&quot;&quot;Remove non-ASCII characters from list of tokenized words&quot;&quot;&quot;
+        new_words = []
+        for word in self.words:
+            new_word = unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+            new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def to_lowercase(self):
+        &quot;&quot;&quot;Convert all characters to lowercase from list of tokenized words&quot;&quot;&quot;
+        new_words = []
+        for word in self.words:
+            new_word = word.lower()
+            new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def remove_punctuation(self):
+        &quot;&quot;&quot;Remove punctuation from list of tokenized words&quot;&quot;&quot;
+        new_words = []
+        for word in self.words:
+            new_word = re.sub(r'[^\w\s]', '', word)
+            if new_word != '':
+                new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def replace_numbers(self):
+        &quot;&quot;&quot;Replace all interger occurrences in list of tokenized words with textual representation&quot;&quot;&quot;
+        p = inflect.engine()
+        new_words = []
+        for word in self.words:
+            if word.isdigit():
+                new_word = p.number_to_words(word)
+                new_words.append(new_word)
+            else:
+                new_words.append(word)
+        self.words = new_words
+        return self
+
+    def remove_stopwords(self):
+        &quot;&quot;&quot;Remove stop words from list of tokenized words&quot;&quot;&quot;
+        new_words = []
+        for word in self.words:
+            if word not in stopwords.words('english'):
+                new_words.append(word)
+        self.words = new_words
+        return self
+
+    def stem_words(self):
+        &quot;&quot;&quot;Stem words in list of tokenized words&quot;&quot;&quot;
+        stemmer = LancasterStemmer()
+        stems = []
+        for word in self.words:
+            stem = stemmer.stem(word)
+            stems.append(stem)
+        self.words = stems
+        return self
+
+    def lemmatize_verbs(self):
+        &quot;&quot;&quot;Lemmatize verbs in list of tokenized words&quot;&quot;&quot;
+        lemmatizer = WordNetLemmatizer()
+        lemmas = []
+        for word in self.words:
+            lemma = lemmatizer.lemmatize(word, pos='v')
+            lemmas.append(lemma)
+        self.words = lemmas
+        return self
+    
+    def join_words(self):
+        self.words = ' '.join(self.words)
+        return self
+    
+    def do_all(self, text):
+        
+        self.text = text
+        self = self.strip_html()
+        self = self.remove_numbers()
+        self = self.replace_contractions()
+        self = self.get_words()
+        self = self.remove_punctuation()
+        self = self.remove_non_ascii()
+        self = self.remove_stopwords()
+        self = self.stem_words()
+        self = self.lemmatize_verbs()
+        self = self.join_words()
+        
+        return self.words
+</code></pre>
+
+<p>Now we can pre-process our text easily:</p>
+
+<pre><code class="language-python">ct = cleantext(sample)
+
+ct.\
+strip_html().\
+remove_numbers().\
+replace_contractions().\
+get_words().\
+remove_punctuation().\
+remove_non_ascii().\
+remove_stopwords().\
+stem_words().\
+lemmatize_verbs().\
+join_words().\
+words
+</code></pre>
+
+<pre><code class="language-text">'titl goe her bold text it text but stil i run he run she run wil stop run i talk she talk they talk run who run talk run som text want keep sebast nicola alejandro jeronimo go stor tomorrow morn someth wrong send i anym i know why could din resta my favorit movy franch ord indian jon marvel cinem univers star war back fut harry pot just bil i know thi gre littl hous get thi unw text john wel wel wel jam ther ther ther lot reason ther reason reason act i go get tut diff stor her stuff insid doubl cur brac her stuff singl cur brac delet'
+</code></pre>
+
+<h2 id="apply-on-pandas-dataframe">Apply on Pandas DataFrame</h2>
+
+<p>Say right now we have a dataframe and one column contains the string we would like to process. We can easily use <code>apply()</code></p>
+
+<pre><code class="language-python">import pandas as pd
+</code></pre>
+
+<pre><code class="language-python">df = pd.DataFrame({'id': range(0,100), 'docs':sample } )
+</code></pre>
+
+<pre><code class="language-python">df.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>docs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df['cleaned_docs'] = df['docs'].apply(ct.do_all)
+</code></pre>
+
+<pre><code class="language-python">df.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>docs</th>
+      <th>cleaned_docs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+      <td>titl goe her bold text it text but stil i run ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+      <td>titl goe her bold text it text but stil i run ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+      <td>titl goe her bold text it text but stil i run ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+      <td>titl goe her bold text it text but stil i run ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>&lt;h1&gt;Title Goes Here&lt;/h1&gt;\n&lt;b&gt;Bolded Text&lt;/b&gt;\n...</td>
+      <td>titl goe her bold text it text but stil i run ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="parallelization-using-dask">Parallelization using <code>dask</code></h2>
+
+<p>Care for some speed up using parallelization? No problem. <code>dask</code> to the rescue. <a href="https://docs.dask.org/en/latest/" target="_blank">(dask documents)</a></p>
+
+<pre><code class="language-python">import dask.dataframe as dd
+from dask.multiprocessing import get
+import timeit
+</code></pre>
+
+<p>The idea here is we partition a pandas dataframe into &ldquo;dask dataframe&rdquo;, then we can run the job parallelly by putting different partition on different workers:</p>
+
+<pre><code class="language-python">def dask_this(df):
+    res = df['docs'].apply(ct.do_all)
+    return res  
+</code></pre>
+
+<pre><code class="language-python">ddata = dd.from_pandas(df, npartitions=10)
+</code></pre>
+
+<pre><code class="language-python">type(ddata)
+</code></pre>
+
+<pre><code class="language-text">dask.dataframe.core.DataFrame
+</code></pre>
+
+<p>Doing a benchmark on our dataframes with 100 samples:</p>
+
+<pre><code class="language-python">import time
+start_time = time.time()
+res = ddata.map_partitions(dask_this).compute(scheduler='processes', num_workers=10)
+print(&quot;--- %s seconds ---&quot; % (time.time() - start_time))
+</code></pre>
+
+<pre><code>--- 1.2451355457305908 seconds ---
+</code></pre>
+
+<pre><code class="language-python">import time
+start_time = time.time()
+res = df['docs'].apply(ct.do_all)
+print(&quot;--- %s seconds ---&quot; % (time.time() - start_time))
+</code></pre>
+
+<pre><code>--- 8.75901198387146 seconds ---
+</code></pre>
+
+<p>~7x speed up with 10 cores! Lets all start dasking!</p>
+
+<p><img src="https://media.giphy.com/media/sRKg9r2YWeCTG5JTTo/giphy.gif" alt="" /></p>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="../../tags/python/">Python</a>
+  
+  <a class="badge badge-light" href="../../tags/nlp/">NLP</a>
+  
+  <a class="badge badge-light" href="../../tags/parallel-computing/">Parallel Computing</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/686fe02aba9090b895e967fa6cc296a3?s=200')" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="../../">Michael Yan</a></h5>
+      <h6 class="card-subtitle">Principal Data Scientist</h6>
+      <p class="card-text" itemprop="description">A student of the last forbidden art of Data Science.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="../../#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://linkedin.com/in/michaelyan3" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/wwwjk366" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thinkdatascience" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//thinkdatascience.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="../../js/academic.min.9ef1b53ee2bde6c7f33b150c6ba4d452.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="../../privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    2019 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

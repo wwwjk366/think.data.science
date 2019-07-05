@@ -1,15 +1,15 @@
 ---
 title: Add Sunburst Chart to highcharter Package
-author: Michael Yan
+author: 'admin'
 date: '2019-06-13'
 slug: add-sunburst-chart-to-highcharter-package
 categories:
   - R
   - Visulization
-tags: ['R']
+tags: ['R', 'Visualization','Package']
 subtitle: ''
 summary: ''
-authors: []
+authors: ['admin']
 lastmod: '2019-06-13T00:11:50-04:00'
 featured: no
 image:
@@ -266,3 +266,5 @@ frameWidget(hc, height = '600')
 
 
 ![](https://media.giphy.com/media/J1S363SbQFselYWz68/source.gif)
+
+TL;DR --- You can start using this function by installing the forked version on my GitHub: `devtools::install_github(repo = "wwwjk366/highcharter")`. I have already initiated a pull request and hopefully the maintainer of `highcharter' can add this function soon.

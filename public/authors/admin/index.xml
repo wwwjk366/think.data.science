@@ -7,14 +7,803 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
+    <lastBuildDate>Thu, 04 Jul 2019 20:14:43 +0000</lastBuildDate>
     
 	    <atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Preprocess Text in Python --- A Cleaner and Faster Approach</title>
+      <link>/post/preprocess-your-text-for-nlp-models-cleaner/</link>
+      <pubDate>Thu, 04 Jul 2019 20:14:43 +0000</pubDate>
+      
+      <guid>/post/preprocess-your-text-for-nlp-models-cleaner/</guid>
+      <description>
+
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;Well, it all start with one of my favorite tweets from 2013:&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.&lt;/p&gt;&amp;mdash; Big Data Borat (@BigDataBorat) &lt;a href=&#34;https://twitter.com/BigDataBorat/status/306596352991830016?ref_src=twsrc%5Etfw&#34;&gt;February 27, 2013&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize? Or tokenize then remove? What we need is a clear to understand and yet flexiable code to do the pre-processing part. When using R, the pipe operator &lt;code&gt;%&amp;gt;%&lt;/code&gt; kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: &lt;a href=&#34;https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c&#34; target=&#34;_blank&#34;&gt;(Long but very good read)&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In other words, it’s like saying that when OOP was born, it was also born with the Gang-of-Four design patterns baked into it’s core as its backing theory of thought (outside of types and inheritance and methods etc.), and every implemented OOP language included these patterns and abstractions by default for you to take advantage of, and that these patterns were bullet-proofed by centuries of research. But that can already never be correct — the Singleton pattern is by now widely recognized as an anti-pattern, and GoF authors said they would remove it, if only they could go back in time.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;But we can definitely hack our way around this using Python &lt;strong&gt;Class&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;design&#34;&gt;Design&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create a snippet of text as an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sample = &amp;quot;&amp;quot;&amp;quot;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;
+&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;
+&amp;lt;i&amp;gt;Italicized Text&amp;lt;/i&amp;gt;
+&amp;lt;img src=&amp;quot;this should all be gone&amp;quot;/&amp;gt;
+&amp;lt;a href=&amp;quot;this will be gone, too&amp;quot;&amp;gt;But this will still be here!&amp;lt;/a&amp;gt;
+I run. He ran. She is running. Will they stop running?
+I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+[Some text we don&#39;t want to keep is in here]
+¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+something... is! wrong() with.,; this :: sentence.
+I can&#39;t do this anymore. I didn&#39;t know them. Why couldn&#39;t you have dinner at the restaurant?
+My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+Don&#39;t do it.... Just don&#39;t. Billy! I know what you&#39;re doing. This is a great little house you&#39;ve got here.
+[This is some other unwanted text]
+John: &amp;quot;Well, well, well.&amp;quot;
+James: &amp;quot;There, there. There, there.&amp;quot;
+&amp;amp;nbsp;&amp;amp;nbsp;
+There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
+I have to go get 2 tutus from 2 different stores, too.
+22    45   1067   445
+{{Here is some stuff inside of double curly braces.}}
+{Here is more stuff in single curly braces.}
+[DELETE]
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Say you want to strip some html characters and use regular expressions to remove open and close double brackets and anything in between them:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import re, string, unicodedata
+from bs4 import BeautifulSoup
+
+def strip_html(text):
+    soup = BeautifulSoup(text, &amp;quot;html.parser&amp;quot;)
+    return soup.get_text()
+
+def remove_between_square_brackets(text):
+    return re.sub(&#39;\[[^]]*\]&#39;, &#39;&#39;, text)
+
+def denoise_text(text):
+    text = strip_html(text)
+    text = remove_between_square_brackets(text)
+    return text
+
+sample = denoise_text(sample)
+print(sample)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;    Title Goes Here
+    Bolded Text
+    Italicized Text
+    
+    But this will still be here!
+    I run. He ran. She is running. Will they stop running?
+    I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+    
+    ¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+    something... is! wrong() with.,; this :: sentence.
+    I can&#39;t do this anymore. I didn&#39;t know them. Why couldn&#39;t you have dinner at the restaurant?
+    My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+    Don&#39;t do it.... Just don&#39;t. Billy! I know what you&#39;re doing. This is a great little house you&#39;ve got here.
+    
+    John: &amp;quot;Well, well, well.&amp;quot;
+    James: &amp;quot;There, there. There, there.&amp;quot;
+      
+    There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
+    I have to go get 2 tutus from 2 different stores, too.
+    22    45   1067   445
+    {{Here is some stuff inside of double curly braces.}}
+     {Here is more stuff in single curly braces.}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This perfectly demonstrates our normal workflow:
+1. Define couple of functions like &lt;code&gt;strip_html()&lt;/code&gt;, &lt;code&gt;remove_punctuation()&lt;/code&gt; &amp;hellip;
+2. Run them one by one or define another &amp;ldquo;master function&amp;rdquo; to run them all like above example
+3. Found that we need add more functions or change the order of the function runs
+4. Make changes to the &amp;ldquo;master function&amp;rdquo; by copy and paste, then re-define it
+5. Run new &amp;ldquo;master function&amp;rdquo; on the text
+6. Rinse and repeat&lt;/p&gt;
+
+&lt;p&gt;It is not very flexiable and easy to do, isn&amp;rsquo;t it?&lt;/p&gt;
+
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;If we put those functions in a Class and let the function return &lt;code&gt;self&lt;/code&gt;, we can use the dot notation &lt;code&gt;.&lt;/code&gt; to chain them together, at any order!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class cleantext():
+    
+    def __init__(self, text = None):
+        self.text = text
+        
+    def strip_html(self):
+        soup = BeautifulSoup(self.text, &amp;quot;html.parser&amp;quot;)
+        self.text = soup.get_text()
+        return self
+
+    def remove_between_square_brackets(self):
+        self.text = re.sub(&#39;\[[^]]*\]&#39;, &#39;&#39;, self.text)
+        return self
+
+    def remove_numbers(self):
+        self.text = re.sub(&#39;[-+]?[0-9]+&#39;, &#39;&#39;, self.text)
+        return self
+    
+    def do_all(self, text):
+        
+        self.text = text
+        self = self.strip_html()
+        self = self.remove_numbers()
+       
+        return self.words
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ct = cleantext(sample)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(ct.strip_html().remove_between_square_brackets().remove_numbers().text)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;    Title Goes Here
+    Bolded Text
+    Italicized Text
+    
+    But this will still be here!
+    I run. He ran. She is running. Will they stop running?
+    I talked. She was talking. They talked to them about running. Who ran to the talking runner?
+    
+    ¡Sebastián, Nicolás, Alejandro and Jéronimo are going to the store tomorrow morning!
+    something... is! wrong() with.,; this :: sentence.
+    I can&#39;t do this anymore. I didn&#39;t know them. Why couldn&#39;t you have dinner at the restaurant?
+    My favorite movie franchises, in order: Indiana Jones; Marvel Cinematic Universe; Star Wars; Back to the Future; Harry Potter.
+    Don&#39;t do it.... Just don&#39;t. Billy! I know what you&#39;re doing. This is a great little house you&#39;ve got here.
+    
+    John: &amp;quot;Well, well, well.&amp;quot;
+    James: &amp;quot;There, there. There, there.&amp;quot;
+      
+    There are a lot of reasons not to do this. There are  reasons not to do it.  reasons, actually.
+    I have to go get  tutus from  different stores, too.
+              
+    {{Here is some stuff inside of double curly braces.}}
+    {Here is more stuff in single curly braces.}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This makes our code very readable and easy to manipulate. We can read the dot &lt;code&gt;.&lt;/code&gt; as &amp;ldquo;then&amp;rdquo; :
+&amp;gt; sample text &lt;strong&gt;then&lt;/strong&gt; strip html &lt;strong&gt;then&lt;/strong&gt; remove between square brackets &lt;strong&gt;then&lt;/strong&gt; remove numbers&amp;rdquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;full-implementation&#34;&gt;Full implementation&lt;/h2&gt;
+
+&lt;p&gt;So my full definition of the class looks like this: (example and many functions are from Nugget)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import re, string, unicodedata
+import nltk
+import contractions
+import inflect
+from bs4 import BeautifulSoup
+from nltk import word_tokenize, sent_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import LancasterStemmer, WordNetLemmatizer
+
+class cleantext():
+    
+    def __init__(self, text = &amp;quot;test&amp;quot;):
+        self.text = text
+        
+    def strip_html(self):
+        soup = BeautifulSoup(self.text, &amp;quot;html.parser&amp;quot;)
+        self.text = soup.get_text()
+        return self
+
+    def remove_between_square_brackets(self):
+        self.text = re.sub(&#39;\[[^]]*\]&#39;, &#39;&#39;, self.text)
+        return self
+
+    def remove_numbers(self):
+        self.text = re.sub(&#39;[-+]?[0-9]+&#39;, &#39;&#39;, self.text)
+        return self
+
+    def replace_contractions(self):
+        &amp;quot;&amp;quot;&amp;quot;Replace contractions in string of text&amp;quot;&amp;quot;&amp;quot;
+        self.text = contractions.fix(self.text)
+        return self
+    
+    def get_words(self):
+        self.words = nltk.word_tokenize(self.text)
+        return self
+
+    def remove_non_ascii(self):
+        &amp;quot;&amp;quot;&amp;quot;Remove non-ASCII characters from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        new_words = []
+        for word in self.words:
+            new_word = unicodedata.normalize(&#39;NFKD&#39;, word).encode(&#39;ascii&#39;, &#39;ignore&#39;).decode(&#39;utf-8&#39;, &#39;ignore&#39;)
+            new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def to_lowercase(self):
+        &amp;quot;&amp;quot;&amp;quot;Convert all characters to lowercase from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        new_words = []
+        for word in self.words:
+            new_word = word.lower()
+            new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def remove_punctuation(self):
+        &amp;quot;&amp;quot;&amp;quot;Remove punctuation from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        new_words = []
+        for word in self.words:
+            new_word = re.sub(r&#39;[^\w\s]&#39;, &#39;&#39;, word)
+            if new_word != &#39;&#39;:
+                new_words.append(new_word)
+        self.words = new_words
+        return self
+
+    def replace_numbers(self):
+        &amp;quot;&amp;quot;&amp;quot;Replace all interger occurrences in list of tokenized words with textual representation&amp;quot;&amp;quot;&amp;quot;
+        p = inflect.engine()
+        new_words = []
+        for word in self.words:
+            if word.isdigit():
+                new_word = p.number_to_words(word)
+                new_words.append(new_word)
+            else:
+                new_words.append(word)
+        self.words = new_words
+        return self
+
+    def remove_stopwords(self):
+        &amp;quot;&amp;quot;&amp;quot;Remove stop words from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        new_words = []
+        for word in self.words:
+            if word not in stopwords.words(&#39;english&#39;):
+                new_words.append(word)
+        self.words = new_words
+        return self
+
+    def stem_words(self):
+        &amp;quot;&amp;quot;&amp;quot;Stem words in list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        stemmer = LancasterStemmer()
+        stems = []
+        for word in self.words:
+            stem = stemmer.stem(word)
+            stems.append(stem)
+        self.words = stems
+        return self
+
+    def lemmatize_verbs(self):
+        &amp;quot;&amp;quot;&amp;quot;Lemmatize verbs in list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+        lemmatizer = WordNetLemmatizer()
+        lemmas = []
+        for word in self.words:
+            lemma = lemmatizer.lemmatize(word, pos=&#39;v&#39;)
+            lemmas.append(lemma)
+        self.words = lemmas
+        return self
+    
+    def join_words(self):
+        self.words = &#39; &#39;.join(self.words)
+        return self
+    
+    def do_all(self, text):
+        
+        self.text = text
+        self = self.strip_html()
+        self = self.remove_numbers()
+        self = self.replace_contractions()
+        self = self.get_words()
+        self = self.remove_punctuation()
+        self = self.remove_non_ascii()
+        self = self.remove_stopwords()
+        self = self.stem_words()
+        self = self.lemmatize_verbs()
+        self = self.join_words()
+        
+        return self.words
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can pre-process our text easily:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ct = cleantext(sample)
+
+ct.\
+strip_html().\
+remove_numbers().\
+replace_contractions().\
+get_words().\
+remove_punctuation().\
+remove_non_ascii().\
+remove_stopwords().\
+stem_words().\
+lemmatize_verbs().\
+join_words().\
+words
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;&#39;titl goe her bold text it text but stil i run he run she run wil stop run i talk she talk they talk run who run talk run som text want keep sebast nicola alejandro jeronimo go stor tomorrow morn someth wrong send i anym i know why could din resta my favorit movy franch ord indian jon marvel cinem univers star war back fut harry pot just bil i know thi gre littl hous get thi unw text john wel wel wel jam ther ther ther lot reason ther reason reason act i go get tut diff stor her stuff insid doubl cur brac her stuff singl cur brac delet&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;apply-on-pandas-dataframe&#34;&gt;Apply on Pandas DataFrame&lt;/h2&gt;
+
+&lt;p&gt;Say right now we have a dataframe and one column contains the string we would like to process. We can easily use &lt;code&gt;apply()&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import pandas as pd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df = pd.DataFrame({&#39;id&#39;: range(0,100), &#39;docs&#39;:sample } )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;id&lt;/th&gt;
+      &lt;th&gt;docs&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df[&#39;cleaned_docs&#39;] = df[&#39;docs&#39;].apply(ct.do_all)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;id&lt;/th&gt;
+      &lt;th&gt;docs&lt;/th&gt;
+      &lt;th&gt;cleaned_docs&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+      &lt;td&gt;titl goe her bold text it text but stil i run ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+      &lt;td&gt;titl goe her bold text it text but stil i run ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+      &lt;td&gt;titl goe her bold text it text but stil i run ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+      &lt;td&gt;titl goe her bold text it text but stil i run ...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;&amp;lt;h1&amp;gt;Title Goes Here&amp;lt;/h1&amp;gt;\n&amp;lt;b&amp;gt;Bolded Text&amp;lt;/b&amp;gt;\n...&lt;/td&gt;
+      &lt;td&gt;titl goe her bold text it text but stil i run ...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;parallelization-using-dask&#34;&gt;Parallelization using &lt;code&gt;dask&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;Care for some speed up using parallelization? No problem. &lt;code&gt;dask&lt;/code&gt; to the rescue. &lt;a href=&#34;https://docs.dask.org/en/latest/&#34; target=&#34;_blank&#34;&gt;(dask documents)&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import dask.dataframe as dd
+from dask.multiprocessing import get
+import timeit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The idea here is we partition a pandas dataframe into &amp;ldquo;dask dataframe&amp;rdquo;, then we can run the job parallelly by putting different partition on different workers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def dask_this(df):
+    res = df[&#39;docs&#39;].apply(ct.do_all)
+    return res  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ddata = dd.from_pandas(df, npartitions=10)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;type(ddata)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;dask.dataframe.core.DataFrame
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Doing a benchmark on our dataframes with 100 samples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import time
+start_time = time.time()
+res = ddata.map_partitions(dask_this).compute(scheduler=&#39;processes&#39;, num_workers=10)
+print(&amp;quot;--- %s seconds ---&amp;quot; % (time.time() - start_time))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;--- 1.2451355457305908 seconds ---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import time
+start_time = time.time()
+res = df[&#39;docs&#39;].apply(ct.do_all)
+print(&amp;quot;--- %s seconds ---&amp;quot; % (time.time() - start_time))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;--- 8.75901198387146 seconds ---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;~7x speed up with 10 cores! Lets all start dasking!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/sRKg9r2YWeCTG5JTTo/giphy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Add Sunburst Chart to highcharter Package</title>
+      <link>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</guid>
+      <description>
+&lt;script src=&#34;../../rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;../../rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;../../rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;the-highcharter-package&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The &lt;code&gt;highcharter&lt;/code&gt; Package&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;highcharter&lt;/code&gt; package &lt;a href=&#34;http://jkunst.com/highcharter/&#34;&gt;link&lt;/a&gt; by Joshua Kunst has long been my favorite data visualization package in R. It created a wonderful API to the famous JS &lt;code&gt;Highcharts&lt;/code&gt; library. &lt;a href=&#34;https://www.highcharts.com/&#34;&gt;link&lt;/a&gt;. Although &lt;code&gt;Highcharts&lt;/code&gt; is not free for commercial use, but I found many functionality of it is unparalleled with other visualization packages like &lt;code&gt;ploty&lt;/code&gt; or &lt;code&gt;sunburstR&lt;/code&gt; or &lt;code&gt;r2d3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, you can easily create an interactive scatterplot with &lt;code&gt;ggplot2&lt;/code&gt; like syntax:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data(diamonds, economics_long, mpg, package = &amp;quot;ggplot2&amp;quot;)
+library(tidyverse)
+library(highcharter)
+library(widgetframe)
+
+l &amp;lt;- hchart(mpg, &amp;quot;scatter&amp;quot;, hcaes(x = displ, y = hwy, group = class))
+frameWidget(l, height = &amp;#39;400&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:400px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Or to be more flexible, use the API functions to “build” the chart and fine tuning almost any specs of your charts:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc &amp;lt;- highchart() %&amp;gt;% 
+  hc_xAxis(categories = citytemp$month) %&amp;gt;% 
+  hc_add_series(name = &amp;quot;Tokyo&amp;quot;, data = citytemp$tokyo) %&amp;gt;% 
+  hc_add_series(name = &amp;quot;New York&amp;quot;, data = citytemp$new_york) %&amp;gt;% 
+  hc_title(text = &amp;quot;This is a title with &amp;lt;i&amp;gt;margin&amp;lt;/i&amp;gt; and &amp;lt;b&amp;gt;Strong or bold text&amp;lt;/b&amp;gt;&amp;quot;,
+           margin = 20, align = &amp;quot;left&amp;quot;,
+           style = list(color = &amp;quot;#90ed7d&amp;quot;, useHTML = TRUE)) %&amp;gt;% 
+  hc_subtitle(text = &amp;quot;And this is a subtitle with more information&amp;quot;,
+              align = &amp;quot;left&amp;quot;,
+              style = list(color = &amp;quot;#2b908f&amp;quot;, fontWeight = &amp;quot;bold&amp;quot;)) %&amp;gt;% 
+  hc_credits(enabled = TRUE, # add credits
+             text = &amp;quot;www.link.tomy.site&amp;quot;,
+             href = &amp;quot;http://jkunst.com&amp;quot;) %&amp;gt;% 
+  hc_legend(align = &amp;quot;left&amp;quot;, verticalAlign = &amp;quot;top&amp;quot;,
+            layout = &amp;quot;vertical&amp;quot;, x = 0, y = 100) %&amp;gt;%
+  hc_tooltip(crosshairs = TRUE, backgroundColor = &amp;quot;#FCFFC5&amp;quot;,
+             shared = TRUE, borderWidth = 5) %&amp;gt;% 
+  hc_exporting(enabled = TRUE)
+
+frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Here. A light weighted, interactive chart with exporting ability and customized tooltip with less than 20 lines of code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sunburst-chart&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sunburst Chart&lt;/h2&gt;
+&lt;p&gt;Let’s take a look at an example of sunburst chart by official Highcharts.org (created in jsfiddle, added to this RMD document using iframe):&lt;/p&gt;
+&lt;iframe width=&#34;100%&#34; height=&#34;800px&#34; src=&#34;https://jsfiddle.net/wwwjk366/pa72o0Ln/embedded/result,html,js,css&#34; allowfullscreen=&#34;allowfullscreen&#34; frameborder=&#34;0&#34;&gt;
+&lt;/iframe&gt;
+&lt;p&gt;Sunburst chart shows hierarchy through a series of rings, that are sliced for each category node. Each ring corresponds to a level in the hierarchy, with the central circle representing the root node and the hierarchy moving outwards from it.&lt;/p&gt;
+&lt;p&gt;Rings are sliced up and divided based on their hierarchical relationship to the parent slice. The angle of each slice is either divided equally under its parent node or can be made proportional to a value.&lt;/p&gt;
+&lt;p&gt;Color can be used to highlight hierarchical groupings or specific categories.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;add-wrapper-to-existing-highcharter&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Add Wrapper to Existing &lt;code&gt;highcharter&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;This is very straightforward since the &lt;code&gt;hc_add_series()&lt;/code&gt; function provides an robust interface to Highcharts series API &lt;a href=&#34;https://api.highcharts.com/highcharts/series&#34;&gt;link&lt;/a&gt;. Moreover, the data structure required of sunburst chart is actually same as treemap chart.&lt;/p&gt;
+&lt;p&gt;Assume we have a dataframe with 3 levels(index1, index2 and index3), each observation is also associated with an numeric value:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tibble)
+data &amp;lt;- tibble(
+  index0 = &amp;quot;Letter&amp;quot;,
+  index1 = sample(LETTERS[1:5], 500, replace = T),
+  index2 = sample(LETTERS[6:10], 500, replace = T),
+  index3 = sample(LETTERS[11:15], 500, replace = T),
+  value = rpois(500, 5)  
+)
+
+head(data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;# A tibble: 6 x 5
+  index0 index1 index2 index3 value
+  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;
+1 Letter D      F      N          1
+2 Letter B      J      M          5
+3 Letter A      J      O          4
+4 Letter D      J      N          8
+5 Letter B      J      M          3
+6 Letter D      G      M          8&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and remember we need to parse the data into the format that Highcharts can recognized, which is a nested list:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+var data = [{
+    id: &amp;#39;0.0&amp;#39;,
+    parent: &amp;#39;&amp;#39;,
+    name: &amp;#39;The World&amp;#39;
+}, {
+    id: &amp;#39;1.3&amp;#39;,
+    parent: &amp;#39;0.0&amp;#39;,
+    name: &amp;#39;Asia&amp;#39;
+}, {
+    id: &amp;#39;1.1&amp;#39;,
+    parent: &amp;#39;0.0&amp;#39;,
+    name: &amp;#39;Africa&amp;#39;
+}, {
+    id: &amp;#39;1.2&amp;#39;,
+    parent: &amp;#39;0.0&amp;#39;
+},
+...
+}
+    &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that every item in the list must have an “id” and “parent”.&lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;hctreemap2()&lt;/code&gt; function, author parsed the dataframe into list nicely using &lt;code&gt;purrr&lt;/code&gt; and &lt;code&gt;rlang&lt;/code&gt; package from tidyverse. Do not worry if you don’t understand those “Quasiquotations” &lt;a href=&#34;https://github.com/r-lib/rlang&#34;&gt;link&lt;/a&gt;. It is just syntax sugar using non-standard evaluation. &lt;a href=&#34;https://tidyeval.tidyverse.org/&#34;&gt;more reference&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;group_vars &amp;lt;- c(&amp;quot;index0&amp;quot;,&amp;quot;index1&amp;quot;, &amp;quot;index2&amp;quot;, &amp;quot;index3&amp;quot;)
+size_var &amp;lt;- &amp;quot;value&amp;quot;
+group_syms &amp;lt;- rlang::syms(group_vars)
+size_sym &amp;lt;- rlang::sym(size_var)
+  
+  if (data %&amp;gt;%
+      select(!!!group_syms) %&amp;gt;%
+      map(unique) %&amp;gt;%
+      unlist() %&amp;gt;%
+      anyDuplicated()) stop(&amp;quot;Sunburst data uses same label at multiple levels.&amp;quot;)
+  
+  data &amp;lt;- data %&amp;gt;% mutate_at(group_vars, as.character)
+  
+  name_cell &amp;lt;- function(..., depth) paste0(list(...), 1:depth, collapse = &amp;quot;&amp;quot;)
+  
+  data_at_depth &amp;lt;- function(depth) {
+    data %&amp;gt;%
+      group_by(!!!group_syms[1:depth]) %&amp;gt;%
+      summarise(
+        value = sum(!!size_sym)
+      ) %&amp;gt;%
+      ungroup() %&amp;gt;%
+      mutate(
+        name = !!group_syms[[depth]],
+        level = depth
+      ) %&amp;gt;% 
+      mutate_at(group_vars, as.character()) %&amp;gt;% 
+      {
+        if (depth == 1) mutate(., id = paste0(name, 1))
+        else {
+          mutate(
+            .,
+            parent = pmap_chr(
+              list(!!!group_syms[1:depth - 1]),
+              name_cell,
+              depth = depth - 1),
+            id = paste0(parent, name, depth)
+          )
+        }
+      }
+  }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lets look at the dataframe before we parse it to a list:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sunburst_df &amp;lt;- 1:length(group_vars) %&amp;gt;%
+  map(data_at_depth) %&amp;gt;%
+  bind_rows() %&amp;gt;% 
+  arrange(level)
+
+head(sunburst_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;# A tibble: 6 x 9
+  index0 value name   level id        index1 parent  index2 index3
+  &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+1 Letter  2496 Letter     1 Letter1   &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+2 Letter   440 A          2 Letter1A2 A      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+3 Letter   575 B          2 Letter1B2 B      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+4 Letter   549 C          2 Letter1C2 C      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+5 Letter   477 D          2 Letter1D2 D      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+6 Letter   455 E          2 Letter1E2 E      Letter1 &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s take a look at the first couple of items:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_list &amp;lt;- sunburst_df %&amp;gt;%
+  highcharter::list_parse() %&amp;gt;%
+  purrr::map(~.[!is.na(.)])
+
+
+data_list[1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;[[1]]
+[[1]]$index0
+[1] &amp;quot;Letter&amp;quot;
+
+[[1]]$value
+[1] 2496
+
+[[1]]$name
+[1] &amp;quot;Letter&amp;quot;
+
+[[1]]$level
+[1] 1
+
+[[1]]$id
+[1] &amp;quot;Letter1&amp;quot;
+
+
+[[2]]
+[[2]]$index0
+[1] &amp;quot;Letter&amp;quot;
+
+[[2]]$value
+[1] 440
+
+[[2]]$name
+[1] &amp;quot;A&amp;quot;
+
+[[2]]$level
+[1] 2
+
+[[2]]$id
+[1] &amp;quot;Letter1A2&amp;quot;
+
+[[2]]$index1
+[1] &amp;quot;A&amp;quot;
+
+[[2]]$parent
+[1] &amp;quot;Letter1&amp;quot;
+
+
+[[3]]
+[[3]]$index0
+[1] &amp;quot;Letter&amp;quot;
+
+[[3]]$value
+[1] 575
+
+[[3]]$name
+[1] &amp;quot;B&amp;quot;
+
+[[3]]$level
+[1] 2
+
+[[3]]$id
+[1] &amp;quot;Letter1B2&amp;quot;
+
+[[3]]$index1
+[1] &amp;quot;B&amp;quot;
+
+[[3]]$parent
+[1] &amp;quot;Letter1&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alright, the data has been parsed into the corresponding format. Now we just need to pass this in to &lt;code&gt;highcharter::hc_add_series()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc &amp;lt;- highchart() %&amp;gt;%
+  hc_add_series(data = data_list,
+                type = &amp;quot;sunburst&amp;quot;,
+                allowDrillToNode = TRUE)
+
+frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_unnamed-chunk-7.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Here we go!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/rVbAzUUSUC6dO/giphy.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We are able to create the sunburst chart using Highcharts API! &lt;a href=&#34;https://github.com/wwwjk366/highcharter/blob/0a3c53a7ec5547af4998bc0b893f5c44df3469d8/R/hchart-shorcuts.R#L449-L554&#34;&gt;link to full code&lt;/a&gt; Of course it’s a bit ugly now because we didn’t pass any other parameters to the chart.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;more-configurations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;More Configurations&lt;/h2&gt;
+&lt;p&gt;Putting everything together,let’s make the center spot transparent by adding &lt;code&gt;color = &#39;transparent&#39;&lt;/code&gt; arguments and change the sub level coloring by &lt;code&gt;colorVariation = list(key = &#39;brightness&#39;, to = 0.5)&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(highcharter)
+library(RColorBrewer)
+
+hc &amp;lt;- tibble(
+ index0 = &amp;quot;Letter&amp;quot;,
+ index1 = sample(LETTERS[1:5], 500, replace = T),
+ index2 = sample(LETTERS[6:10], 500, replace = T),
+ index3 = sample(LETTERS[11:15], 500, replace = T),
+ value = rpois(500, 5)  
+) %&amp;gt;%
+ hcsunburst(
+   group_vars = c(&amp;quot;index0&amp;quot;,&amp;quot;index1&amp;quot;, &amp;quot;index2&amp;quot;, &amp;quot;index3&amp;quot;),
+   size_var = &amp;quot;value&amp;quot;,
+   levels = list(
+     list(level = 1, color = &amp;#39;transparent&amp;#39;, dataLabels = list(enabled = TRUE)),
+     list(level = 2, colorByPoint = TRUE, dataLabels = list(enabled = TRUE)),
+     list(level = 3, colorVariation = list(key = &amp;#39;brightness&amp;#39;, to = 0.5),
+          dataLabels = list(enabled = TRUE)),
+     list(level = 4, colorVariation = list(key = &amp;#39;brightness&amp;#39;, to = -0.5),
+          dataLabels = list(enabled = FALSE))
+   )
+ ) %&amp;gt;% 
+ hc_tooltip(pointFormat = &amp;quot;&amp;lt;b&amp;gt;{point.name}&amp;lt;/b&amp;gt;:&amp;lt;br&amp;gt;
+            Value: {point.value:,.0f}&amp;lt;br&amp;gt;&amp;quot;)
+
+frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:100%;height:600px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2019-06-13-add-sunburst/index_files/figure-html//widgets/widget_cars.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/J1S363SbQFselYWz68/source.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;TL;DR — You can start using this function by installing the forked version on my GitHub: &lt;code&gt;devtools::install_github(repo = &amp;quot;wwwjk366/highcharter&amp;quot;)&lt;/code&gt;. I have already initiated a pull request and hopefully the maintainer of `highcharter’ can add this function soon.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title></title>
       <link>/authors/admin/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 04 Jul 2019 20:14:43 +0000</pubDate>
       
       <guid>/authors/admin/</guid>
       <description>&lt;p&gt;&amp;ldquo;You can have data without information, but you cannot have information without data.&amp;rdquo;&lt;/p&gt;

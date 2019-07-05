@@ -34,6 +34,69 @@
   </url>
   
   <url>
+    <loc>/authors/admin/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/blog/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/nlp/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/parallel-computing/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/preprocess-your-text-for-nlp-models-cleaner/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tutorial/</loc>
+    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
@@ -44,14 +107,9 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>/tags/package/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
   
   <url>
@@ -67,7 +125,7 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>/tags/visualization/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -119,15 +177,6 @@
   <url>
     <loc>/project/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/authors/admin/</loc>
-  </url>
-  
-  <url>
-    <loc>/authors/</loc>
     <priority>0</priority>
   </url>
   
