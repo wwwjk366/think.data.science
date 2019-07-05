@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Motivation Well, it all start with one of my favorite tweets from 2013:
+  <meta name="description" content="Motivation Well, I think it all start with one of my favorite tweets from 2013:
 In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.
 &mdash; Big Data Borat (@BigDataBorat) February 27, 2013 
-When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models.">
+When building NLP models, pre-processing your data is extremely important. For example, different stopwords removal, stemming and lemmization might have huge impact on the accuracy of your models.">
 
   
   <link rel="alternate" hreflang="en-us" href="../../post/preprocess-your-text-for-nlp-models-cleaner/">
@@ -126,10 +126,10 @@ When building NLP models, pre-processing your data is extremely necessary and im
   <meta property="og:site_name" content="Think.Data.Science">
   <meta property="og:url" content="/post/preprocess-your-text-for-nlp-models-cleaner/">
   <meta property="og:title" content="Preprocess Text in Python --- A Cleaner and Faster Approach | Think.Data.Science">
-  <meta property="og:description" content="Motivation Well, it all start with one of my favorite tweets from 2013:
+  <meta property="og:description" content="Motivation Well, I think it all start with one of my favorite tweets from 2013:
 In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.
 &mdash; Big Data Borat (@BigDataBorat) February 27, 2013 
-When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models."><meta property="og:image" content="/post/preprocess-your-text-for-nlp-models-cleaner/featured.png">
+When building NLP models, pre-processing your data is extremely important. For example, different stopwords removal, stemming and lemmization might have huge impact on the accuracy of your models."><meta property="og:image" content="/post/preprocess-your-text-for-nlp-models-cleaner/featured.png">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-07-04T20:14:43&#43;00:00">
@@ -625,12 +625,12 @@ When building NLP models, pre-processing your data is extremely necessary and im
 
 <h2 id="motivation">Motivation</h2>
 
-<p>Well, it all start with one of my favorite tweets from 2013:</p>
+<p>Well, I think it all start with one of my favorite tweets from 2013:</p>
 
 <p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.</p>&mdash; Big Data Borat (@BigDataBorat) <a href="https://twitter.com/BigDataBorat/status/306596352991830016?ref_src=twsrc%5Etfw">February 27, 2013</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
-<p>When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize? Or tokenize then remove? What we need is a clear to understand and yet flexiable code to do the pre-processing part. When using R, the pipe operator <code>%&gt;%</code> kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: <a href="https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c" target="_blank">(Long but very good read)</a></p>
+<p>When building NLP models, pre-processing your data is extremely important. For example, different stopwords removal, stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize the text? Or tokenize then remove the tokens? What we need is a <strong>clear to understand</strong> and yet <strong>flexiable</strong> code to do the pre-processing job. When using R, the pipe operator <code>%&gt;%</code> kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: <a href="https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c" target="_blank">(Long but very good read)</a></p>
 
 <blockquote>
 <p>In other words, it’s like saying that when OOP was born, it was also born with the Gang-of-Four design patterns baked into it’s core as its backing theory of thought (outside of types and inheritance and methods etc.), and every implemented OOP language included these patterns and abstractions by default for you to take advantage of, and that these patterns were bullet-proofed by centuries of research. But that can already never be correct — the Singleton pattern is by now widely recognized as an anti-pattern, and GoF authors said they would remove it, if only they could go back in time.</p>
@@ -706,7 +706,7 @@ print(sample)
     
     John: &quot;Well, well, well.&quot;
     James: &quot;There, there. There, there.&quot;
-      
+    
     There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
     I have to go get 2 tutus from 2 different stores, too.
     22    45   1067   445
@@ -722,7 +722,7 @@ print(sample)
 5. Run new &ldquo;master function&rdquo; on the text
 6. Rinse and repeat</p>
 
-<p>It is not very flexiable and easy to do, isn&rsquo;t it?</p>
+<p>It is not very flexiable and easy to maintain, isn&rsquo;t it?</p>
 
 <h2 id="solution">Solution</h2>
 
@@ -779,7 +779,7 @@ print(sample)
     
     John: &quot;Well, well, well.&quot;
     James: &quot;There, there. There, there.&quot;
-      
+    
     There are a lot of reasons not to do this. There are  reasons not to do it.  reasons, actually.
     I have to go get  tutus from  different stores, too.
               
@@ -787,12 +787,12 @@ print(sample)
     {Here is more stuff in single curly braces.}
 </code></pre>
 
-<p>This makes our code very readable and easy to manipulate. We can read the dot <code>.</code> as &ldquo;then&rdquo; :
+<p>This makes our code readable and easy to manipulate. We can read out our code too &mdash; just read the dot <code>.</code> as &ldquo;then&rdquo; in your mind :
 &gt; sample text <strong>then</strong> strip html <strong>then</strong> remove between square brackets <strong>then</strong> remove numbers&rdquo;</p>
 
 <h2 id="full-implementation">Full implementation</h2>
 
-<p>So my full definition of the class looks like this: (example and many functions are from Nugget)</p>
+<p>So my full definition of the class looks like this: (example and many functions are from KDNugget)</p>
 
 <pre><code class="language-python">import re, string, unicodedata
 import nltk
@@ -921,7 +921,7 @@ class cleantext():
         return self.words
 </code></pre>
 
-<p>Now we can pre-process our text easily:</p>
+<p>Now we can pre-process our text easily, in a chain-like matter:</p>
 
 <pre><code class="language-python">ct = cleantext(sample)
 
@@ -941,6 +941,8 @@ words
 
 <pre><code class="language-text">'titl goe her bold text it text but stil i run he run she run wil stop run i talk she talk they talk run who run talk run som text want keep sebast nicola alejandro jeronimo go stor tomorrow morn someth wrong send i anym i know why could din resta my favorit movy franch ord indian jon marvel cinem univers star war back fut harry pot just bil i know thi gre littl hous get thi unw text john wel wel wel jam ther ther ther lot reason ther reason reason act i go get tut diff stor her stuff insid doubl cur brac her stuff singl cur brac delet'
 </code></pre>
+
+<p>You can easily add or modify any step on your code, it&rsquo;s like a pipeline!</p>
 
 <h2 id="apply-on-pandas-dataframe">Apply on Pandas DataFrame</h2>
 

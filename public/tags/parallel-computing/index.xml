@@ -22,12 +22,12 @@
 
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 
-&lt;p&gt;Well, it all start with one of my favorite tweets from 2013:&lt;/p&gt;
+&lt;p&gt;Well, I think it all start with one of my favorite tweets from 2013:&lt;/p&gt;
 
 &lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.&lt;/p&gt;&amp;mdash; Big Data Borat (@BigDataBorat) &lt;a href=&#34;https://twitter.com/BigDataBorat/status/306596352991830016?ref_src=twsrc%5Etfw&#34;&gt;February 27, 2013&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
 
-&lt;p&gt;When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize? Or tokenize then remove? What we need is a clear to understand and yet flexiable code to do the pre-processing part. When using R, the pipe operator &lt;code&gt;%&amp;gt;%&lt;/code&gt; kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: &lt;a href=&#34;https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c&#34; target=&#34;_blank&#34;&gt;(Long but very good read)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When building NLP models, pre-processing your data is extremely important. For example, different stopwords removal, stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize the text? Or tokenize then remove the tokens? What we need is a &lt;strong&gt;clear to understand&lt;/strong&gt; and yet &lt;strong&gt;flexiable&lt;/strong&gt; code to do the pre-processing job. When using R, the pipe operator &lt;code&gt;%&amp;gt;%&lt;/code&gt; kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: &lt;a href=&#34;https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c&#34; target=&#34;_blank&#34;&gt;(Long but very good read)&lt;/a&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;In other words, it’s like saying that when OOP was born, it was also born with the Gang-of-Four design patterns baked into it’s core as its backing theory of thought (outside of types and inheritance and methods etc.), and every implemented OOP language included these patterns and abstractions by default for you to take advantage of, and that these patterns were bullet-proofed by centuries of research. But that can already never be correct — the Singleton pattern is by now widely recognized as an anti-pattern, and GoF authors said they would remove it, if only they could go back in time.&lt;/p&gt;
@@ -103,7 +103,7 @@ print(sample)
     
     John: &amp;quot;Well, well, well.&amp;quot;
     James: &amp;quot;There, there. There, there.&amp;quot;
-      
+    
     There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
     I have to go get 2 tutus from 2 different stores, too.
     22    45   1067   445
@@ -119,7 +119,7 @@ print(sample)
 5. Run new &amp;ldquo;master function&amp;rdquo; on the text
 6. Rinse and repeat&lt;/p&gt;
 
-&lt;p&gt;It is not very flexiable and easy to do, isn&amp;rsquo;t it?&lt;/p&gt;
+&lt;p&gt;It is not very flexiable and easy to maintain, isn&amp;rsquo;t it?&lt;/p&gt;
 
 &lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
 
@@ -176,7 +176,7 @@ print(sample)
     
     John: &amp;quot;Well, well, well.&amp;quot;
     James: &amp;quot;There, there. There, there.&amp;quot;
-      
+    
     There are a lot of reasons not to do this. There are  reasons not to do it.  reasons, actually.
     I have to go get  tutus from  different stores, too.
               
@@ -184,12 +184,12 @@ print(sample)
     {Here is more stuff in single curly braces.}
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;This makes our code very readable and easy to manipulate. We can read the dot &lt;code&gt;.&lt;/code&gt; as &amp;ldquo;then&amp;rdquo; :
+&lt;p&gt;This makes our code readable and easy to manipulate. We can read out our code too &amp;mdash; just read the dot &lt;code&gt;.&lt;/code&gt; as &amp;ldquo;then&amp;rdquo; in your mind :
 &amp;gt; sample text &lt;strong&gt;then&lt;/strong&gt; strip html &lt;strong&gt;then&lt;/strong&gt; remove between square brackets &lt;strong&gt;then&lt;/strong&gt; remove numbers&amp;rdquo;&lt;/p&gt;
 
 &lt;h2 id=&#34;full-implementation&#34;&gt;Full implementation&lt;/h2&gt;
 
-&lt;p&gt;So my full definition of the class looks like this: (example and many functions are from Nugget)&lt;/p&gt;
+&lt;p&gt;So my full definition of the class looks like this: (example and many functions are from KDNugget)&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import re, string, unicodedata
 import nltk
@@ -318,7 +318,7 @@ class cleantext():
         return self.words
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now we can pre-process our text easily:&lt;/p&gt;
+&lt;p&gt;Now we can pre-process our text easily, in a chain-like matter:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ct = cleantext(sample)
 
@@ -338,6 +338,8 @@ words
 
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;&#39;titl goe her bold text it text but stil i run he run she run wil stop run i talk she talk they talk run who run talk run som text want keep sebast nicola alejandro jeronimo go stor tomorrow morn someth wrong send i anym i know why could din resta my favorit movy franch ord indian jon marvel cinem univers star war back fut harry pot just bil i know thi gre littl hous get thi unw text john wel wel wel jam ther ther ther lot reason ther reason reason act i go get tut diff stor her stuff insid doubl cur brac her stuff singl cur brac delet&#39;
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can easily add or modify any step on your code, it&amp;rsquo;s like a pipeline!&lt;/p&gt;
 
 &lt;h2 id=&#34;apply-on-pandas-dataframe&#34;&gt;Apply on Pandas DataFrame&lt;/h2&gt;
 

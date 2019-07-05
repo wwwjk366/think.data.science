@@ -32,7 +32,7 @@ projects: []
 
 ## Motivation
 
-Well, it all start with one of my favorite tweets from 2013:
+Well, I think it all start with one of my favorite tweets from 2013:
 
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">In Data Science, 80% of time spent prepare data, 20% of time spent complain about need for prepare data.</p>&mdash; Big Data Borat (@BigDataBorat) <a href="https://twitter.com/BigDataBorat/status/306596352991830016?ref_src=twsrc%5Etfw">February 27, 2013</a></blockquote>
@@ -40,11 +40,12 @@ Well, it all start with one of my favorite tweets from 2013:
 
 
 
-When building NLP models, pre-processing your data is extremely necessary and important. For example, different stopwords removal, different stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize? Or tokenize then remove? What we need is a clear to understand and yet flexiable code to do the pre-processing part. When using R, the pipe operator `%>%` kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: [(Long but very good read)](https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c)
+When building NLP models, pre-processing your data is extremely important. For example, different stopwords removal, stemming and lemmization might have huge impact on the accuracy of your models. Often times, the order of how you do the cleaning is also critical. Do you want to remove certain words first then tokenize the text? Or tokenize then remove the tokens? What we need is a **clear to understand** and yet **flexiable** code to do the pre-processing job. When using R, the pipe operator `%>%` kind of taken care of the most part. However, there is no really good equivlent in Python because the natural different of Python and R: [(Long but very good read)](https://medium.com/@jondot/functional-programming-with-python-for-people-without-time-1eebdbd9526c)
 
 > In other words, it’s like saying that when OOP was born, it was also born with the Gang-of-Four design patterns baked into it’s core as its backing theory of thought (outside of types and inheritance and methods etc.), and every implemented OOP language included these patterns and abstractions by default for you to take advantage of, and that these patterns were bullet-proofed by centuries of research. But that can already never be correct — the Singleton pattern is by now widely recognized as an anti-pattern, and GoF authors said they would remove it, if only they could go back in time.
 
 But we can definitely hack our way around this using Python **Class**
+
 
 ## Design
 
@@ -118,7 +119,7 @@ print(sample)
     
     John: "Well, well, well."
     James: "There, there. There, there."
-      
+    
     There are a lot of reasons not to do this. There are 101 reasons not to do it. 1000000 reasons, actually.
     I have to go get 2 tutus from 2 different stores, too.
     22    45   1067   445
@@ -126,9 +127,6 @@ print(sample)
      {Here is more stuff in single curly braces.}
 ```   
     
-    
-
-
 This perfectly demonstrates our normal workflow:
 1. Define couple of functions like `strip_html()`, `remove_punctuation()` ...
 2. Run them one by one or define another "master function" to run them all like above example
@@ -137,7 +135,7 @@ This perfectly demonstrates our normal workflow:
 5. Run new "master function" on the text
 6. Rinse and repeat
 
-It is not very flexiable and easy to do, isn't it?
+It is not very flexiable and easy to maintain, isn't it?
 
 ## Solution
 
@@ -201,7 +199,7 @@ print(ct.strip_html().remove_between_square_brackets().remove_numbers().text)
     
     John: "Well, well, well."
     James: "There, there. There, there."
-      
+    
     There are a lot of reasons not to do this. There are  reasons not to do it.  reasons, actually.
     I have to go get  tutus from  different stores, too.
               
@@ -210,15 +208,13 @@ print(ct.strip_html().remove_between_square_brackets().remove_numbers().text)
 ```   
     
     
-
-
-This makes our code very readable and easy to manipulate. We can read the dot `.` as "then" : 
+This makes our code readable and easy to manipulate. We can read out our code too --- just read the dot `.` as "then" in your mind : 
 > sample text **then** strip html **then** remove between square brackets **then** remove numbers"
+
 
 ## Full implementation
 
-So my full definition of the class looks like this: (example and many functions are from Nugget)
-
+So my full definition of the class looks like this: (example and many functions are from KDNugget)
 
 ```python
 import re, string, unicodedata
@@ -348,7 +344,7 @@ class cleantext():
         return self.words
 ```
 
-Now we can pre-process our text easily:
+Now we can pre-process our text easily, in a chain-like matter:
 
 
 ```python
@@ -368,11 +364,10 @@ join_words().\
 words
 ```
 
-
-
 ```text
 'titl goe her bold text it text but stil i run he run she run wil stop run i talk she talk they talk run who run talk run som text want keep sebast nicola alejandro jeronimo go stor tomorrow morn someth wrong send i anym i know why could din resta my favorit movy franch ord indian jon marvel cinem univers star war back fut harry pot just bil i know thi gre littl hous get thi unw text john wel wel wel jam ther ther ther lot reason ther reason reason act i go get tut diff stor her stuff insid doubl cur brac her stuff singl cur brac delet'
 ```
+You can easily add or modify any step on your code, it's like a pipeline!
 
 
 ## Apply on Pandas DataFrame
