@@ -7,7 +7,7 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Mon, 22 Jul 2019 20:14:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jul 2019 20:14:43 +0000</lastBuildDate>
     
 	    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Introduction</title>
       <link>/tags/introduction/</link>
-      <pubDate>Mon, 22 Jul 2019 20:14:43 +0000</pubDate>
+      <pubDate>Sun, 21 Jul 2019 20:14:43 +0000</pubDate>
       
       <guid>/tags/introduction/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>Package</title>
       <link>/tags/package/</link>
-      <pubDate>Mon, 22 Jul 2019 20:14:43 +0000</pubDate>
+      <pubDate>Sun, 21 Jul 2019 20:14:43 +0000</pubDate>
       
       <guid>/tags/package/</guid>
       <description></description>
@@ -33,7 +33,7 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Mon, 22 Jul 2019 20:14:43 +0000</pubDate>
+      <pubDate>Sun, 21 Jul 2019 20:14:43 +0000</pubDate>
       
       <guid>/tags/r/</guid>
       <description></description>

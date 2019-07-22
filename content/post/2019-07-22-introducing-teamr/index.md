@@ -5,8 +5,8 @@ summary: ""
 authors: ['admin']
 tags: ['R', 'Package', 'Introduction']
 categories: ['Blog', 'Announcement']
-date: 2019-07-22T20:14:43Z
-lastmod: 2019-07-22T20:14:43Z
+date: 2019-07-21T20:14:43Z
+lastmod: 2019-07-21T20:14:43Z
 featured: true
 draft: false
 
