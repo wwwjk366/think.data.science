@@ -7,10 +7,179 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jul 2019 20:14:43 +0000</lastBuildDate>
     
 	    <atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introducing teamr Package</title>
+      <link>/post/2019-07-22-introducing-teamr/</link>
+      <pubDate>Mon, 22 Jul 2019 20:14:43 +0000</pubDate>
+      
+      <guid>/post/2019-07-22-introducing-teamr/</guid>
+      <description>
+
+&lt;p&gt;Today I am so pleased to introduce my first CRAN package for sending
+formatted messages to Microsoft Teams,
+&lt;a href=&#34;https://github.com/wwwjk366/teamr&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;teamr&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Motivation is simple here. For years I have been using Slack and built
+many slash commands and apps using incoming webhooks with R, but ever
+since I started to use Teams, I found that we will have the same needs
+for communicating with R as well. So with some inspiration from the
+Python package &lt;a href=&#34;https://pypi.org/project/pymsteams/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;pymsteams&lt;/code&gt;&lt;/a&gt;. I
+created &lt;code&gt;teamr&lt;/code&gt; package with the hope that this package will provide a
+simple and clean way to talk to Teams from R.&lt;/p&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;You can install the released version of teamr from
+&lt;a href=&#34;https://CRAN.R-project.org&#34; target=&#34;_blank&#34;&gt;CRAN&lt;/a&gt; with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&amp;quot;teamr&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the development version from &lt;a href=&#34;https://github.com/&#34; target=&#34;_blank&#34;&gt;GitHub&lt;/a&gt; with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# install.packages(&amp;quot;devtools&amp;quot;)
+devtools::install_github(&amp;quot;wwwjk366/teamr&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;This is a basic example of send a simple titled message to MS Teams:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(teamr)
+
+# initiate new connector card object
+cc &amp;lt;- connector_card$new(hookurl = &amp;quot;https://outlook.office.com/webhook/...&amp;quot;)
+# add text
+cc$text(&amp;quot;This is text of main body.&amp;quot;)
+# add title
+cc$title(&amp;quot;This is message title&amp;quot;)
+# add hyperlink button
+cc$add_link_button(&amp;quot;Read more&amp;quot;, &amp;quot;https://www.google.com&amp;quot;)
+# change theme color
+cc$color(&amp;quot;#008000&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can print out the payload that will be sending to given webhook using
+&lt;code&gt;print&lt;/code&gt; method&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# print out the payload for checking
+cc$print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Card: 
+  hookurl: https://outlook.office.com/webhook/...
+  payload:  {&amp;quot;text&amp;quot;:&amp;quot;This is text of main body.&amp;quot;,&amp;quot;title&amp;quot;:&amp;quot;This is message title&amp;quot;,&amp;quot;potentialAction&amp;quot;:[{&amp;quot;@context&amp;quot;:&amp;quot;http://schema.org&amp;quot;,&amp;quot;@type&amp;quot;:&amp;quot;ViewAction&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Read more&amp;quot;,&amp;quot;target&amp;quot;:[&amp;quot;https://www.google.com&amp;quot;]}],&amp;quot;themeColor&amp;quot;:&amp;quot;#008000&amp;quot;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our &lt;code&gt;JSON&lt;/code&gt; payload looks good, time to send it out :)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# send to Teams
+cc$send()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1] TRUE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;send&lt;/code&gt; menthod will return &lt;code&gt;TRUE&lt;/code&gt; if send was successful (status code
+200). If it failed, it will return the reponse object for further
+investigation. Our message with a link button will looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;media/main1.PNG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You probablity noticed now that this package is built using &lt;code&gt;R6&lt;/code&gt;
+class(very nice tutorial by Hadley
+&lt;a href=&#34;https://adv-r.hadley.nz/r6.html&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;). I decide to do this way
+because by using OOP concept, it will give use a feeling that you are
+“building” your message by adding something piece by piece. At the same
+time the code will be highly readable and easy to understand. &lt;code&gt;teamr&lt;/code&gt;
+has 3 main classes as of today — &lt;code&gt;connector_card&lt;/code&gt;, &lt;code&gt;card_section&lt;/code&gt; and
+&lt;code&gt;action_card&lt;/code&gt;. For example, let’s add a section to our message:&lt;/p&gt;
+
+&lt;h2 id=&#34;message-with-sections&#34;&gt;Message with sections&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#initiate new card section object
+sec &amp;lt;- card_section$new()
+
+sec$text(sec_text = &amp;quot;2018-19 Finals MVP&amp;quot;)
+sec$add_fact(fname = &amp;quot;Position&amp;quot;, fvalue = &amp;quot;Forward&amp;quot;)
+sec$title(sec_title = &amp;quot;Player Info&amp;quot;)
+sec$activity_image(sec_activitiy_image = &amp;quot;https://d2cwpp38twqe55.cloudfront.net/req/201905091/images/players/leonaka01.jpg&amp;quot;)
+sec$activity_title(sec_activity_title = &amp;quot;Kawhi Leonard&amp;quot;)
+sec$activity_sub_title(sec_activitiy_subtitle = &amp;quot;LA Clippers&amp;quot;)
+sec$activity_text(sec_activitiy_text = &amp;quot;Activity text&amp;quot;)
+cc$add_section(new_section = sec)
+cc$send()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1] TRUE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is what you will get on you Teams channel:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;media/kawhi1.PNG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;message-with-action-cards&#34;&gt;Message with action cards&lt;/h2&gt;
+
+&lt;p&gt;Teams also support sending actionable messages. You can add a button to
+your message which can send HTTP reqeust to a certain URL with different
+type of inputs.&lt;/p&gt;
+
+&lt;p&gt;In the following example, I will add a multilined text input, a date
+selector and a multiple choice input to our message. Simply changing
+&lt;code&gt;target = &amp;quot;http://...&amp;quot;&lt;/code&gt; in &lt;code&gt;add_actions&lt;/code&gt; method to the URL you want the
+reponse payload to be sent to:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# create new action card
+pa &amp;lt;- action_card$new(type = &amp;quot;ActionCard&amp;quot;, name = &amp;quot;Add comment&amp;quot;)
+# add default actions to card
+pa$add_actions(type = &amp;quot;HttpPOST&amp;quot;, name = &amp;quot;Save&amp;quot;, target = &amp;quot;http://...&amp;quot;)
+# add text inputs
+pa$add_text_inputs(id = &amp;quot;comment&amp;quot;, title = &amp;quot;Add comment for this task&amp;quot;, is_multi_line = TRUE)
+# save to the card object
+cc$add_potential_action(pa)
+
+pa2 &amp;lt;- action_card$new(type = &amp;quot;ActionCard&amp;quot;, name = &amp;quot;Add Date&amp;quot;)
+pa2$add_actions(type = &amp;quot;HttpPOST&amp;quot;, name = &amp;quot;Save&amp;quot;, target = &amp;quot;http://...&amp;quot;)
+pa2$add_date_inputs(id = &amp;quot;date&amp;quot;, title = &amp;quot;Add Date for this task&amp;quot;)
+cc$add_potential_action(pa2)
+
+pa3 &amp;lt;- action_card$new(type = &amp;quot;ActionCard&amp;quot;, name = &amp;quot;Add Options&amp;quot;)
+pa3$add_actions(type = &amp;quot;HttpPOST&amp;quot;, name = &amp;quot;Save&amp;quot;, target = &amp;quot;http://...&amp;quot;)
+# add multiple choices. note that choices must be a nested named list
+pa3$add_mchoice_inputs(id = &amp;quot;mchoice&amp;quot;, 
+                       title = &amp;quot;Choice one&amp;quot;, 
+                       is_multi_select = TRUE, 
+                       choices = list(
+                         list(display=&amp;quot;In Progress&amp;quot;, value=1),
+                         list(display=&amp;quot;Active&amp;quot;, value=2),
+                         list(display=&amp;quot;Close&amp;quot;, value=3))
+                       )
+cc$add_potential_action(pa3)
+
+cc$send()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1] TRUE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;media/teamr.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to learn more regarding Microsoft Connectors, you check out
+the offical doc
+&lt;a href=&#34;https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors-using&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;This is my very first package on CRAN so if you found any bugs please
+report here &lt;a href=&#34;https://github.com/wwwjk366/teamr/issues&#34; target=&#34;_blank&#34;&gt;https://github.com/wwwjk366/teamr/issues&lt;/a&gt;. I do have plan
+to add more functionality to the package so stay tuned!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Add Sunburst Chart to highcharter Package</title>

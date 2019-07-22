@@ -9,7 +9,7 @@ tags: ['Python', 'NLP', 'Parallel Computing']
 categories: ['Blog', 'Tutorial']
 date: 2019-07-04T20:14:43Z
 lastmod: 2019-07-04T20:14:43Z
-featured: true
+featured: false
 draft: false
 
 # Featured image
