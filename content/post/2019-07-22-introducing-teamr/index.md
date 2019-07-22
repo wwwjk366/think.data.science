@@ -131,7 +131,7 @@ cc$send()
 
     [1] TRUE
 
-This is what you will get on you Teams channel:
+This is what you will get on your Teams channel:
 
 ![](media/kawhi1.PNG)
 
