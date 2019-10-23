@@ -102,7 +102,7 @@ investigation. Our message with a link button will looks like this:
 
 ![](media/main1.PNG)
 
-You probablity noticed now that this package is built using `R6`
+You probably noticed now that this package is built using `R6`
 class(very nice tutorial by Hadley
 [here](https://adv-r.hadley.nz/r6.html)). I decide to do this way
 because by using OOP concept, it will give use a feeling that you are
