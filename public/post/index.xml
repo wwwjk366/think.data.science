@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Think.Data.Science</title>
+    <title>Blog on Think.Data.Science</title>
     <link>/post/</link>
-    <description>Recent content in Posts on Think.Data.Science</description>
+    <description>Recent content in Blog on Think.Data.Science</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>

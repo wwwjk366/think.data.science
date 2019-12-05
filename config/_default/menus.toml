@@ -9,28 +9,24 @@
 #  weight = 1
 
 [[main]]
-  name = "ABOUT ME"
-  url = "bio/"
-  weight = 4
-  
-[[main]]
-  name = "BLOG"
-  url = "#posts"
-  weight = 1
+  name = "POSTS"
+  url = "post/"
+  weight = 10
 
 [[main]]
   name = "TUTORIALS"
   url = "courses/"
-  weight = 2
+  weight = 20
 
 [[main]]
-  name = "CONTACT"
-  url = "#contact"
-  weight = 5
+  name = "ABOUT / CONTACT"
+  url = "bio/"
+  weight = 30
+
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
-# [[main]]
-#    name = "CV"
-#    url = "files/cv.pdf"
-#    weight = 70
+[[main]]
+    name = "CV"
+    url = "files/cv.pdf"
+    weight = 1

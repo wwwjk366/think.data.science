@@ -45,18 +45,12 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/post/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/python/</loc>
+    <loc>/categories/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -68,13 +62,19 @@
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>/categories/python/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/r/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -89,6 +89,11 @@
     <loc>/categories/tutorial/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/license/</loc>
+    <lastmod>2019-12-05T00:00:00+01:00</lastmod>
   </url>
   
   <url>
@@ -179,11 +184,6 @@
   <url>
     <loc>/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/privacy/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
   </url>
   
   <url>
