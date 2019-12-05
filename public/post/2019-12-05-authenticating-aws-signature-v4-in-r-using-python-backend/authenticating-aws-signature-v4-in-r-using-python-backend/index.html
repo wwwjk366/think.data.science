@@ -28,11 +28,10 @@
   
     
   
-  <meta name="description" content="Today I am so pleased to introduce my first CRAN package for sending formatted messages to Microsoft Teams, teamr.
-Motivation is simple here. For years I have been using Slack and built many slash commands and apps using incoming webhooks with R, but ever since I started to use Teams, I found that we will have the same needs for communicating with R as well. So with some inspiration from the Python package pymsteams.">
+  <meta name="description" content="Intuition I was working with an Elasticsearch project on AWS using Python and the requests_aws4auth package worked like a charm for me. Never had any issue regarding the authentication (AWS V4 could be hard to work with sometimes). However, when I trying to create a Shiny app for my project, the problem emerged. I just couldn’t get the V4 auth to work with httr in R. I tried aws.signature package on Github but keep getting request header issues.">
 
   
-  <link rel="alternate" hreflang="en-us" href="../../post/2019-07-22-introducing-teamr/">
+  <link rel="alternate" hreflang="en-us" href="../../../post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/">
 
   
 
@@ -83,7 +82,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
   
   
   
-  <link rel="stylesheet" href="../../css/academic.min.966b3bc843cfea29ab40b0bad2f17078.css">
+  <link rel="stylesheet" href="../../../css/academic.min.966b3bc843cfea29ab40b0bad2f17078.css">
 
   
 
@@ -107,11 +106,11 @@ Motivation is simple here. For years I have been using Slack and built many slas
 
   
 
-  <link rel="manifest" href="../../site.webmanifest">
-  <link rel="icon" type="image/png" href="../../img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="../../img/icon-192.png">
+  <link rel="manifest" href="../../../site.webmanifest">
+  <link rel="icon" type="image/png" href="../../../img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../../img/icon-192.png">
 
-  <link rel="canonical" href="../../post/2019-07-22-introducing-teamr/">
+  <link rel="canonical" href="../../../post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/">
 
   
   
@@ -122,27 +121,26 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="Think.Data.Science">
-  <meta property="og:url" content="/post/2019-07-22-introducing-teamr/">
-  <meta property="og:title" content="Introducing teamr Package | Think.Data.Science">
-  <meta property="og:description" content="Today I am so pleased to introduce my first CRAN package for sending formatted messages to Microsoft Teams, teamr.
-Motivation is simple here. For years I have been using Slack and built many slash commands and apps using incoming webhooks with R, but ever since I started to use Teams, I found that we will have the same needs for communicating with R as well. So with some inspiration from the Python package pymsteams."><meta property="og:image" content="/post/2019-07-22-introducing-teamr/featured.PNG">
+  <meta property="og:url" content="/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/">
+  <meta property="og:title" content="Authenticating AWS (Signature V4) in R using Python Backend | Think.Data.Science">
+  <meta property="og:description" content="Intuition I was working with an Elasticsearch project on AWS using Python and the requests_aws4auth package worked like a charm for me. Never had any issue regarding the authentication (AWS V4 could be hard to work with sometimes). However, when I trying to create a Shiny app for my project, the problem emerged. I just couldn’t get the V4 auth to work with httr in R. I tried aws.signature package on Github but keep getting request header issues."><meta property="og:image" content="/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/featured.png">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-07-21T20:14:43&#43;00:00">
+  <meta property="article:published_time" content="2019-12-05T00:00:00&#43;00:00">
   
-  <meta property="article:modified_time" content="2019-07-21T20:14:43&#43;00:00">
+  <meta property="article:modified_time" content="2019-12-05T17:49:48&#43;00:00">
   
-
-  
-
 
   
 
 
+  
 
 
 
-  <title>Introducing teamr Package | Think.Data.Science</title>
+
+
+  <title>Authenticating AWS (Signature V4) in R using Python Backend | Think.Data.Science</title>
 
 </head>
 
@@ -186,7 +184,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <div class="container">
 
     
-      <a class="navbar-brand" href="../../"><img src="../../img/header_trans.png" alt="Think.Data.Science"></a>
+      <a class="navbar-brand" href="../../../"><img src="../../../img/header_trans.png" alt="Think.Data.Science"></a>
       
       <button type="button" class="navbar-toggler" data-toggle="collapse"
               data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -225,7 +223,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../../#posts"><span>BLOG</span></a>
+          <a class="nav-link " href="../../../#posts"><span>BLOG</span></a>
         </li>
 
         
@@ -247,7 +245,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../../courses/"><span>TUTORIALS</span></a>
+          <a class="nav-link " href="../../../courses/"><span>TUTORIALS</span></a>
         </li>
 
         
@@ -267,7 +265,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../../bio/"><span>ABOUT ME</span></a>
+          <a class="nav-link " href="../../../bio/"><span>ABOUT ME</span></a>
         </li>
 
         
@@ -296,7 +294,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../../#contact"><span>CONTACT</span></a>
+          <a class="nav-link " href="../../../#contact"><span>CONTACT</span></a>
         </li>
 
         
@@ -344,7 +342,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
 
 
 <div class="article-header d-xl-none">
-  <div class="featured-image" style="background-image: url('/post/2019-07-22-introducing-teamr/featured_hu39f4e39b6d2c041f5afa89e0f6cc45c9_67319_800x0_resize_lanczos_2.PNG');"></div>
+  <div class="featured-image" style="background-image: url('/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/featured_hucc5792566b8058bf89df284f635e159d_58867_800x0_resize_lanczos_2.png');"></div>
   
 </div>
 
@@ -353,7 +351,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <div class="row">
     <div class="col-6">
       <div class="split-header-content">
-        <h1 itemprop="name">Introducing teamr Package</h1>
+        <h1 itemprop="name">Authenticating AWS (Signature V4) in R using Python Backend</h1>
 
         
 
@@ -361,23 +359,11 @@ Motivation is simple here. For years I have been using Slack and built many slas
 
 
 
-<meta content="2019-07-21 20:14:43 &#43;0000 UTC" itemprop="datePublished">
-<meta content="2019-07-21 20:14:43 &#43;0000 UTC" itemprop="dateModified">
+<meta content="2019-12-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-12-05 17:49:48 &#43;0000 UTC" itemprop="dateModified">
 
 <div class="article-metadata">
 
-  
-  
-  
-  
-  <div>
-    
-
-
-
-  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="../../authors/admin/">Michael Yan</a></span>
-
-  </div>
   
   
 
@@ -386,8 +372,10 @@ Motivation is simple here. For years I have been using Slack and built many slas
     
     
       
+          Last updated on
+      
     
-    <time>Jul 21, 2019</time>
+    <time>Dec 5, 2019</time>
   </span>
   
 
@@ -396,14 +384,14 @@ Motivation is simple here. For years I have been using Slack and built many slas
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    2 min read
   </span>
   
 
   
   
   <span class="middot-divider"></span>
-  <a href="../../post/2019-07-22-introducing-teamr/#disqus_thread"></a>
+  <a href="../../../post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/#disqus_thread"></a>
   
 
   
@@ -411,7 +399,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <span class="middot-divider"></span>
   <span class="article-categories">
     <i class="fas fa-folder"></i>
-    <a href="../../categories/blog/">Blog</a>, <a href="../../categories/announcement/">Announcement</a></span>
+    <a href="../../../categories/r/">R</a>, <a href="../../../categories/python/">Python</a>, <a href="../../../categories/tutorial/">Tutorial</a></span>
   
 
   
@@ -440,35 +428,35 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Introducing%20teamr%20Package&amp;url=%2fpost%2f2019-07-22-introducing-teamr%2f"
+         href="https://twitter.com/intent/tweet?text=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend&amp;url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f"
          target="_blank" rel="noopener">
         <i class="fab fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-07-22-introducing-teamr%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f"
          target="_blank" rel="noopener">
         <i class="fab fa-facebook-f"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-07-22-introducing-teamr%2f&amp;title=Introducing%20teamr%20Package"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f&amp;title=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend"
          target="_blank" rel="noopener">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-07-22-introducing-teamr%2f&amp;title=Introducing%20teamr%20Package"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f&amp;title=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend"
          target="_blank" rel="noopener">
         <i class="fab fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Introducing%20teamr%20Package&amp;body=%2fpost%2f2019-07-22-introducing-teamr%2f">
+         href="mailto:?subject=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend&amp;body=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f">
         <i class="fas fa-envelope"></i>
       </a>
     </li>
@@ -480,7 +468,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
     </div>
     <div class="col-6">
       <div class="split-header-image">
-        <img src="../../post/2019-07-22-introducing-teamr/featured_hu39f4e39b6d2c041f5afa89e0f6cc45c9_67319_680x500_fill_q90_lanczos_smart1_2.PNG" itemprop="image" alt="">
+        <img src="../../../post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/featured_hucc5792566b8058bf89df284f635e159d_58867_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
         
       </div>
     </div>
@@ -488,7 +476,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
 </div>
 
 <div class="article-container d-xl-none">
-  <h1 itemprop="name">Introducing teamr Package</h1>
+  <h1 itemprop="name">Authenticating AWS (Signature V4) in R using Python Backend</h1>
 
   
 
@@ -496,23 +484,11 @@ Motivation is simple here. For years I have been using Slack and built many slas
 
 
 
-<meta content="2019-07-21 20:14:43 &#43;0000 UTC" itemprop="datePublished">
-<meta content="2019-07-21 20:14:43 &#43;0000 UTC" itemprop="dateModified">
+<meta content="2019-12-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-12-05 17:49:48 &#43;0000 UTC" itemprop="dateModified">
 
 <div class="article-metadata">
 
-  
-  
-  
-  
-  <div>
-    
-
-
-
-  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="../../authors/admin/">Michael Yan</a></span>
-
-  </div>
   
   
 
@@ -521,8 +497,10 @@ Motivation is simple here. For years I have been using Slack and built many slas
     
     
       
+          Last updated on
+      
     
-    <time>Jul 21, 2019</time>
+    <time>Dec 5, 2019</time>
   </span>
   
 
@@ -531,14 +509,14 @@ Motivation is simple here. For years I have been using Slack and built many slas
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    2 min read
   </span>
   
 
   
   
   <span class="middot-divider"></span>
-  <a href="../../post/2019-07-22-introducing-teamr/#disqus_thread"></a>
+  <a href="../../../post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/#disqus_thread"></a>
   
 
   
@@ -546,7 +524,7 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <span class="middot-divider"></span>
   <span class="article-categories">
     <i class="fas fa-folder"></i>
-    <a href="../../categories/blog/">Blog</a>, <a href="../../categories/announcement/">Announcement</a></span>
+    <a href="../../../categories/r/">R</a>, <a href="../../../categories/python/">Python</a>, <a href="../../../categories/tutorial/">Tutorial</a></span>
   
 
   
@@ -555,35 +533,35 @@ Motivation is simple here. For years I have been using Slack and built many slas
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Introducing%20teamr%20Package&amp;url=%2fpost%2f2019-07-22-introducing-teamr%2f"
+         href="https://twitter.com/intent/tweet?text=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend&amp;url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f"
          target="_blank" rel="noopener">
         <i class="fab fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-07-22-introducing-teamr%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f"
          target="_blank" rel="noopener">
         <i class="fab fa-facebook-f"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-07-22-introducing-teamr%2f&amp;title=Introducing%20teamr%20Package"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f&amp;title=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend"
          target="_blank" rel="noopener">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-07-22-introducing-teamr%2f&amp;title=Introducing%20teamr%20Package"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f&amp;title=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend"
          target="_blank" rel="noopener">
         <i class="fab fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Introducing%20teamr%20Package&amp;body=%2fpost%2f2019-07-22-introducing-teamr%2f">
+         href="mailto:?subject=Authenticating%20AWS%20%28Signature%20V4%29%20in%20R%20using%20Python%20Backend&amp;body=%2fpost%2f2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend%2fauthenticating-aws-signature-v4-in-r-using-python-backend%2f">
         <i class="fas fa-envelope"></i>
       </a>
     </li>
@@ -619,164 +597,48 @@ Motivation is simple here. For years I have been using Slack and built many slas
     <div class="article-style" itemprop="articleBody">
       
 
-<p>Today I am so pleased to introduce my first CRAN package for sending
-formatted messages to Microsoft Teams,
-<a href="https://github.com/wwwjk366/teamr" target="_blank"><code>teamr</code></a>.</p>
 
-<p>Motivation is simple here. For years I have been using Slack and built
-many slash commands and apps using incoming webhooks with R, but ever
-since I started to use Teams, I found that we will have the same needs
-for communicating with R as well. So with some inspiration from the
-Python package <a href="https://pypi.org/project/pymsteams/" target="_blank"><code>pymsteams</code></a>. I
-created <code>teamr</code> package with the hope that this package will provide a
-simple and clean way to talk to Teams from R.</p>
+<div id="intuition" class="section level2">
+<h2>Intuition</h2>
+<p>I was working with an Elasticsearch project on AWS using Python and the <code>requests_aws4auth</code> package worked like a charm for me. Never had any issue regarding the authentication (AWS V4 could be hard to work with sometimes). However, when I trying to create a Shiny app for my project, the problem emerged. I just couldn’t get the V4 auth to work with <code>httr</code> in R. I tried <code>aws.signature</code> package on <a href="https://github.com/cloudyr/aws.signature">Github</a> but keep getting request header issues. Then I remembered that JJ Alaire from Rstudio created this amazing package <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/">(link)</a> claiming the ability to import Python packages into R. Therefore I am intrigued to give it a try!</p>
+</div>
+<div id="the-syntax" class="section level2">
+<h2>The Syntax</h2>
+<p>After install this package, the actually syntax is quite simple.</p>
+<p>Load the package and point it to the location of your Python (I’m using Ubuntu here):</p>
+<pre class="r"><code>library(reticulate)
+use_python(&quot;/usr/local/bin/python&quot;)</code></pre>
+<p>Then you can easily load and call Python functions! For example, a simple <code>listdir</code> function from <code>os</code> package:</p>
+<pre class="r"><code>os &lt;- import(&quot;os&quot;)
+os$listdir(&quot;.&quot;)</code></pre>
+<pre><code>## [1] &quot;index.html&quot;   &quot;featured.png&quot; &quot;index.Rmd&quot;</code></pre>
+</div>
+<div id="in-shiny" class="section level2">
+<h2>In Shiny</h2>
+<p>All I did was adding those to the <code>global.R</code> script (the script I source first in <code>server.R</code>)</p>
+<pre class="r"><code>py_awsauth &lt;- import(&quot;requests_aws4auth&quot;)
+py_requests &lt;- import(&quot;requests&quot;)
 
-<h2 id="installation">Installation</h2>
-
-<p>You can install the released version of teamr from
-<a href="https://CRAN.R-project.org" target="_blank">CRAN</a> with:</p>
-
-<pre><code class="language-r">install.packages(&quot;teamr&quot;)
+region &lt;- &#39;us-east-2&#39;
+service &lt;- &#39;execute-api&#39;
+credentials &lt;- aws.signature::locate_credentials()
+authr &lt;- py_awsauth$AWS4Auth(credentials$key, credentials$secret, region, service, session_token=credentials$session_token)
+url &lt;- &#39;https://.....&#39;
 </code></pre>
-
-<p>And the development version from <a href="https://github.com/" target="_blank">GitHub</a> with:</p>
-
-<pre><code class="language-r"># install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;wwwjk366/teamr&quot;)
-</code></pre>
-
-<h2 id="example">Example</h2>
-
-<p>This is a basic example of send a simple titled message to MS Teams:</p>
-
-<pre><code class="language-r">library(teamr)
-
-# initiate new connector card object
-cc &lt;- connector_card$new(hookurl = &quot;https://outlook.office.com/webhook/...&quot;)
-# add text
-cc$text(&quot;This is text of main body.&quot;)
-# add title
-cc$title(&quot;This is message title&quot;)
-# add hyperlink button
-cc$add_link_button(&quot;Read more&quot;, &quot;https://www.google.com&quot;)
-# change theme color
-cc$color(&quot;#008000&quot;)
-</code></pre>
-
-<p>We can print out the payload that will be sending to given webhook using
-<code>print</code> method</p>
-
-<pre><code class="language-r"># print out the payload for checking
-cc$print()
-</code></pre>
-
-<pre><code>Card: 
-  hookurl: https://outlook.office.com/webhook/...
-  payload:  {&quot;text&quot;:&quot;This is text of main body.&quot;,&quot;title&quot;:&quot;This is message title&quot;,&quot;potentialAction&quot;:[{&quot;@context&quot;:&quot;http://schema.org&quot;,&quot;@type&quot;:&quot;ViewAction&quot;,&quot;name&quot;:&quot;Read more&quot;,&quot;target&quot;:[&quot;https://www.google.com&quot;]}],&quot;themeColor&quot;:&quot;#008000&quot;}
-</code></pre>
-
-<p>Our <code>JSON</code> payload looks good, time to send it out :)</p>
-
-<pre><code class="language-r"># send to Teams
-cc$send()
-</code></pre>
-
-<pre><code>[1] TRUE
-</code></pre>
-
-<p><code>send</code> menthod will return <code>TRUE</code> if send was successful (status code
-200). If it failed, it will return the reponse object for further
-investigation. Our message with a link button will looks like this:</p>
-
-<p><img src="media/main1.PNG" alt="" /></p>
-
-<p>You probably noticed now that this package is built using <code>R6</code>
-class(very nice tutorial by Hadley
-<a href="https://adv-r.hadley.nz/r6.html" target="_blank">here</a>). I decide to do this way
-because by using OOP concept, it will give use a feeling that you are
-“building” your message by adding something piece by piece. At the same
-time the code will be highly readable and easy to understand. <code>teamr</code>
-has 3 main classes as of today — <code>connector_card</code>, <code>card_section</code> and
-<code>action_card</code>. For example, let’s add a section to our message:</p>
-
-<h2 id="message-with-sections">Message with sections</h2>
-
-<pre><code class="language-r">#initiate new card section object
-sec &lt;- card_section$new()
-
-sec$text(sec_text = &quot;2018-19 Finals MVP&quot;)
-sec$add_fact(fname = &quot;Position&quot;, fvalue = &quot;Forward&quot;)
-sec$title(sec_title = &quot;Player Info&quot;)
-sec$activity_image(sec_activitiy_image = &quot;https://d2cwpp38twqe55.cloudfront.net/req/201905091/images/players/leonaka01.jpg&quot;)
-sec$activity_title(sec_activity_title = &quot;Kawhi Leonard&quot;)
-sec$activity_sub_title(sec_activitiy_subtitle = &quot;LA Clippers&quot;)
-sec$activity_text(sec_activitiy_text = &quot;Activity text&quot;)
-cc$add_section(new_section = sec)
-cc$send()
-</code></pre>
-
-<pre><code>[1] TRUE
-</code></pre>
-
-<p>This is what you will get on your Teams channel:</p>
-
-<p><img src="media/kawhi1.PNG" alt="" /></p>
-
-<h2 id="message-with-action-cards">Message with action cards</h2>
-
-<p>Teams also support sending actionable messages. You can add a button to
-your message which can send HTTP reqeust to a certain URL with different
-type of inputs.</p>
-
-<p>In the following example, I will add a multilined text input, a date
-selector and a multiple choice input to our message. Simply changing
-<code>target = &quot;http://...&quot;</code> in <code>add_actions</code> method to the URL you want the
-reponse payload to be sent to:</p>
-
-<pre><code class="language-r"># create new action card
-pa &lt;- action_card$new(type = &quot;ActionCard&quot;, name = &quot;Add comment&quot;)
-# add default actions to card
-pa$add_actions(type = &quot;HttpPOST&quot;, name = &quot;Save&quot;, target = &quot;http://...&quot;)
-# add text inputs
-pa$add_text_inputs(id = &quot;comment&quot;, title = &quot;Add comment for this task&quot;, is_multi_line = TRUE)
-# save to the card object
-cc$add_potential_action(pa)
-
-pa2 &lt;- action_card$new(type = &quot;ActionCard&quot;, name = &quot;Add Date&quot;)
-pa2$add_actions(type = &quot;HttpPOST&quot;, name = &quot;Save&quot;, target = &quot;http://...&quot;)
-pa2$add_date_inputs(id = &quot;date&quot;, title = &quot;Add Date for this task&quot;)
-cc$add_potential_action(pa2)
-
-pa3 &lt;- action_card$new(type = &quot;ActionCard&quot;, name = &quot;Add Options&quot;)
-pa3$add_actions(type = &quot;HttpPOST&quot;, name = &quot;Save&quot;, target = &quot;http://...&quot;)
-# add multiple choices. note that choices must be a nested named list
-pa3$add_mchoice_inputs(id = &quot;mchoice&quot;, 
-                       title = &quot;Choice one&quot;, 
-                       is_multi_select = TRUE, 
-                       choices = list(
-                         list(display=&quot;In Progress&quot;, value=1),
-                         list(display=&quot;Active&quot;, value=2),
-                         list(display=&quot;Close&quot;, value=3))
-                       )
-cc$add_potential_action(pa3)
-
-cc$send()
-</code></pre>
-
-<pre><code>[1] TRUE
-</code></pre>
-
-<p><img src="media/teamr.gif" alt="" /></p>
-
-<p>If you want to learn more regarding Microsoft Connectors, you check out
-the offical doc
-<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors-using" target="_blank">here</a>.</p>
-
-<h2 id="summary">Summary</h2>
-
-<p>This is my very first package on CRAN so if you found any bugs please
-report here <a href="https://github.com/wwwjk366/teamr/issues" target="_blank">https://github.com/wwwjk366/teamr/issues</a>. I do have plan
-to add more functionality to the package so stay tuned!</p>
+<p>As you can see I am setting up the AWS connection using my local stored credentials. And the next step is to send HTTP request using Python <code>requests</code> package.</p>
+<p>One thing to noticed is that you cannot use nested list for your payload as you would do that if you are using R <code>httr</code> package. You have to create a Python dictionary object as your payload using <code>reticulate::py_dict()</code> function:</p>
+<pre class="r"><code>
+params &lt;- reticulate::py_dict(c(&quot;x&quot;, &quot;y&quot;),
+                              c(...,...))
+response &lt;- py_requests$get(url, auth = authr,params = params)
+res &lt;- response$json()</code></pre>
+<p>It worked like magic!</p>
+<p><img src="https://media.giphy.com/media/14udF3WUwwGMaA/giphy.gif" /></p>
+</div>
+<div id="thoughts" class="section level2">
+<h2>Thoughts</h2>
+<p>This is a good example of why I always encouraging Data Scientist to learn both R and Python. Many people only proficient in one and often has biased opinion against the other. Why not learn both so you can use the amazing package in R like <code>shiny</code> and equivalently amazing packages like <code>ortools</code> (I will write another post on this) at the same time!</p>
+</div>
 
     </div>
 
@@ -784,11 +646,11 @@ to add more functionality to the package so stay tuned!</p>
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="../../tags/r/">R</a>
+  <a class="badge badge-light" href="../../../tags/python/">Python</a>
   
-  <a class="badge badge-light" href="../../tags/package/">Package</a>
+  <a class="badge badge-light" href="../../../tags/r/">R</a>
   
-  <a class="badge badge-light" href="../../tags/introduction/">Introduction</a>
+  <a class="badge badge-light" href="../../../tags/aws/">AWS</a>
   
 </div>
 
@@ -804,10 +666,6 @@ to add more functionality to the package so stay tuned!</p>
 
 
 
-  
-  
-    
-  
   
 
 
@@ -826,7 +684,7 @@ to add more functionality to the package so stay tuned!</p>
     
 
     <div class="media-body">
-      <h5 class="card-title" itemprop="name"><a href="../../">Michael Yan</a></h5>
+      <h5 class="card-title" itemprop="name"><a href="../../../">Michael Yan</a></h5>
       <h6 class="card-subtitle">Principal Data Scientist</h6>
       <p class="card-text" itemprop="description">A student of the last forbidden art of Data Science.</p>
       <ul class="network-icon" aria-hidden="true">
@@ -843,7 +701,7 @@ to add more functionality to the package so stay tuned!</p>
             
           
           <li>
-            <a itemprop="sameAs" href="../../#contact" >
+            <a itemprop="sameAs" href="../../../#contact" >
               <i class="fas fa-envelope"></i>
             </a>
           </li>
@@ -895,7 +753,11 @@ to add more functionality to the package so stay tuned!</p>
         <h3>Related</h3>
         <ul>
           
-          <li><a href="../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">Add Sunburst Chart to highcharter Package</a></li>
+          <li><a href="../../../post/2019-07-22-introducing-teamr/">Introducing teamr Package</a></li>
+          
+          <li><a href="../../../post/preprocess-your-text-for-nlp-models-cleaner/">Preprocess Text in Python --- A Cleaner and Faster Approach</a></li>
+          
+          <li><a href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">Add Sunburst Chart to highcharter Package</a></li>
           
         </ul>
       </div>
@@ -1035,7 +897,7 @@ to add more functionality to the package so stay tuned!</p>
     
     
     
-    <script src="../../js/academic.min.9ef1b53ee2bde6c7f33b150c6ba4d452.js"></script>
+    <script src="../../../js/academic.min.9ef1b53ee2bde6c7f33b150c6ba4d452.js"></script>
 
     
 
@@ -1049,7 +911,7 @@ to add more functionality to the package so stay tuned!</p>
     <footer class="site-footer">
   
   <p class="powered-by">
-    <a href="../../privacy/">Privacy Policy</a>
+    <a href="../../../privacy/">Privacy Policy</a>
   </p>
   
 

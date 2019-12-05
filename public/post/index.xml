@@ -7,10 +7,63 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Sun, 21 Jul 2019 20:14:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Authenticating AWS (Signature V4) in R using Python Backend</title>
+      <link>/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/</guid>
+      <description>
+
+
+&lt;div id=&#34;intuition&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Intuition&lt;/h2&gt;
+&lt;p&gt;I was working with an Elasticsearch project on AWS using Python and the &lt;code&gt;requests_aws4auth&lt;/code&gt; package worked like a charm for me. Never had any issue regarding the authentication (AWS V4 could be hard to work with sometimes). However, when I trying to create a Shiny app for my project, the problem emerged. I just couldn’t get the V4 auth to work with &lt;code&gt;httr&lt;/code&gt; in R. I tried &lt;code&gt;aws.signature&lt;/code&gt; package on &lt;a href=&#34;https://github.com/cloudyr/aws.signature&#34;&gt;Github&lt;/a&gt; but keep getting request header issues. Then I remembered that JJ Alaire from Rstudio created this amazing package &lt;code&gt;reticulate&lt;/code&gt; &lt;a href=&#34;https://rstudio.github.io/reticulate/&#34;&gt;(link)&lt;/a&gt; claiming the ability to import Python packages into R. Therefore I am intrigued to give it a try!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-syntax&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Syntax&lt;/h2&gt;
+&lt;p&gt;After install this package, the actually syntax is quite simple.&lt;/p&gt;
+&lt;p&gt;Load the package and point it to the location of your Python (I’m using Ubuntu here):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)
+use_python(&amp;quot;/usr/local/bin/python&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then you can easily load and call Python functions! For example, a simple &lt;code&gt;listdir&lt;/code&gt; function from &lt;code&gt;os&lt;/code&gt; package:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;os &amp;lt;- import(&amp;quot;os&amp;quot;)
+os$listdir(&amp;quot;.&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;index.html&amp;quot;   &amp;quot;featured.png&amp;quot; &amp;quot;index.Rmd&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;in-shiny&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;In Shiny&lt;/h2&gt;
+&lt;p&gt;All I did was adding those to the &lt;code&gt;global.R&lt;/code&gt; script (the script I source first in &lt;code&gt;server.R&lt;/code&gt;)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_awsauth &amp;lt;- import(&amp;quot;requests_aws4auth&amp;quot;)
+py_requests &amp;lt;- import(&amp;quot;requests&amp;quot;)
+
+region &amp;lt;- &amp;#39;us-east-2&amp;#39;
+service &amp;lt;- &amp;#39;execute-api&amp;#39;
+credentials &amp;lt;- aws.signature::locate_credentials()
+authr &amp;lt;- py_awsauth$AWS4Auth(credentials$key, credentials$secret, region, service, session_token=credentials$session_token)
+url &amp;lt;- &amp;#39;https://.....&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As you can see I am setting up the AWS connection using my local stored credentials. And the next step is to send HTTP request using Python &lt;code&gt;requests&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;One thing to noticed is that you cannot use nested list for your payload as you would do that if you are using R &lt;code&gt;httr&lt;/code&gt; package. You have to create a Python dictionary object as your payload using &lt;code&gt;reticulate::py_dict()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+params &amp;lt;- reticulate::py_dict(c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;),
+                              c(...,...))
+response &amp;lt;- py_requests$get(url, auth = authr,params = params)
+res &amp;lt;- response$json()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It worked like magic!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/14udF3WUwwGMaA/giphy.gif&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;thoughts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Thoughts&lt;/h2&gt;
+&lt;p&gt;This is a good example of why I always encouraging Data Scientist to learn both R and Python. Many people only proficient in one and often has biased opinion against the other. Why not learn both so you can use the amazing package in R like &lt;code&gt;shiny&lt;/code&gt; and equivalently amazing packages like &lt;code&gt;ortools&lt;/code&gt; (I will write another post on this) at the same time!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Introducing teamr Package</title>
@@ -91,7 +144,7 @@ investigation. Our message with a link button will looks like this:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;media/main1.PNG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You probablity noticed now that this package is built using &lt;code&gt;R6&lt;/code&gt;
+&lt;p&gt;You probably noticed now that this package is built using &lt;code&gt;R6&lt;/code&gt;
 class(very nice tutorial by Hadley
 &lt;a href=&#34;https://adv-r.hadley.nz/r6.html&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;). I decide to do this way
 because by using OOP concept, it will give use a feeling that you are

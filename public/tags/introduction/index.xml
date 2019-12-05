@@ -91,7 +91,7 @@ investigation. Our message with a link button will looks like this:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;media/main1.PNG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You probablity noticed now that this package is built using &lt;code&gt;R6&lt;/code&gt;
+&lt;p&gt;You probably noticed now that this package is built using &lt;code&gt;R6&lt;/code&gt;
 class(very nice tutorial by Hadley
 &lt;a href=&#34;https://adv-r.hadley.nz/r6.html&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;). I decide to do this way
 because by using OOP concept, it will give use a feeling that you are

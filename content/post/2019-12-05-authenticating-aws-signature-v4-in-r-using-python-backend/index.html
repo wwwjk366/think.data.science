@@ -1,0 +1,68 @@
+---
+title: Authenticating AWS (Signature V4) in R using Python Backend
+author:  ['admin']
+date: '2019-12-05'
+slug: authenticating-aws-signature-v4-in-r-using-python-backend
+categories:
+  - R
+  - Python
+  - Tutorial
+tags:
+  - Python
+  - R
+  - AWS
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2019-12-05T17:49:48Z'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+
+<div id="intuition" class="section level2">
+<h2>Intuition</h2>
+<p>I was working with an Elasticsearch project on AWS using Python and the <code>requests_aws4auth</code> package worked like a charm for me. Never had any issue regarding the authentication (AWS V4 could be hard to work with sometimes). However, when I trying to create a Shiny app for my project, the problem emerged. I just couldn’t get the V4 auth to work with <code>httr</code> in R. I tried <code>aws.signature</code> package on <a href="https://github.com/cloudyr/aws.signature">Github</a> but keep getting request header issues. Then I remembered that JJ Alaire from Rstudio created this amazing package <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/">(link)</a> claiming the ability to import Python packages into R. Therefore I am intrigued to give it a try!</p>
+</div>
+<div id="the-syntax" class="section level2">
+<h2>The Syntax</h2>
+<p>After install this package, the actually syntax is quite simple.</p>
+<p>Load the package and point it to the location of your Python (I’m using Ubuntu here):</p>
+<pre class="r"><code>library(reticulate)
+use_python(&quot;/usr/local/bin/python&quot;)</code></pre>
+<p>Then you can easily load and call Python functions! For example, a simple <code>listdir</code> function from <code>os</code> package:</p>
+<pre class="r"><code>os &lt;- import(&quot;os&quot;)
+os$listdir(&quot;.&quot;)</code></pre>
+<pre><code>## [1] &quot;index.html&quot;   &quot;featured.png&quot; &quot;index.Rmd&quot;</code></pre>
+</div>
+<div id="in-shiny" class="section level2">
+<h2>In Shiny</h2>
+<p>All I did was adding those to the <code>global.R</code> script (the script I source first in <code>server.R</code>)</p>
+<pre class="r"><code>py_awsauth &lt;- import(&quot;requests_aws4auth&quot;)
+py_requests &lt;- import(&quot;requests&quot;)
+
+region &lt;- &#39;us-east-2&#39;
+service &lt;- &#39;execute-api&#39;
+credentials &lt;- aws.signature::locate_credentials()
+authr &lt;- py_awsauth$AWS4Auth(credentials$key, credentials$secret, region, service, session_token=credentials$session_token)
+url &lt;- &#39;https://.....&#39;
+</code></pre>
+<p>As you can see I am setting up the AWS connection using my local stored credentials. And the next step is to send HTTP request using Python <code>requests</code> package.</p>
+<p>One thing to noticed is that you cannot use nested list for your payload as you would do that if you are using R <code>httr</code> package. You have to create a Python dictionary object as your payload using <code>reticulate::py_dict()</code> function:</p>
+<pre class="r"><code>
+params &lt;- reticulate::py_dict(c(&quot;x&quot;, &quot;y&quot;),
+                              c(...,...))
+response &lt;- py_requests$get(url, auth = authr,params = params)
+res &lt;- response$json()</code></pre>
+<p>It worked like magic!</p>
+<p><img src="https://media.giphy.com/media/14udF3WUwwGMaA/giphy.gif" /></p>
+</div>
+<div id="thoughts" class="section level2">
+<h2>Thoughts</h2>
+<p>This is a good example of why I always encouraging Data Scientist to learn both R and Python. Many people only proficient in one and often has biased opinion against the other. Why not learn both so you can use the amazing package in R like <code>shiny</code> and equivalently amazing packages like <code>ortools</code> (I will write another post on this) at the same time!</p>
+</div>

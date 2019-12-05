@@ -34,6 +34,64 @@
   </url>
   
   <url>
+    <loc>/tags/aws/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/2019-12-05-authenticating-aws-signature-v4-in-r-using-python-backend/authenticating-aws-signature-v4-in-r-using-python-backend/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/python/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tutorial/</loc>
+    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/authors/admin/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
   </url>
@@ -57,12 +115,6 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/post/2019-07-22-introducing-teamr/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
   </url>
@@ -75,23 +127,6 @@
   
   <url>
     <loc>/tags/package/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -114,18 +149,6 @@
   </url>
   
   <url>
-    <loc>/tags/python/</loc>
-    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/tutorial/</loc>
-    <lastmod>2019-07-04T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</loc>
     <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
@@ -133,12 +156,6 @@
   <url>
     <loc>/bio/</loc>
     <lastmod>2019-06-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
