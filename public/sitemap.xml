@@ -34,6 +34,58 @@
   </url>
   
   <url>
+    <loc>/categories/announcement/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/clustering/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/2019-12-16-introducing-python-package-gower/introducing-python-package-gower/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/package/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/python/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-12-16T20:23:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/aws/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
@@ -45,42 +97,13 @@
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/python/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2019-12-05T17:49:48+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/r/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2019-12-05T17:49:48+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -102,12 +125,6 @@
   </url>
   
   <url>
-    <loc>/categories/announcement/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/authors/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
     <priority>0</priority>
@@ -126,12 +143,6 @@
   
   <url>
     <loc>/tags/introduction/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/package/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
     <priority>0</priority>
   </url>

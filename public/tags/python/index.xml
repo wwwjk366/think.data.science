@@ -7,10 +7,339 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Thu, 05 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introducing Python package --- gower</title>
+      <link>/post/2019-12-16-introducing-python-package-gower/introducing-python-package-gower/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-12-16-introducing-python-package-gower/introducing-python-package-gower/</guid>
+      <description>
+
+&lt;p&gt;Today I am so pleased to introduce my first PyPI package (so much easier to submit comparing to CRAN) &amp;mdash; &lt;a href=&#34;https://pypi.org/project/gower/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;gower&lt;/code&gt;&lt;/a&gt; for calculating gower distance. I borrowed ideas from &lt;a href=&#34;https://github.com/scikit-learn/scikit-learn/issues/5884&#34; target=&#34;_blank&#34;&gt;https://github.com/scikit-learn/scikit-learn/issues/5884&lt;/a&gt; nad hopefully it can be added to &lt;code&gt;sklearn&lt;/code&gt; soon. There are lots of packages in R that incorporated this method but unfortunately not for Python users. I took this chance to try the whole package-making experience for PyPI and here we go!&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-gower-distance&#34;&gt;What is gower distance?&lt;/h2&gt;
+
+&lt;p&gt;Like normal Euclidean distance or cosine distance, Gower distance is a distance measure. However, it can be used to calculate distance between two entity whose attribute has a mixed of categorical and numerical values. Why this is important? Many common clustering algorithms, e.g. K-means clustering - only works when all variables are numeric. &lt;a href=&#34;https://www.jstor.org/stable/2528823?seq=1&#34; target=&#34;_blank&#34;&gt;Gower (1971) A general coefficient of similarity and some of its properties. Biometrics 27 857–874.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I won&amp;rsquo;t talk about the math behind it here but if you are interested there are tons of good material out there besides of Gower&amp;rsquo;s original paper:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rstudio-pubs-static.s3.amazonaws.com/423873_adfdb38bce8d47579f6dc916dd67ae75.html#fnref2&#34; target=&#34;_blank&#34;&gt;https://rstudio-pubs-static.s3.amazonaws.com/423873_adfdb38bce8d47579f6dc916dd67ae75.html#fnref2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://towardsdatascience.com/clustering-on-mixed-type-data-8bbd0a2569c3&#34; target=&#34;_blank&#34;&gt;https://towardsdatascience.com/clustering-on-mixed-type-data-8bbd0a2569c3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.math.vu.nl/~sbhulai/papers/thesis-vandenhoven.pdf&#34; target=&#34;_blank&#34;&gt;https://www.math.vu.nl/~sbhulai/papers/thesis-vandenhoven.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;You can install directly from PyPI using &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;pip install gower&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;calculate-gower-distance&#34;&gt;Calculate Gower Distance&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
+import pandas as pd
+
+Xd=pd.DataFrame({&#39;age&#39;:[21,21,19, 30,21,21,19,30],
+&#39;gender&#39;:[&#39;M&#39;,&#39;M&#39;,&#39;M&#39;,&#39;M&#39;,&#39;F&#39;,&#39;F&#39;,&#39;F&#39;,&#39;F&#39;],
+&#39;civil_status&#39;:[&#39;MARRIED&#39;,&#39;SINGLE&#39;,&#39;SINGLE&#39;,&#39;SINGLE&#39;,&#39;MARRIED&#39;,&#39;SINGLE&#39;,&#39;WIDOW&#39;,&#39;DIVORCED&#39;],
+&#39;salary&#39;:[3000.0,1200.0 ,32000.0,1800.0 ,2900.0 ,1100.0 ,10000.0,1500.0],
+&#39;has_children&#39;:[1,0,1,1,1,0,0,1],
+&#39;available_credit&#39;:[2200,100,22000,1100,2000,100,6000,2200]})
+Yd = Xd.iloc[0:1,:]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;First create some fake data called &lt;code&gt;Xd&lt;/code&gt; and &lt;code&gt;Yd&lt;/code&gt; as pandas dataframe:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;Xd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;age&lt;/th&gt;
+      &lt;th&gt;gender&lt;/th&gt;
+      &lt;th&gt;civil_status&lt;/th&gt;
+      &lt;th&gt;salary&lt;/th&gt;
+      &lt;th&gt;has_children&lt;/th&gt;
+      &lt;th&gt;available_credit&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;MARRIED&lt;/td&gt;
+      &lt;td&gt;3000.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2200&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;SINGLE&lt;/td&gt;
+      &lt;td&gt;1200.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;19&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;SINGLE&lt;/td&gt;
+      &lt;td&gt;32000.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;22000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;30&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;SINGLE&lt;/td&gt;
+      &lt;td&gt;1800.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;MARRIED&lt;/td&gt;
+      &lt;td&gt;2900.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;SINGLE&lt;/td&gt;
+      &lt;td&gt;1100.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;19&lt;/td&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;WIDOW&lt;/td&gt;
+      &lt;td&gt;10000.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;6000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;30&lt;/td&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;DIVORCED&lt;/td&gt;
+      &lt;td&gt;1500.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2200&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;Yd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;age&lt;/th&gt;
+      &lt;th&gt;gender&lt;/th&gt;
+      &lt;th&gt;civil_status&lt;/th&gt;
+      &lt;th&gt;salary&lt;/th&gt;
+      &lt;th&gt;has_children&lt;/th&gt;
+      &lt;th&gt;available_credit&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;MARRIED&lt;/td&gt;
+      &lt;td&gt;3000.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2200&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&#34;compute-distance-matrix&#34;&gt;Compute distance matrix&lt;/h3&gt;
+
+&lt;p&gt;Main function for the package is &lt;code&gt;gower.gower_matrix()&lt;/code&gt;. This function has 4 arguments:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;data_x&lt;/code&gt; : input data&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data_y&lt;/code&gt; : default &lt;code&gt;None&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;weight&lt;/code&gt; : weight of each variable, default to be a vector of 1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cat_features&lt;/code&gt; : a boolean vector indicates categorical features, default &lt;code&gt;None&lt;/code&gt; and function will determine by itself&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s run it on our dataframe &lt;code&gt;Xd&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import gower
+
+gower.gower_matrix(Xd)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;array([[0.        , 0.3590238 , 0.5040732 , 0.31787416, 0.16872811,
+        0.52622986, 0.59697855, 0.47778758],
+       [0.3590238 , 0.        , 0.52976364, 0.3138769 , 0.523629  ,
+        0.16720603, 0.45600235, 0.6539635 ],
+       [0.5040732 , 0.52976364, 0.        , 0.48861402, 0.6728013 ,
+        0.6969697 , 0.740428  , 0.8151941 ],
+       [0.31787416, 0.3138769 , 0.48861402, 0.        , 0.4824794 ,
+        0.48108295, 0.74818605, 0.34332284],
+       [0.16872811, 0.523629  , 0.6728013 , 0.4824794 , 0.        ,
+        0.35750175, 0.43237334, 0.3121036 ],
+       [0.52622986, 0.16720603, 0.6969697 , 0.48108295, 0.35750175,
+        0.        , 0.2898751 , 0.4878362 ],
+       [0.59697855, 0.45600235, 0.740428  , 0.74818605, 0.43237334,
+        0.2898751 , 0.        , 0.57476616],
+       [0.47778758, 0.6539635 , 0.8151941 , 0.34332284, 0.3121036 ,
+        0.4878362 , 0.57476616, 0.        ]], dtype=float32)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s try to treat them all as categorical features:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gower.gower_matrix(Xd, cat_features = [True, True,True,True,True,True])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;array([[0.        , 0.6666667 , 0.6666667 , 0.6666667 , 0.5       ,
+        0.8333333 , 1.        , 0.6666667 ],
+       [0.6666667 , 0.        , 0.6666667 , 0.6666667 , 0.8333333 ,
+        0.33333334, 0.8333333 , 1.        ],
+       [0.6666667 , 0.6666667 , 0.        , 0.5       , 0.8333333 ,
+        0.8333333 , 0.8333333 , 0.8333333 ],
+       [0.6666667 , 0.6666667 , 0.5       , 0.        , 0.8333333 ,
+        0.8333333 , 1.        , 0.6666667 ],
+       [0.5       , 0.8333333 , 0.8333333 , 0.8333333 , 0.        ,
+        0.6666667 , 0.8333333 , 0.6666667 ],
+       [0.8333333 , 0.33333334, 0.8333333 , 0.8333333 , 0.6666667 ,
+        0.        , 0.6666667 , 0.8333333 ],
+       [1.        , 0.8333333 , 0.8333333 , 1.        , 0.8333333 ,
+        0.6666667 , 0.        , 0.8333333 ],
+       [0.6666667 , 1.        , 0.8333333 , 0.6666667 , 0.6666667 ,
+        0.8333333 , 0.8333333 , 0.        ]], dtype=float32)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It also supports array inputs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;X = np.asarray(Xd)
+gower.gower_matrix(X)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;array([[0.        , 0.3590238 , 0.5040732 , 0.31787416, 0.16872811,
+        0.52622986, 0.59697855, 0.47778758],
+       [0.3590238 , 0.        , 0.52976364, 0.3138769 , 0.523629  ,
+        0.16720603, 0.45600235, 0.6539635 ],
+       [0.5040732 , 0.52976364, 0.        , 0.48861402, 0.6728013 ,
+        0.6969697 , 0.740428  , 0.8151941 ],
+       [0.31787416, 0.3138769 , 0.48861402, 0.        , 0.4824794 ,
+        0.48108295, 0.74818605, 0.34332284],
+       [0.16872811, 0.523629  , 0.6728013 , 0.4824794 , 0.        ,
+        0.35750175, 0.43237334, 0.3121036 ],
+       [0.52622986, 0.16720603, 0.6969697 , 0.48108295, 0.35750175,
+        0.        , 0.2898751 , 0.4878362 ],
+       [0.59697855, 0.45600235, 0.740428  , 0.74818605, 0.43237334,
+        0.2898751 , 0.        , 0.57476616],
+       [0.47778758, 0.6539635 , 0.8151941 , 0.34332284, 0.3121036 ,
+        0.4878362 , 0.57476616, 0.        ]], dtype=float32)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;find-top-n-similar-items&#34;&gt;Find top n similar items&lt;/h3&gt;
+
+&lt;p&gt;One intuition for me to create this package is to use it at work. I usually need to find look-alike customer for my company. E.g. one customer with certain KPI and properties &amp;mdash; location, tenure, RFM metrics etc and they are often mixed type. Gower distance can easily be calculated the distance between them and allows me to give certain variables higher/lower weight.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gower.gower_topn(Xd.iloc[0:1,:], Xd, n = 5)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;{&#39;index&#39;: array([0, 4, 3, 1, 7]),
+ &#39;values&#39;: array([0.        , 0.16872811, 0.31787416, 0.3590238 , 0.47778758],
+       dtype=float32)}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The function will return two arrays. The index of the top 5 closest records and their distance in decimals&lt;/p&gt;
+
+&lt;h2 id=&#34;application-in-hierarchical-clustering&#34;&gt;Application in Hierarchical Clustering&lt;/h2&gt;
+
+&lt;p&gt;The most popular use cases for mathematical distances are clustering. &lt;code&gt;cluster&lt;/code&gt; module in &lt;code&gt;scipy&lt;/code&gt; provided the ability to use custom distance matrix to do hierarchical clustering. Let&amp;rsquo;s run a simple clustering model on our toy data. First we need to create the linkage using our precomputed distance matrix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
+
+dm = gower.gower_matrix(X)
+Zd = linkage(dm) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;/opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:6: ClusterWarning: scipy.cluster: The symmetric non-negative hollow observation matrix looks suspiciously like an uncondensed distance matrix
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Say we want total of 3 clusters:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;cld = fcluster(Zd, 3, criterion=&#39;maxclust&#39;)
+cld
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;array([2, 1, 3, 2, 2, 1, 1, 2], dtype=int32)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can also inspect the dendrogram created from our distance matrix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dendrogram(Zd) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;gower_introduction_28_1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This package will be maintained so please feel free to report bug and issues here: (&lt;a href=&#34;https://github.com/wwwjk366/teamr/issues&#34; target=&#34;_blank&#34;&gt;https://github.com/wwwjk366/teamr/issues&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Last but not least:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/26FLhjMK5PytcY2rK/giphy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Authenticating AWS (Signature V4) in R using Python Backend</title>
