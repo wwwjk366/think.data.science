@@ -2,7 +2,6 @@
 title: Introducing Python package --- gower
 author: 'admin'
 date: '2019-12-16'
-slug: introducing-python-package-gower
 categories:
   - Announcement
   - Python
