@@ -24,7 +24,7 @@ role: Principal Data Scientist
 social:
 - icon: envelope
   icon_pack: fas
-  link: '#contact'
+  link: 'bio/'
 - icon: linkedin
   icon_pack: fab
   link:  https://linkedin.com/in/michaelyan3
@@ -39,6 +39,4 @@ user_groups:
 
 "You can have data without information, but you cannot have information without data."
 
-I'm a accomplished data scientist and thought leader with 8 years of experience of machine learning and predictive modeling in finance, gaming and retail industries. I'm also a person with insatiable intellectual curiosity who is passionate about finding actionable insights hidden in vast amounts of raw data. 
-
-
+I'm an accomplished data scientist and thought leader with 8+ years of experience of research and bring to market advance analytics and machine learning solutions. I have been extremely lucky to work in many different realms, including retail, finance, marketing and even gaming. I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. Also as a person with insatiable intellectual curiosity, I am passionate about finding actionable insights hidden in vast amounts of raw data.
