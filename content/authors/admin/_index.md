@@ -20,7 +20,7 @@ name: Michael Yan
 organizations:
 - name: Ingram Micro
   url: "https://corp.ingrammicro.com/About-Us.aspx"
-role: Principal Data Scientist
+role: Principal Data Scientist @ Ingram Micro
 social:
 - icon: envelope
   icon_pack: fas

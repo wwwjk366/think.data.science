@@ -13,21 +13,11 @@
     
     
     <item>
-      <title>OSRM</title>
-      <link>/post/osrm/</link>
-      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/osrm/</guid>
-      <description>&lt;p&gt;test&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications</title>
-      <link>/post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/</link>
+      <link>/post/2020-03-03-osrm/osrm/</link>
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/</guid>
+      <guid>/post/2020-03-03-osrm/osrm/</guid>
       <description>
 
 &lt;p&gt;I came across a wonderful open source project recently &amp;mdash; Project OSRM (&lt;a href=&#34;http://project-osrm.org/&#34; target=&#34;_blank&#34;&gt;link&lt;/a&gt;) &amp;mdash; A modern C++ routing engine for shortest paths in road networks. You can imagine it as a free version of Google Maps API, without live traffic of course. It is very valuable for my work because my current company has large shipping and logistic services. Being able to calculate the distance and directions between locations in a timely fashion will enable us to research and modeling on route optimization, leads generation, etc.&lt;/p&gt;

@@ -2,7 +2,7 @@
 title: Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications
 author: ''
 date: '2020-03-03'
-slug: osrm
+slug: open-source-routing-machine-in-action-in-python-and-applications
 categories:
   - Python
   - Tutorial
@@ -14,7 +14,7 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2020-03-03T22:04:53Z'
+lastmod: '2020-03-03T21:14:08Z'
 featured: no
 image:
   caption: ''
@@ -22,7 +22,6 @@ image:
   preview_only: no
 projects: []
 ---
-
 
 
 I came across a wonderful open source project recently --- Project OSRM ([link](http://project-osrm.org/)) --- A modern C++ routing engine for shortest paths in road networks. You can imagine it as a free version of Google Maps API, without live traffic of course. It is very valuable for my work because my current company has large shipping and logistic services. Being able to calculate the distance and directions between locations in a timely fashion will enable us to research and modeling on route optimization, leads generation, etc.
