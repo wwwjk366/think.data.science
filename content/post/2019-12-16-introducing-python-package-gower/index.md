@@ -1,5 +1,5 @@
 ---
-title: Introducing Python package --- gower
+title: Introducing Python Package --- gower
 author: 'admin'
 date: '2019-12-16'
 categories:

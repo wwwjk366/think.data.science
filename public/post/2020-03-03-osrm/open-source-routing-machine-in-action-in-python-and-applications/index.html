@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Michael Yan">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="I came across a wonderful open source project recently &mdash; Project OSRM (link) &mdash; A modern C&#43;&#43; routing engine for shortest paths in road networks. You can imagine it as a free version of Google Maps API, without live traffic of course. It is very valuable for my work because my current company has large shipping and logistic services. Being able to calculate the distance and directions between locations in a timely fashion will enable us to research and modeling on route optimization, leads generation, etc.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="../../../post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="../../../css/academic.min.966b3bc843cfea29ab40b0bad2f17078.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74212634-3', 'auto');
+      
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="../../../site.webmanifest">
+  <link rel="icon" type="image/png" href="../../../img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../../img/icon-192.png">
+
+  <link rel="canonical" href="../../../post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Think.Data.Science">
+  <meta property="og:url" content="/post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/">
+  <meta property="og:title" content="Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications | Think.Data.Science">
+  <meta property="og:description" content="I came across a wonderful open source project recently &mdash; Project OSRM (link) &mdash; A modern C&#43;&#43; routing engine for shortest paths in road networks. You can imagine it as a free version of Google Maps API, without live traffic of course. It is very valuable for my work because my current company has large shipping and logistic services. Being able to calculate the distance and directions between locations in a timely fashion will enable us to research and modeling on route optimization, leads generation, etc."><meta property="og:image" content="/post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-03-03T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-03-03T21:14:08&#43;00:00">
+  
+
+  
+
+
+  
+
+
+
+
+
+  <title>Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications | Think.Data.Science</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="../../../"><img src="../../../img/header_trans.png" alt="Think.Data.Science"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="../../../post/"><span>POSTS</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../courses/"><span>TUTORIALS</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../bio/"><span>ABOUT / CONTACT</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/featured_hu3a80464479977e5667bc97262776cd42_421358_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications</h1>
+
+        
+
+        
+
+
+
+<meta content="2020-03-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-03-03 21:14:08 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Mar 3, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../../post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../../categories/python/">Python</a>, <a href="../../../categories/tutorial/">Tutorial</a>, <a href="../../../categories/visualization/">Visualization</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications&amp;url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f&amp;title=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f&amp;title=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications&amp;body=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="../../../post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/featured_hu3a80464479977e5667bc97262776cd42_421358_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">Python Tutorial of OSRM(Open Sourced Routing Machine) and Applications</h1>
+
+  
+
+  
+
+
+
+<meta content="2020-03-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-03-03 21:14:08 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Mar 3, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="../../../post/2020-03-03-osrm/open-source-routing-machine-in-action-in-python-and-applications/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="../../../categories/python/">Python</a>, <a href="../../../categories/tutorial/">Tutorial</a>, <a href="../../../categories/visualization/">Visualization</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications&amp;url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f&amp;title=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f&amp;title=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Python%20Tutorial%20of%20OSRM%28Open%20Sourced%20Routing%20Machine%29%20and%20Applications&amp;body=%2fpost%2f2020-03-03-osrm%2fopen-source-routing-machine-in-action-in-python-and-applications%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>I came across a wonderful open source project recently &mdash; Project OSRM (<a href="http://project-osrm.org/" target="_blank">link</a>) &mdash; A modern C++ routing engine for shortest paths in road networks. You can imagine it as a free version of Google Maps API, without live traffic of course. It is very valuable for my work because my current company has large shipping and logistic services. Being able to calculate the distance and directions between locations in a timely fashion will enable us to research and modeling on route optimization, leads generation, etc.</p>
+
+<p>The solution itself is quite straightforward and I am able to setup an API sandbox running in a couple of hours.</p>
+
+<p>First you need to get the OSRM back-end running as a container on your machine. The process is very easy to follow on the project&rsquo;s github page <a href="https://github.com/Project-OSRM/osrm-backend" target="_blank">here</a>. After that you can easily interact with it in python, let&rsquo;s take a look:</p>
+
+<h2 id="package-needed">Package Needed</h2>
+
+<p>We need <code>folium</code> package to draw the routes on the map and <code>polyline</code> to decode the routes from the API output. We will talk about that more later.</p>
+
+<pre><code class="language-python">import requests
+import folium
+import polyline
+</code></pre>
+
+<h2 id="single-request">Single Request</h2>
+
+<p>You can request the driving route by supply the latitude and longitude of your start and end points, separate by  , and ;</p>
+
+<pre><code class="language-python">url = &quot;http://10.22.168.65:9080/route/v1/driving/-117.851364,33.698206;-117.838925,33.672260&quot;
+r = requests.get(url)
+res = r.json()
+res
+</code></pre>
+
+<pre><code>{'code': 'Ok',
+ 'routes': [{'geometry': 'gttlEfyhnUpBtC|k@e`Aro@zo@tf@jXhFaMxSe]lDgKlAqIGwTcIyB',
+   'legs': [{'steps': [],
+     'distance': 4995.3,
+     'duration': 409.1,
+     'summary': '',
+     'weight': 422.5}],
+   'distance': 4995.3,
+   'duration': 409.1,
+   'weight_name': 'routability',
+   'weight': 422.5}],
+ 'waypoints': [{'hint': 'O14sgD1eLIAMAQAASQEAAAAAAAAAAAAAWs1fQprEiEIAAAAAAAAAAIYAAAClAAAAAAAAAAAAAACQBgAAnbv5-EQxAgIcu_n4njECAgAAfwLrq6bJ',
+   'distance': 15.580755,
+   'name': '',
+   'location': [-117.851235, 33.698116]},
+  {'hint': 'S64XgFKuF4BLAAAAKgAAAAAAAAA_AAAA2iJQQqE95kEAAAAAb1YuQksAAAAqAAAAAAAAAD8AAACQBgAA5-z5-MXLAQKz6_n4RMwBAgAArwHrq6bJ',
+   'distance': 31.847501,
+   'name': 'Carlson Avenue',
+   'location': [-117.838617, 33.672133]}]}
+</code></pre>
+
+<p>The output is easy to follow. This trip has a distance of 4995 meters and travel time of 409 seconds, with the routes encoded using google&rsquo;s <a href="https://developers.google.com/maps/documentation/utilities/polylinealgorithm" target="_blank">Polyline Algorithm</a>. We can use python package <code>polyline</code> to decode it into coordinates:</p>
+
+<pre><code class="language-python">polyline.decode('gttlEfyhnUpBtC|k@e`Aro@zo@tf@jXhFaMxSe]lDgKlAqIGwTcIyB')
+</code></pre>
+
+<pre><code>[(33.69812, -117.85124),
+ (33.69755, -117.85199),
+ (33.69036, -117.84156),
+ (33.68258, -117.84938),
+ (33.67623, -117.85344),
+ (33.67506, -117.85119),
+ (33.67173, -117.84636),
+ (33.67086, -117.8444),
+ (33.67047, -117.84271),
+ (33.67051, -117.83923),
+ (33.67213, -117.83862)]
+</code></pre>
+
+<p>Now this is something we can work with! Lets wrap it into a function:</p>
+
+<pre><code class="language-python">def get_route(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat):
+    
+    loc = &quot;{},{};{},{}&quot;.format(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
+    url = &quot;http://10.22.168.65:9080/route/v1/driving/&quot;
+    r = requests.get(url + loc) 
+    if r.status_code!= 200:
+        return {}
+  
+    res = r.json()   
+    routes = polyline.decode(res['routes'][0]['geometry'])
+    start_point = [res['waypoints'][0]['location'][1], res['waypoints'][0]['location'][0]]
+    end_point = [res['waypoints'][1]['location'][1], res['waypoints'][1]['location'][0]]
+    distance = res['routes'][0]['distance']
+    
+    out = {'route':routes,
+           'start_point':start_point,
+           'end_point':end_point,
+           'distance':distance
+          }
+
+    return out
+</code></pre>
+
+<pre><code class="language-python">pickup_lon, pickup_lat, dropoff_lon, dropoff_lat = -117.851364,33.698206,-117.838925,33.672260
+test_route = get_route(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
+test_route
+</code></pre>
+
+<pre><code>{'route': [(33.69812, -117.85124),
+  (33.69755, -117.85199),
+  (33.69036, -117.84156),
+  (33.68258, -117.84938),
+  (33.67623, -117.85344),
+  (33.67506, -117.85119),
+  (33.67173, -117.84636),
+  (33.67086, -117.8444),
+  (33.67047, -117.84271),
+  (33.67051, -117.83923),
+  (33.67213, -117.83862)],
+ 'start_point': [33.698116, -117.851235],
+ 'end_point': [33.672133, -117.838617],
+ 'distance': 4995.3}
+</code></pre>
+
+<h2 id="draw-the-route-on-map">Draw the route on map</h2>
+
+<p>Now we have the output nicely organized in coordinates format, let&rsquo;s use <code>folium</code> package to chart the routes and see if it makes sense or not.</p>
+
+<pre><code class="language-python">def get_map(route):
+    
+    m = folium.Map(location=[(route['start_point'][0] + route['end_point'][0])/2, 
+                             (route['start_point'][1] + route['end_point'][1])/2], 
+                   zoom_start=13)
+
+    folium.PolyLine(
+        route['route'],
+        weight=8,
+        color='blue',
+        opacity=0.6
+    ).add_to(m)
+
+    folium.Marker(
+        location=route['start_point'],
+        icon=folium.Icon(icon='play', color='green')
+    ).add_to(m)
+
+    folium.Marker(
+        location=route['end_point'],
+        icon=folium.Icon(icon='stop', color='red')
+    ).add_to(m)
+
+    return m
+</code></pre>
+
+<pre><code class="language-python">get_map(test_route)
+</code></pre>
+
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgPHNjcmlwdD5MX1BSRUZFUl9DQU5WQVM9ZmFsc2U7IExfTk9fVE9VQ0g9ZmFsc2U7IExfRElTQUJMRV8zRD1mYWxzZTs8L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS40LjAvZGlzdC9sZWFmbGV0LmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2NvZGUuanF1ZXJ5LmNvbS9qcXVlcnktMS4xMi40Lm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvanMvYm9vdHN0cmFwLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuanMiPjwvc2NyaXB0PgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS40LjAvZGlzdC9sZWFmbGV0LmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvY3NzL2Jvb3RzdHJhcC10aGVtZS5taW4uY3NzIi8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vZm9udC1hd2Vzb21lLzQuNi4zL2Nzcy9mb250LWF3ZXNvbWUubWluLmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9MZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy8yLjAuMi9sZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy5jc3MiLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9yYXdjZG4uZ2l0aGFjay5jb20vcHl0aG9uLXZpc3VhbGl6YXRpb24vZm9saXVtL21hc3Rlci9mb2xpdW0vdGVtcGxhdGVzL2xlYWZsZXQuYXdlc29tZS5yb3RhdGUuY3NzIi8+CiAgICA8c3R5bGU+aHRtbCwgYm9keSB7d2lkdGg6IDEwMCU7aGVpZ2h0OiAxMDAlO21hcmdpbjogMDtwYWRkaW5nOiAwO308L3N0eWxlPgogICAgPHN0eWxlPiNtYXAge3Bvc2l0aW9uOmFic29sdXRlO3RvcDowO2JvdHRvbTowO3JpZ2h0OjA7bGVmdDowO308L3N0eWxlPgogICAgCiAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLAogICAgICAgIGluaXRpYWwtc2NhbGU9MS4wLCBtYXhpbXVtLXNjYWxlPTEuMCwgdXNlci1zY2FsYWJsZT1ubyIgLz4KICAgIDxzdHlsZT4jbWFwXzU3ZmY2YzVhOTk1YTQ3Nzc4ODFmNmNiNTc4NGJjY2VhIHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgICAgd2lkdGg6IDEwMC4wJTsKICAgICAgICBoZWlnaHQ6IDEwMC4wJTsKICAgICAgICBsZWZ0OiAwLjAlOwogICAgICAgIHRvcDogMC4wJTsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgPGRpdiBjbGFzcz0iZm9saXVtLW1hcCIgaWQ9Im1hcF81N2ZmNmM1YTk5NWE0Nzc3ODgxZjZjYjU3ODRiY2NlYSIgPjwvZGl2Pgo8L2JvZHk+CjxzY3JpcHQ+ICAgIAogICAgCiAgICAKICAgICAgICB2YXIgYm91bmRzID0gbnVsbDsKICAgIAoKICAgIHZhciBtYXBfNTdmZjZjNWE5OTVhNDc3Nzg4MWY2Y2I1Nzg0YmNjZWEgPSBMLm1hcCgKICAgICAgICAnbWFwXzU3ZmY2YzVhOTk1YTQ3Nzc4ODFmNmNiNTc4NGJjY2VhJywgewogICAgICAgIGNlbnRlcjogWzMzLjY4NTEyNDUsIC0xMTcuODQ0OTI2XSwKICAgICAgICB6b29tOiAxMywKICAgICAgICBtYXhCb3VuZHM6IGJvdW5kcywKICAgICAgICBsYXllcnM6IFtdLAogICAgICAgIHdvcmxkQ29weUp1bXA6IGZhbHNlLAogICAgICAgIGNyczogTC5DUlMuRVBTRzM4NTcsCiAgICAgICAgem9vbUNvbnRyb2w6IHRydWUsCiAgICAgICAgfSk7CgoKICAgIAogICAgdmFyIHRpbGVfbGF5ZXJfYzdlM2Q4MjZkZDYzNDdjOGEyZjllYThmOWFlNjE2ZWEgPSBMLnRpbGVMYXllcigKICAgICAgICAnaHR0cHM6Ly97c30udGlsZS5vcGVuc3RyZWV0bWFwLm9yZy97en0ve3h9L3t5fS5wbmcnLAogICAgICAgIHsKICAgICAgICAiYXR0cmlidXRpb24iOiBudWxsLAogICAgICAgICJkZXRlY3RSZXRpbmEiOiBmYWxzZSwKICAgICAgICAibWF4TmF0aXZlWm9vbSI6IDE4LAogICAgICAgICJtYXhab29tIjogMTgsCiAgICAgICAgIm1pblpvb20iOiAwLAogICAgICAgICJub1dyYXAiOiBmYWxzZSwKICAgICAgICAib3BhY2l0eSI6IDEsCiAgICAgICAgInN1YmRvbWFpbnMiOiAiYWJjIiwKICAgICAgICAidG1zIjogZmFsc2UKfSkuYWRkVG8obWFwXzU3ZmY2YzVhOTk1YTQ3Nzc4ODFmNmNiNTc4NGJjY2VhKTsKICAgIAogICAgICAgICAgICAgICAgdmFyIHBvbHlfbGluZV9mNzM5OWU1MTdjOGE0MTMyOTNmMTBkMTc3Mzg1YzYxYyA9IEwucG9seWxpbmUoCiAgICAgICAgICAgICAgICAgICAgW1szMy42OTgxMiwgLTExNy44NTEyNF0sIFszMy42OTc1NSwgLTExNy44NTE5OV0sIFszMy42OTAzNiwgLTExNy44NDE1Nl0sIFszMy42ODI1OCwgLTExNy44NDkzOF0sIFszMy42NzYyMywgLTExNy44NTM0NF0sIFszMy42NzUwNiwgLTExNy44NTExOV0sIFszMy42NzE3MywgLTExNy44NDYzNl0sIFszMy42NzA4NiwgLTExNy44NDQ0XSwgWzMzLjY3MDQ3LCAtMTE3Ljg0MjcxXSwgWzMzLjY3MDUxLCAtMTE3LjgzOTIzXSwgWzMzLjY3MjEzLCAtMTE3LjgzODYyXV0sCiAgICAgICAgICAgICAgICAgICAgewogICJidWJibGluZ01vdXNlRXZlbnRzIjogdHJ1ZSwKICAiY29sb3IiOiAiYmx1ZSIsCiAgImRhc2hBcnJheSI6IG51bGwsCiAgImRhc2hPZmZzZXQiOiBudWxsLAogICJmaWxsIjogZmFsc2UsCiAgImZpbGxDb2xvciI6ICJibHVlIiwKICAiZmlsbE9wYWNpdHkiOiAwLjIsCiAgImZpbGxSdWxlIjogImV2ZW5vZGQiLAogICJsaW5lQ2FwIjogInJvdW5kIiwKICAibGluZUpvaW4iOiAicm91bmQiLAogICJub0NsaXAiOiBmYWxzZSwKICAib3BhY2l0eSI6IDAuNiwKICAic21vb3RoRmFjdG9yIjogMS4wLAogICJzdHJva2UiOiB0cnVlLAogICJ3ZWlnaHQiOiA4Cn0KICAgICAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICAgICAgLmFkZFRvKG1hcF81N2ZmNmM1YTk5NWE0Nzc3ODgxZjZjYjU3ODRiY2NlYSk7CiAgICAgICAgICAgIAogICAgCiAgICAgICAgdmFyIG1hcmtlcl9jMWRhYjFkZjE4MTE0MDYxYTg0YTBjYmViMjJkYWE4ZCA9IEwubWFya2VyKAogICAgICAgICAgICBbMzMuNjk4MTE2LCAtMTE3Ljg1MTIzNV0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGljb246IG5ldyBMLkljb24uRGVmYXVsdCgpLAogICAgICAgICAgICAgICAgfQogICAgICAgICAgICApLmFkZFRvKG1hcF81N2ZmNmM1YTk5NWE0Nzc3ODgxZjZjYjU3ODRiY2NlYSk7CiAgICAgICAgCiAgICAKCiAgICAgICAgICAgICAgICB2YXIgaWNvbl84YjJhNzMzY2YxN2I0ZTlkODVlODI5MDk3MTRhMTNiNCA9IEwuQXdlc29tZU1hcmtlcnMuaWNvbih7CiAgICAgICAgICAgICAgICAgICAgaWNvbjogJ3BsYXknLAogICAgICAgICAgICAgICAgICAgIGljb25Db2xvcjogJ3doaXRlJywKICAgICAgICAgICAgICAgICAgICBtYXJrZXJDb2xvcjogJ2dyZWVuJywKICAgICAgICAgICAgICAgICAgICBwcmVmaXg6ICdnbHlwaGljb24nLAogICAgICAgICAgICAgICAgICAgIGV4dHJhQ2xhc3NlczogJ2ZhLXJvdGF0ZS0wJwogICAgICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgbWFya2VyX2MxZGFiMWRmMTgxMTQwNjFhODRhMGNiZWIyMmRhYThkLnNldEljb24oaWNvbl84YjJhNzMzY2YxN2I0ZTlkODVlODI5MDk3MTRhMTNiNCk7CiAgICAgICAgICAgIAogICAgCiAgICAgICAgdmFyIG1hcmtlcl81MTc5ZjNmYmVhYzg0NmE0ODg1N2ZjYjVjYTA5M2U5MSA9IEwubWFya2VyKAogICAgICAgICAgICBbMzMuNjcyMTMzLCAtMTE3LjgzODYxN10sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGljb246IG5ldyBMLkljb24uRGVmYXVsdCgpLAogICAgICAgICAgICAgICAgfQogICAgICAgICAgICApLmFkZFRvKG1hcF81N2ZmNmM1YTk5NWE0Nzc3ODgxZjZjYjU3ODRiY2NlYSk7CiAgICAgICAgCiAgICAKCiAgICAgICAgICAgICAgICB2YXIgaWNvbl82M2IyMjgyNjg0OTE0MmViOGRhMzliZTIyYzBkYTExYSA9IEwuQXdlc29tZU1hcmtlcnMuaWNvbih7CiAgICAgICAgICAgICAgICAgICAgaWNvbjogJ3N0b3AnLAogICAgICAgICAgICAgICAgICAgIGljb25Db2xvcjogJ3doaXRlJywKICAgICAgICAgICAgICAgICAgICBtYXJrZXJDb2xvcjogJ3JlZCcsCiAgICAgICAgICAgICAgICAgICAgcHJlZml4OiAnZ2x5cGhpY29uJywKICAgICAgICAgICAgICAgICAgICBleHRyYUNsYXNzZXM6ICdmYS1yb3RhdGUtMCcKICAgICAgICAgICAgICAgICAgICB9KTsKICAgICAgICAgICAgICAgIG1hcmtlcl81MTc5ZjNmYmVhYzg0NmE0ODg1N2ZjYjVjYTA5M2U5MS5zZXRJY29uKGljb25fNjNiMjI4MjY4NDkxNDJlYjhkYTM5YmUyMmMwZGExMWEpOwogICAgICAgICAgICAKPC9zY3JpcHQ+" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+
+<p>I just randomly pick two points in Irvine, CA and the route looks pretty good!</p>
+
+<h2 id="benchmarking">Benchmarking</h2>
+
+<p>If I want to use this API to processing data for me, I would like to know how fast it can handle my requests. Here I randomly generated another 1000 coordinates and request the routes from our docker backend as a mini stress test:</p>
+
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+lon1 = np.random.uniform(-117.4,-118, 1000).round(6)
+lon2 = np.random.uniform(-117.4,-118, 1000).round(6)
+lat1 = np.random.uniform(33.6,33.8, 1000).round(6)
+lat2 = np.random.uniform(33.6,33.8, 1000).round(6)
+df = pd.DataFrame({'pickup_lon': lon1,
+              'pickup_lat': lat1,
+              'dropoff_lon': lon2,
+              'dropoff_lat': lat2,
+             })
+</code></pre>
+
+<pre><code class="language-python">df.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pickup_lon</th>
+      <th>pickup_lat</th>
+      <th>dropoff_lon</th>
+      <th>dropoff_lat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-117.650723</td>
+      <td>33.696095</td>
+      <td>-117.400615</td>
+      <td>33.675578</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-117.653614</td>
+      <td>33.713656</td>
+      <td>-117.920080</td>
+      <td>33.679549</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-117.484076</td>
+      <td>33.671013</td>
+      <td>-117.960667</td>
+      <td>33.741495</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-117.599436</td>
+      <td>33.656727</td>
+      <td>-117.481877</td>
+      <td>33.643613</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-117.968429</td>
+      <td>33.776134</td>
+      <td>-117.469914</td>
+      <td>33.739116</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">%%time
+df['routes'] = df.apply(lambda x: get_route(x['pickup_lon'], 
+                                            x['pickup_lat'],
+                                            x['dropoff_lon'], 
+                                            x['dropoff_lat']), axis=1)
+</code></pre>
+
+<pre><code>CPU times: user 1.55 s, sys: 118 ms, total: 1.67 s
+Wall time: 5.72 s
+</code></pre>
+
+<p>Not bad at all! With single container and it can finish the request async in 6 seconds. If we put it on a multiple node docker swarm cluster with proper load balancer, I believe the performance will be very staisfactory.</p>
+
+<p>Check with a random data I requested:</p>
+
+<pre><code class="language-python">get_map(df.loc[900,'routes'])
+</code></pre>
+
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgPHNjcmlwdD5MX1BSRUZFUl9DQU5WQVM9ZmFsc2U7IExfTk9fVE9VQ0g9ZmFsc2U7IExfRElTQUJMRV8zRD1mYWxzZTs8L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS40LjAvZGlzdC9sZWFmbGV0LmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2NvZGUuanF1ZXJ5LmNvbS9qcXVlcnktMS4xMi40Lm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvanMvYm9vdHN0cmFwLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuanMiPjwvc2NyaXB0PgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS40LjAvZGlzdC9sZWFmbGV0LmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvY3NzL2Jvb3RzdHJhcC10aGVtZS5taW4uY3NzIi8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vZm9udC1hd2Vzb21lLzQuNi4zL2Nzcy9mb250LWF3ZXNvbWUubWluLmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9MZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy8yLjAuMi9sZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy5jc3MiLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9yYXdjZG4uZ2l0aGFjay5jb20vcHl0aG9uLXZpc3VhbGl6YXRpb24vZm9saXVtL21hc3Rlci9mb2xpdW0vdGVtcGxhdGVzL2xlYWZsZXQuYXdlc29tZS5yb3RhdGUuY3NzIi8+CiAgICA8c3R5bGU+aHRtbCwgYm9keSB7d2lkdGg6IDEwMCU7aGVpZ2h0OiAxMDAlO21hcmdpbjogMDtwYWRkaW5nOiAwO308L3N0eWxlPgogICAgPHN0eWxlPiNtYXAge3Bvc2l0aW9uOmFic29sdXRlO3RvcDowO2JvdHRvbTowO3JpZ2h0OjA7bGVmdDowO308L3N0eWxlPgogICAgCiAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLAogICAgICAgIGluaXRpYWwtc2NhbGU9MS4wLCBtYXhpbXVtLXNjYWxlPTEuMCwgdXNlci1zY2FsYWJsZT1ubyIgLz4KICAgIDxzdHlsZT4jbWFwX2JmNDQ5OWQ3ODIwODQ2YWFhMjQwODJjMjQ5ODAyOWVlIHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgICAgd2lkdGg6IDEwMC4wJTsKICAgICAgICBoZWlnaHQ6IDEwMC4wJTsKICAgICAgICBsZWZ0OiAwLjAlOwogICAgICAgIHRvcDogMC4wJTsKICAgICAgICB9CiAgICA8L3N0eWxlPgo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgPGRpdiBjbGFzcz0iZm9saXVtLW1hcCIgaWQ9Im1hcF9iZjQ0OTlkNzgyMDg0NmFhYTI0MDgyYzI0OTgwMjllZSIgPjwvZGl2Pgo8L2JvZHk+CjxzY3JpcHQ+ICAgIAogICAgCiAgICAKICAgICAgICB2YXIgYm91bmRzID0gbnVsbDsKICAgIAoKICAgIHZhciBtYXBfYmY0NDk5ZDc4MjA4NDZhYWEyNDA4MmMyNDk4MDI5ZWUgPSBMLm1hcCgKICAgICAgICAnbWFwX2JmNDQ5OWQ3ODIwODQ2YWFhMjQwODJjMjQ5ODAyOWVlJywgewogICAgICAgIGNlbnRlcjogWzMzLjY2NjAyMTUsIC0xMTcuNzExMTQxNV0sCiAgICAgICAgem9vbTogMTMsCiAgICAgICAgbWF4Qm91bmRzOiBib3VuZHMsCiAgICAgICAgbGF5ZXJzOiBbXSwKICAgICAgICB3b3JsZENvcHlKdW1wOiBmYWxzZSwKICAgICAgICBjcnM6IEwuQ1JTLkVQU0czODU3LAogICAgICAgIHpvb21Db250cm9sOiB0cnVlLAogICAgICAgIH0pOwoKCiAgICAKICAgIHZhciB0aWxlX2xheWVyXzQ4YWM2YjM0YTU0OTRjMjY5ODg0MmUxYzQwMDQwZTgzID0gTC50aWxlTGF5ZXIoCiAgICAgICAgJ2h0dHBzOi8ve3N9LnRpbGUub3BlbnN0cmVldG1hcC5vcmcve3p9L3t4fS97eX0ucG5nJywKICAgICAgICB7CiAgICAgICAgImF0dHJpYnV0aW9uIjogbnVsbCwKICAgICAgICAiZGV0ZWN0UmV0aW5hIjogZmFsc2UsCiAgICAgICAgIm1heE5hdGl2ZVpvb20iOiAxOCwKICAgICAgICAibWF4Wm9vbSI6IDE4LAogICAgICAgICJtaW5ab29tIjogMCwKICAgICAgICAibm9XcmFwIjogZmFsc2UsCiAgICAgICAgIm9wYWNpdHkiOiAxLAogICAgICAgICJzdWJkb21haW5zIjogImFiYyIsCiAgICAgICAgInRtcyI6IGZhbHNlCn0pLmFkZFRvKG1hcF9iZjQ0OTlkNzgyMDg0NmFhYTI0MDgyYzI0OTgwMjllZSk7CiAgICAKICAgICAgICAgICAgICAgIHZhciBwb2x5X2xpbmVfY2VhZTk4MzU2YWVlNDU5ZjhmZGNmZDhlNWM3MGU0MzggPSBMLnBvbHlsaW5lKAogICAgICAgICAgICAgICAgICAgIFtbMzMuNjYwMTgsIC0xMTcuNjY4NDldLCBbMzMuNjYzNDYsIC0xMTcuNjY2NjddLCBbMzMuNjY3NzEsIC0xMTcuNjYyMDFdLCBbMzMuNjcyNDYsIC0xMTcuNjYwMzZdLCBbMzMuNjc1NjgsIC0xMTcuNjY5MThdLCBbMzMuNjc4MDksIC0xMTcuNjcxODRdLCBbMzMuNjg0ODksIC0xMTcuNjc2ODldLCBbMzMuNjk0ODgsIC0xMTcuNjkxMDddLCBbMzMuNzA2MjUsIC0xMTcuNzE0Nl0sIFszMy43MTA1OSwgLTExNy43MTkwNF0sIFszMy43MTE0MywgLTExNy43MjA5NV0sIFszMy43MTEzLCAtMTE3LjcyMjc2XSwgWzMzLjcxMDI4LCAtMTE3LjcyNDQzXSwgWzMzLjcwNDM3LCAtMTE3LjcyODE4XSwgWzMzLjY5ODA0LCAtMTE3LjczNDk0XSwgWzMzLjY3ODI3LCAtMTE3Ljc1MTYxXSwgWzMzLjY3NTIxLCAtMTE3Ljc1MzQ0XSwgWzMzLjY3MTg2LCAtMTE3Ljc1MzhdXSwKICAgICAgICAgICAgICAgICAgICB7CiAgImJ1YmJsaW5nTW91c2VFdmVudHMiOiB0cnVlLAogICJjb2xvciI6ICJibHVlIiwKICAiZGFzaEFycmF5IjogbnVsbCwKICAiZGFzaE9mZnNldCI6IG51bGwsCiAgImZpbGwiOiBmYWxzZSwKICAiZmlsbENvbG9yIjogImJsdWUiLAogICJmaWxsT3BhY2l0eSI6IDAuMiwKICAiZmlsbFJ1bGUiOiAiZXZlbm9kZCIsCiAgImxpbmVDYXAiOiAicm91bmQiLAogICJsaW5lSm9pbiI6ICJyb3VuZCIsCiAgIm5vQ2xpcCI6IGZhbHNlLAogICJvcGFjaXR5IjogMC42LAogICJzbW9vdGhGYWN0b3IiOiAxLjAsCiAgInN0cm9rZSI6IHRydWUsCiAgIndlaWdodCI6IDgKfQogICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICAuYWRkVG8obWFwX2JmNDQ5OWQ3ODIwODQ2YWFhMjQwODJjMjQ5ODAyOWVlKTsKICAgICAgICAgICAgCiAgICAKICAgICAgICB2YXIgbWFya2VyXzI2ZGNkODVmY2U3ZDRkZjBhYTdlZjM0NGM4MGEzYmNhID0gTC5tYXJrZXIoCiAgICAgICAgICAgIFszMy42NjAxOCwgLTExNy42Njg0ODVdLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBpY29uOiBuZXcgTC5JY29uLkRlZmF1bHQoKSwKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgKS5hZGRUbyhtYXBfYmY0NDk5ZDc4MjA4NDZhYWEyNDA4MmMyNDk4MDI5ZWUpOwogICAgICAgIAogICAgCgogICAgICAgICAgICAgICAgdmFyIGljb25fMDY0ZmMyNjJhZWQxNGE2Yjg4NTM2NTk3ZDk0ZGJjZmMgPSBMLkF3ZXNvbWVNYXJrZXJzLmljb24oewogICAgICAgICAgICAgICAgICAgIGljb246ICdwbGF5JywKICAgICAgICAgICAgICAgICAgICBpY29uQ29sb3I6ICd3aGl0ZScsCiAgICAgICAgICAgICAgICAgICAgbWFya2VyQ29sb3I6ICdncmVlbicsCiAgICAgICAgICAgICAgICAgICAgcHJlZml4OiAnZ2x5cGhpY29uJywKICAgICAgICAgICAgICAgICAgICBleHRyYUNsYXNzZXM6ICdmYS1yb3RhdGUtMCcKICAgICAgICAgICAgICAgICAgICB9KTsKICAgICAgICAgICAgICAgIG1hcmtlcl8yNmRjZDg1ZmNlN2Q0ZGYwYWE3ZWYzNDRjODBhM2JjYS5zZXRJY29uKGljb25fMDY0ZmMyNjJhZWQxNGE2Yjg4NTM2NTk3ZDk0ZGJjZmMpOwogICAgICAgICAgICAKICAgIAogICAgICAgIHZhciBtYXJrZXJfNTgyYThmYzhmOTk0NGY5OGFmOGE3MTEzN2NhZjIzMDIgPSBMLm1hcmtlcigKICAgICAgICAgICAgWzMzLjY3MTg2MywgLTExNy43NTM3OThdLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBpY29uOiBuZXcgTC5JY29uLkRlZmF1bHQoKSwKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgKS5hZGRUbyhtYXBfYmY0NDk5ZDc4MjA4NDZhYWEyNDA4MmMyNDk4MDI5ZWUpOwogICAgICAgIAogICAgCgogICAgICAgICAgICAgICAgdmFyIGljb25fNTNhNmY5ZjUzY2M2NDg4NGFjZTY5YzE2OGY0YTNmNWEgPSBMLkF3ZXNvbWVNYXJrZXJzLmljb24oewogICAgICAgICAgICAgICAgICAgIGljb246ICdzdG9wJywKICAgICAgICAgICAgICAgICAgICBpY29uQ29sb3I6ICd3aGl0ZScsCiAgICAgICAgICAgICAgICAgICAgbWFya2VyQ29sb3I6ICdyZWQnLAogICAgICAgICAgICAgICAgICAgIHByZWZpeDogJ2dseXBoaWNvbicsCiAgICAgICAgICAgICAgICAgICAgZXh0cmFDbGFzc2VzOiAnZmEtcm90YXRlLTAnCiAgICAgICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgICBtYXJrZXJfNTgyYThmYzhmOTk0NGY5OGFmOGE3MTEzN2NhZjIzMDIuc2V0SWNvbihpY29uXzUzYTZmOWY1M2NjNjQ4ODRhY2U2OWMxNjhmNGEzZjVhKTsKICAgICAgICAgICAgCjwvc2NyaXB0Pg==" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+
+<h2 id="potential-applications">Potential applications</h2>
+
+<p>Now we have seen the beauty of the OSRM. You can imagine how many use cases it could potentially has. I actually used it to generate features in one Kaggle competition &mdash; NYC taxi fare prediction <a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/overview" target="_blank">(link)</a>. In this competition, you were asked to predict the taxi fares given some basic features including the pickup and dropoff coordinates. As we all know that Haversine distance is different than the actually driving distance, especially in NYC. My intuition is that using the predicted driving distance will increase the model accuracy. Because that is how the taxi fares are calculated anyway. I was absolutely right. By adding this trip distance to the data, I am able to achieve the score of 3.09 which is about <sup>300</sup>&frasl;<sub>1500</sub> on the leaderboard, using just 10% of the data! (full dataset is too big to work with on my laptop) I will publish my detailed approach in the next posts if you are interested.</p>
+
+<p>So what are you waiting for? Starting routing now!</p>
+
+<p><img src="https://media.giphy.com/media/U4YEoSRgz5JtebnYqH/giphy.gif" alt="" /></p>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="../../../tags/map/">Map</a>
+  
+  <a class="badge badge-light" href="../../../tags/routing/">Routing</a>
+  
+  <a class="badge badge-light" href="../../../tags/package/">Package</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/686fe02aba9090b895e967fa6cc296a3?s=200')" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="../../../">Michael Yan</a></h5>
+      <h6 class="card-subtitle">Principal Data Scientist</h6>
+      <p class="card-text" itemprop="description">A student of the last forbidden art of Data Science.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="../../../bio/" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://linkedin.com/in/michaelyan3" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/wwwjk366" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="../../../post/2019-12-16-introducing-python-package-gower/">Introducing Python package --- gower</a></li>
+          
+          <li><a href="../../../post/2019-07-22-introducing-teamr/">Introducing teamr Package</a></li>
+          
+          <li><a href="../../../post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/">Add Sunburst Chart to highcharter Package</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thinkdatascience" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//thinkdatascience.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="../../../js/academic.min.9ef1b53ee2bde6c7f33b150c6ba4d452.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="../../../license/">LICENSE: CC-BY-SA <br> <i class="fab fa-creative-commons fa-2x"></i><i class="fab fa-creative-commons-by fa-2x"></i><i class="fab fa-creative-commons-sa fa-2x"></i> </a><br>
+  </p>
+  
+
+  <p class="powered-by">
+    2020 &middot; 
+
+    Made with <a href="https://github.com/wwwjk366/think.data.science" target="_blank" rel="noopener"><i class="fas fa-code-branch" style="color:#3f51b5"></i></a>, the <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i> </a><a href="https://github.com/rstudio/blogdown" target="_blank" rel="noopener">blogdown</a> package, and the 
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
