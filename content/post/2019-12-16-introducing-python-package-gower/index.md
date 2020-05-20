@@ -21,7 +21,7 @@ image:
 projects: []
 ---
 
-Today I am so pleased to introduce my first PyPI package (so much easier to submit comparing to CRAN) --- [`gower`](https://pypi.org/project/gower/) for calculating gower distance. I borrowed ideas from https://github.com/scikit-learn/scikit-learn/issues/5884 and hopefully it can be added to `sklearn` soon. There are lots of packages in R that incorporated this method but unfortunately not for Python users. I took this chance to try the whole package-making experience for PyPI and here we go!
+Today I am so pleased to introduce my first PyPI package (so much easier to submit comparing to CRAN) --- [`gower`](https://pypi.org/project/gower/) for calculating gower distance. I used the code from https://github.com/scikit-learn/scikit-learn/issues/5884 and hopefully it can be added to `sklearn` soon.(The core algo is originally wrote by [Marcelo Beckmann](https://github.com/marcelobeckmann) ). There are lots of packages in R that incorporated this method but unfortunately not for Python users. I took this chance to try the whole package-making experience for PyPI and here we go!
 
 
 ## What is gower distance?
