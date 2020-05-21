@@ -333,7 +333,7 @@ Wall time: 5.72 s
       <guid>/post/2019-12-16-introducing-python-package-gower/</guid>
       <description>
 
-&lt;p&gt;Today I am so pleased to introduce my first PyPI package (so much easier to submit comparing to CRAN) &amp;mdash; &lt;a href=&#34;https://pypi.org/project/gower/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;gower&lt;/code&gt;&lt;/a&gt; for calculating gower distance. I used the code from &lt;a href=&#34;https://github.com/scikit-learn/scikit-learn/issues/5884&#34; target=&#34;_blank&#34;&gt;https://github.com/scikit-learn/scikit-learn/issues/5884&lt;/a&gt; and hopefully it can be added to &lt;code&gt;sklearn&lt;/code&gt; soon.(The core algo is originally wrote by &lt;a href=&#34;https://github.com/marcelobeckmann&#34; target=&#34;_blank&#34;&gt;Marcelo Beckmann&lt;/a&gt; ). There are lots of packages in R that incorporated this method but unfortunately not for Python users. I took this chance to try the whole package-making experience for PyPI and here we go!&lt;/p&gt;
+&lt;p&gt;Today I am so pleased to introduce my first PyPI package (so much easier to submit comparing to CRAN) &amp;mdash; &lt;a href=&#34;https://pypi.org/project/gower/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;gower&lt;/code&gt;&lt;/a&gt; for calculating gower distance. The core function is originally published by &lt;a href=&#34;https://sourceforge.net/projects/gower-distance-4python/files/&#34; target=&#34;_blank&#34;&gt;Marcelo Beckmann&lt;/a&gt;. There are lots of packages in R that incorporated this method but unfortunately not for Python users. I took this chance to try the whole package-making experience for PyPI and here we go!&lt;/p&gt;
 
 &lt;h2 id=&#34;what-is-gower-distance&#34;&gt;What is gower distance?&lt;/h2&gt;
 
@@ -713,7 +713,7 @@ res &amp;lt;- response$json()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Thu, 05 Dec 2019 00:00:00 +0100</pubDate>
       
       <guid>/license/</guid>
-      <description>&lt;p&gt;My &lt;a href=&#34;./post/&#34;&gt;blog posts&lt;/a&gt; are released under a &lt;a href=&#34;http://creativecommons.org/licenses/by-sa/4.0/&#34; target=&#34;_blank&#34;&gt;Creative Commons Attribution-ShareAlike 4.0 International License&lt;/a&gt;.&lt;/p&gt;
+      <description>&lt;p&gt;My &lt;a href=&#34;/post/&#34;&gt;blog posts&lt;/a&gt; are released under a &lt;a href=&#34;http://creativecommons.org/licenses/by-sa/4.0/&#34; target=&#34;_blank&#34;&gt;Creative Commons Attribution-ShareAlike 4.0 International License&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
 &lt;i class=&#34;fab fa-creative-commons fa-2x&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fab fa-creative-commons-by fa-2x&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fab fa-creative-commons-sa fa-2x&#34;&gt;&lt;/i&gt;
@@ -1400,15 +1400,24 @@ print(&amp;quot;--- %s seconds ---&amp;quot; % (time.time() - start_time))
     </item>
     
     <item>
+      <title>Bio</title>
+      <link>/bio/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 -0400</pubDate>
+      
+      <guid>/bio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Add Sunburst Chart to highcharter Package</title>
       <link>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</link>
       <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</guid>
       <description>
-&lt;script src=&#34;./rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;./rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;./rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;the-highcharter-package&#34; class=&#34;section level2&#34;&gt;
@@ -1678,15 +1687,6 @@ frameWidget(hc, height = &amp;#39;600&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;TL;DR — You can start using this function by installing the forked version on my GitHub: &lt;code&gt;devtools::install_github(repo = &amp;quot;wwwjk366/highcharter&amp;quot;)&lt;/code&gt;. I have already initiated a pull request and hopefully the maintainer of `highcharter’ can add this function soon.&lt;/p&gt;
 &lt;/div&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Bio</title>
-      <link>/bio/</link>
-      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/bio/</guid>
-      <description></description>
     </item>
     
     <item>
