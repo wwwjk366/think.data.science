@@ -7,10 +7,69 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Sun, 21 Jul 2019 20:14:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	    <atom:link href="/categories/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How To Excel As A Data Scientist? 4 Essential Skills You Should Have</title>
+      <link>/post/2020-10-30-how-to-excel-as-a-data-scientist/how-to-excel-as-a-data-scientist-4-essential-skills-you-should-have/</link>
+      <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-10-30-how-to-excel-as-a-data-scientist/how-to-excel-as-a-data-scientist-4-essential-skills-you-should-have/</guid>
+      <description>
+
+&lt;p&gt;I consider myself as an extremely lucky guy. When I picked Statistics as my college major, I didn’t know I would be working as a data scientist after I graduate. The job “Data Scientist” probably didn&amp;rsquo;t even exist back then. And here I am, after almost 9 years, I matured from someone that struggled to run and diagnose a linear regression to a fairly experienced data scientist that gives talks and lectures. When I speak of Data Science and the career development of data scientists, one of the questions that I have been asked a lot is &amp;mdash; &lt;strong&gt;What are the most important skills/traits to become a successful data scientist?&lt;/strong&gt; Many people think the answer is the coding skills. The ability of writing a state of art python script that can run the most advanced algorithm. Well, coding skill is important but in my honest opinion it&amp;rsquo;s far from the most important one. To me, coding skill is like the knife skill to a chef. Yes a better knife skill can make a chef’s work easier. However, cutting a potato wedge half inch thinner or thicker won’t affect the taste of the dish that much. So what are the most important traits of a successful data scientist?&lt;/p&gt;
+
+&lt;h2 id=&#34;curiosity&#34;&gt;Curiosity&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;ldquo;Eager to know hows and whys&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;More specifically, &lt;strong&gt;Intellectual curiosity&lt;/strong&gt;. Not “Curiosity killed the cat” that kind of curiosity. Why is it important? Because a big part of data science is able finding insights and reason behind the data. Or maybe that&amp;rsquo;s why it’s called a “science” because scientists are curious. Newton discovered gravity because he was curious about apples falling from the tree. So when good data scientists saw the data showing customers are churning, they would try to figure out why.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-data-science-problem-solving-framework&#34;&gt;A Data Science Problem solving framework&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;ldquo;Think as a consultant&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a big concept. Good data scientists have a &lt;strong&gt;framework&lt;/strong&gt; which they can leverage to approach problems at work. That means, when given an ambiguous request, we should know how to decompose it and break down into solvable pieces. One of the most common pitfalls is to start working on a problem without a clear goal and roadmap in mind. Because my wife was studying for an MBA degree at Chicago Booth. I am lucky to know from some consultant from the big 3 consulting companies her classmate and I learned a lot from them about how to approach problems at work.&lt;/p&gt;
+
+&lt;p&gt;Let’s assume you received a task to build a model that generates leads for sales people, a propensity model. What is the first thing you should do? Many might start researching and testing out algorithms already. However the first question you should ask is &amp;mdash; &lt;strong&gt;What constitutes success?&lt;/strong&gt; Can we quantify the goal? Are we looking to increase the sales by 10%, 15%? Is that doable? How do we measure it? After clarifying those questions with your stakeholders, next steps became clear. Here is a process I always follow when designing and working on a data science project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;media/crisp-dm.gif&#34; alt=&#34;&#34; /&gt;  see &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;After understanding the business goals and expectations, we can go about figuring out the data quality and availability. The following work will be a standard data science workflow.&lt;/p&gt;
+
+&lt;p&gt;I personally find this skill is very very important when interviewing for jobs or hiring as a manager. That fact is because many organizations are still in the phase of adopting data science and data science teams often face a lot of ambiguous requests and projects. Without a solid framework it is hard to be successful and slowly the team will function as a support team instead of driving the direction of the business.&lt;/p&gt;
+
+&lt;h2 id=&#34;business-intuition&#34;&gt;Business Intuition&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;“Knows How and What to do”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Believe it or not, different people in a company have very different motivations and goals. If you were an executive, your focus might be to increase the top line, attract more funding, play PR right, etc. While as a data scientist, that is often not what you had in mind. I saw many data scientist teams struggling to win support from high up and fail to turn the organization to be data-driven. Let’s say you were given a task to build a dynamic pricing model for your company. Common mistake is that the team would try the most complicated and sophisticated modeling technique that requires a lot of experiments and resources. The model might increase the revenue by 20% however a simple linear regression will do about 10%. In the end the team was taking too long to come up with a solution and eventually the project got called off because executives lost patience.  Why not &lt;strong&gt;start small&lt;/strong&gt; and grab the low hanging fruit? Think of ROI, do not afraid of fail fast and take solid baby steps.&lt;/p&gt;
+
+&lt;h2 id=&#34;communication&#34;&gt;Communication&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;ldquo;Explain Like I&amp;rsquo;m 5&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Why communication is important for data scientists? Because oftentimes you need to communicate/socialize your work with executives/non-technical people.  How would you go about explaining your recent build neural networks models to them? People tend to question and fear the things that they do not understand. If you can’t explain the concept to them it is very hard to prove the value your team is generating. I have been teaching Machine Learning and Data Science for a while and I have been appreciating more and more the skills of &lt;strong&gt;explaining complex concepts to people from various backgrounds&lt;/strong&gt;. Here is a Youtube channel I came across called “5 Levels” where they try to explain complex ideas  first to a child, then a teenager, then an undergrad majoring in the same subject, a grad student and, finally, a colleague.[&lt;a href=&#34;https://www.wired.com/video/series/5-levels&#34; target=&#34;_blank&#34;&gt;https://www.wired.com/video/series/5-levels&lt;/a&gt;] Another example is &lt;a href=&#34;https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw&#34; target=&#34;_blank&#34;&gt;3Blue1Brown, by Grant Sanderson&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Not all people are the same and if we are able to convey a complicated to any audience, that knowledge will stick and pass on for generations.&lt;/p&gt;
+
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;In summary, those are the 4 commonly overlooked traits to many data scientists. I personally was not aware of them as well when I started my career. For all the mistakes and failures I encountered I learn them the hard way. Therefore I just want to share those thoughts to you and hope it will help you in your journey of data science careers.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;Data Science for Business: What You Need to Know about Data Mining and Data-Analytic Thinking by Foster Provost
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Introducing teamr Package</title>

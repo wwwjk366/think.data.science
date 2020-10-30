@@ -34,13 +34,42 @@
   </url>
   
   <url>
+    <loc>/categories/blog/</loc>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2020-03-03T22:04:53+00:00</lastmod>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2020-03-03T22:04:53+00:00</lastmod>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data-science/</loc>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/2020-10-30-how-to-excel-as-a-data-scientist/how-to-excel-as-a-data-scientist-4-essential-skills-you-should-have/</loc>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/random-thoughts/</loc>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-10-30T14:21:22+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -69,12 +98,6 @@
   
   <url>
     <loc>/tags/routing/</loc>
-    <lastmod>2020-03-03T22:04:53+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-03-03T22:04:53+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -154,12 +177,6 @@
   </url>
   
   <url>
-    <loc>/categories/blog/</loc>
-    <lastmod>2019-07-21T20:14:43+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/post/2019-07-22-introducing-teamr/</loc>
     <lastmod>2019-07-21T20:14:43+00:00</lastmod>
   </url>
@@ -188,13 +205,13 @@
   </url>
   
   <url>
-    <loc>/bio/</loc>
-    <lastmod>2019-06-13T00:00:00-04:00</lastmod>
+    <loc>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</loc>
+    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2019-06-13-add-sunburst/add-sunburst-chart-to-highcharter-package/</loc>
-    <lastmod>2019-06-13T00:11:50-04:00</lastmod>
+    <loc>/bio/</loc>
+    <lastmod>2019-06-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
