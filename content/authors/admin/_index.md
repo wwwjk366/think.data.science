@@ -18,9 +18,9 @@ interests:
 - Sports & Gaming
 name: Michael Yan
 organizations:
-- name: Ingram Micro
-  url: "https://corp.ingrammicro.com/About-Us.aspx"
-role: Principal Data Scientist @ Ingram Micro
+- name: SpotHero
+  url: "https://spothero.com/"
+role: Staff Data Scientist @ SpotHero
 social:
 - icon: envelope
   icon_pack: fas
@@ -39,4 +39,4 @@ user_groups:
 
 "You can have data without information, but you cannot have information without data."
 
-I'm an accomplished data scientist and thought leader with 8+ years of experience of research and bring to market advance analytics and machine learning solutions. I have been extremely lucky to work in many different realms, including retail, finance, marketing and even gaming. I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. Also as a person with insatiable intellectual curiosity, I am passionate about finding actionable insights hidden in vast amounts of raw data.
+I'm an accomplished data scientist and thought leader with 10+ years of experience of research and bring to market advance analytics and machine learning solutions. As a person with insatiable intellectual curiosity, I am passionate about finding actionable insights hidden in vast amounts of raw data. I like data. Manipulating it, making it (simulation),  modeling it, visualizing it and yes, even cleaning it. I have been extremely lucky to work in many different realms --- I have built gambling market trading algorithms and live spots models for online sportsbook. I have built DSaaS tools housing customer analytics and recommendation engine for enterprise customers. I have built quantitative portfolio construction algorithms for PE firm. Now I am working with a team of excellent engineers to help people park their cars using cellphone app. 
