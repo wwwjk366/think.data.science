@@ -3,10 +3,11 @@ header:
   caption: ""
   image: ""
 layout: docs
-title: Past Teaching and Training Experience
+title: Past Talks and Teaching Experience
 ---
 
-
+* Changing the Face of Parking:Lesson's Learned from SpotHero's Intelligent, Dynamic Rate Board @ **2021 Toronto Machine Learning Summit** 
+[video here](https://youtu.be/8h8OAqpbBrI)
 * Big Data with R  @ **Agriculture and Agri-Food Canada**
 * R for Data Analysis and Research @ **Economics Canada**
 * Foundation R @ **Environment Canada**
