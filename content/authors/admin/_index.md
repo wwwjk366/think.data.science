@@ -2,25 +2,24 @@
 authors:
 - admin
 bio: A student of the last forbidden art of Data Science.
-education:
-  courses:
-  - course: MSc Statistics
-    institution: Brock University
-    year: 2011
-  - course: BSc in Economics & Statistics
-    institution: Beijing Forestry University
-    year: 2009
+# education:
+#   courses:
+#   - course: MSc Statistics
+#     institution: Brock University
+#   - course: BSc in Economics & Statistics
+#     institution: Beijing Forestry University
 email: "tanbingy@gmail.com"
 interests:
+- Bring-to-market AI product
 - Machine Learning
 - Statistical Inference
 - Finance & Economics
 - Sports & Gaming
 name: Michael Yan
 organizations:
-- name: SpotHero
-  url: "https://spothero.com/"
-role: Staff Data Scientist @ SpotHero
+- name: Mistplay
+  url: "https://www.mistplay.com/"
+role: Director of Data Science and Machine Learning @
 social:
 - icon: envelope
   icon_pack: fas
@@ -39,4 +38,4 @@ user_groups:
 
 "You can have data without information, but you cannot have information without data."
 
-I'm an accomplished data scientist and thought leader with 10+ years of experience of research and bring to market advance analytics and machine learning solutions. As a person with insatiable intellectual curiosity, I am passionate about finding actionable insights hidden in vast amounts of raw data. I like data. Manipulating it, making it (simulation),  modeling it, visualizing it and yes, even cleaning it. I have been extremely lucky to work in many different realms --- I have built gambling market trading algorithms and live spots models for online sportsbook. I have built DSaaS tools housing customer analytics and recommendation engine for enterprise customers. I have built quantitative portfolio construction algorithms for PE firm. Now I am working with a team of excellent engineers to help people park their cars using cellphone app. 
+I'm an accomplished data scientist and thought leader with 12+ years of experience in research and bring to market machine learning and AI products. As a person with insatiable intellectual curiosity, I am passionate about finding actionable insights hidden in vast amounts of raw data. I like data. Manipulating it, making it (simulation),  modeling it, visualizing it and yes, even cleaning it. I have been extremely lucky to work in many different realms --- I have built dynamic pricing algorithms for the largest online parking marketplace Patent pending). I have built gambling market trading algorithms and live sports models for an online sportsbook. I have built DSaaS tools housing customer analytics and recommendation engine for enterprise customers. I have built quantitative portfolio construction algorithms for PE firm. Now I'm leading and building a world-class data science team at Mistplay, the #1 loyalty platform for mobile gamers.
